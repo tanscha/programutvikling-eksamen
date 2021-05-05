@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.AdminLogginnController">
+    <Label alignment="CENTER" layoutX="323.0" layoutY="62.0" prefHeight="47.0" prefWidth="282.0" text="Logg inn">
+        <font>
+            <Font size="38.0" />
+        </font>
+    </Label>
+    <Button fx:id="btnTilbake" layoutX="35.0" layoutY="35.0" mnemonicParsing="false" onAction="#btnTilbake" text="Startside" />
+    <TextField fx:id="txtBrukernavn" layoutX="384.0" layoutY="129.0" promptText="Skriv inn brukernavn" />
+    <PasswordField fx:id="txtPassord" layoutX="384.0" layoutY="165.0" promptText="Skriv inn passord" />
+    <Button fx:id="btnLoggInn" layoutX="428.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnLoggInn" text="Logg inn" />
+    <Label fx:id="lblFeil" alignment="CENTER" layoutX="350.0" layoutY="245.0" prefHeight="30" prefWidth="222.0" textFill="#8c8c8ccf" />
+    <Label layoutX="35.0" layoutY="409.0" text="brukernavn: admin" textFill="#8a8a8acf">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+    <Label layoutX="35.0" layoutY="426.0" text="passord: passord" textFill="#8a8a8acf">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+    <Button fx:id="btnUten" layoutX="35.0" layoutY="451.0" mnemonicParsing="false" onAction="#loggInnUten" text="Logg inn uten" textFill="#0000009b">
+        <font>
+            <Font size="11.0" />
+        </font>
+    </Button>
+</AnchorPane>

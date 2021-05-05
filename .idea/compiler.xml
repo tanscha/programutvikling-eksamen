@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="semesteroppg" />
+        <module name="semesteroppg 2 2 3 2" />
+        <module name="hellofx" />
+        <module name="semOppg 3" />
+        <module name="semOppg 2" />
+        <module name="semesterOppgave" />
+        <module name="semesteroppg 2 2 3" />
+        <module name="semesteroppgave 1" />
+        <module name="semOppg 3 3" />
+        <module name="semesterOppgave 4" />
+        <module name="semOppg" />
+        <module name="semOppg 3 3 2" />
+        <module name="semesterOppgave 4 4" />
+        <module name="semesteroppg 2 2 3 2 2 2" />
+        <module name="semesteroppg 2 2 3 2 2" />
+        <module name="semesteroppg 2" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="semesteroppg" options="--add-exports=java.datatransfer/java.awt=org.openjfx" />
+    </option>
+  </component>
+</project>
