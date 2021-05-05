@@ -36,6 +36,8 @@ public class ProdukterController implements Initializable {
     public ComboBox KategoriValg;
     public Spinner spnAntall;
     public TextField txtEgenskap;
+    public TextField txtKategori;
+    public Button btnLeggtilKat;
 
 
     @FXML
@@ -65,6 +67,7 @@ public class ProdukterController implements Initializable {
         comboType.setDisable(false);
         typevalg.setDisable(false);
         btnLagre.setDisable(false);
+        btnLeggtilKat.setDisable(false);
     }
 
     //Metode som hemmer knapper osv
@@ -120,5 +123,9 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnSlett(ActionEvent event) {
+    }
+
+    public void btnLeggTilKat(ActionEvent event) {
+
     }
 }

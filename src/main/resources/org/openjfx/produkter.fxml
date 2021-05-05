@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
     <children>
         <AnchorPane layoutY="-11.0" prefHeight="550.0" prefWidth="900.0">
             <TextField fx:id="txtNavn" layoutX="35.0" layoutY="212.0" prefHeight="27.0" prefWidth="155.0" promptText="Navn" />
             <Button fx:id="btnLeggtil" layoutX="139.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnLeggTil" text="Legg til" />
+            <Button fx:id="btnLeggtilKat" layoutX="139.0" layoutY="410.0" mnemonicParsing="false" onAction="#btnLeggTilKat" text="Legg til" />
             <Button fx:id="btnSlett" layoutX="306.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnSlett" text="Slett valgt" />
             <Button layoutX="35.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnTilbake" text="Logg ut" />
 
@@ -62,9 +54,10 @@
             <ComboBox fx:id="KategoriValg" layoutX="475.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
          <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="337.0" prefHeight="17.0" prefWidth="155.0" />
-         <Spinner fx:id="spnAntall" editable="true" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0"/>
+         <Spinner fx:id="spnAntall" editable="true" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0" />
          <Label layoutX="88.0" layoutY="280.0" text="Antall:" />
          <TextField fx:id="txtEgenskap" layoutX="35.0" layoutY="243.0" prefHeight="27.0" prefWidth="155.0" promptText="Egenskap" />
+         <TextField fx:id="txtKategori" layoutX="35.0" layoutY="354.0" prefHeight="27.0" prefWidth="155.0" promptText="Ny kategori" />
         </AnchorPane>
     </children>
 </Pane>
