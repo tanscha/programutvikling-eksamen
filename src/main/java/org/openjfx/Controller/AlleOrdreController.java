@@ -89,7 +89,7 @@ public class AlleOrdreController extends Window implements Initializable {
                     ordrenr = b.ordrenr;
                     liste = (ListeKonverterer.fraArraytilKomponent(b.handlevogn2));
                     for (Product k : b.handlevogn2) {
-                        sum += k.antall;
+                        sum += k.quantity;
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class AlleOrdreController extends Window implements Initializable {
             e.printStackTrace();
         }
 
-        //Finner navn og kundenr i fil fra aktivbruker
+        //Finner name og kundenr i fil fra aktivbruker
         FileOpener les = new FileOpenerJOBJ();
         ArrayList<Kunde> liste = null;
         try {

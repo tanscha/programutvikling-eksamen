@@ -5,46 +5,46 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
-    public String navn;
-    public int antall;
-    public String type;
+    public String name;
+    public int quantity;
+    public String category;
 
-    public Product(String navn, int antall, String type) {
-        this.navn = navn;
-        this.antall = antall;
-        this.type = type;
+    public Product(String name, int quantity, String category) {
+        this.name = name;
+        this.quantity = quantity;
+        this.category = category;
     }
 
-    public String getNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 
-    public int getAntall() {
-        return antall;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAntall(int antall) {
-        this.antall = antall;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
-        return String.format(navn + ", " + antall + ",-");
+        return String.format(name + ", " + quantity + ",-");
     }
 
     public String getKompType() {
-        return type;
+        return category;
     }
 }

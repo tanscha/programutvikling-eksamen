@@ -39,7 +39,7 @@ public class Bestillinger implements Serializable {
 
     }
 
-    //Metode som finner antall bestillinger
+    //Metode som finner quantity bestillinger
     public static int finnAntall() throws IOException, ClassNotFoundException {
         ArrayList<Bestilling> a = hentFraFil();
         return a.size();

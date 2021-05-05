@@ -46,7 +46,7 @@ public class NyKundeController {
             Kunder.LeggTil(nyKunde);
             SkrivMld(nyKunde);
         } else {
-            lblMld.setText("Skriv inn et gyldig navn");
+            lblMld.setText("Skriv inn et gyldig name");
             txtNavn.clear();
         }
 

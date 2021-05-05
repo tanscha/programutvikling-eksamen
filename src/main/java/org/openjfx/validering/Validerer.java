@@ -7,7 +7,7 @@ public class Validerer {
 
     public static int gyldigPris(int pris) throws InvalidPrisException {
         if (pris <= 0) {
-            throw new InvalidPrisException("Ugyldig antall");
+            throw new InvalidPrisException("Ugyldig quantity");
         }
         return pris;
     }

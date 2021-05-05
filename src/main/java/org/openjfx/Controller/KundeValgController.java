@@ -23,7 +23,7 @@ public class KundeValgController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Finner aktivkunde fra fil og skriver Velkommen+navn
+        //Finner aktivkunde fra fil og skriver Velkommen+name
         FileOpener les = new FileOpenerJOBJ();
         ArrayList<Kunde> liste = null;
         try {

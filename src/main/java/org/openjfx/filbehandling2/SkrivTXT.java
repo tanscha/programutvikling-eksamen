@@ -15,12 +15,12 @@ public class SkrivTXT {
     }
 
     //Metode som gjør liste om til string
-    //Skriver navn, type og antall med tabulator mellom slik at filen kan åpnes av excel
+    //Skriver name, category og quantity med tabulator mellom slik at filen kan åpnes av excel
     //Velger tabulator som delimiter fordi noen av navnene har komma eller " i seg
     private static byte[] printString(ArrayList<Product> a) {
         String tekst = "Komponent\t Navn\t Pris \n";
         for (Product k : a) {
-            tekst += k.type + "\t" + k.navn + "\t" + k.antall + "\n";
+            tekst += k.category + "\t" + k.name + "\t" + k.quantity + "\n";
         }
         return tekst.getBytes();
     }

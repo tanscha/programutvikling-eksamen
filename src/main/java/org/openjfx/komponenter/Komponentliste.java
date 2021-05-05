@@ -46,16 +46,16 @@ public class Komponentliste implements Serializable {
     }
 
 
-    //Metoder som filtrer ut komponenter etter gitt navn, antall eller type
+    //Metoder som filtrer ut komponenter etter gitt name, quantity eller category
     //Returner en observablelist med disse komponentene
     public static ObservableList<Product> filtrerEtterNavn(String navn, ObservableList<Product> a) {
-        return a.stream().filter(objekt -> objekt.getNavn().
+        return a.stream().filter(objekt -> objekt.getName().
                 toLowerCase().matches(String.format("%s%s%s", ".*", navn.
                 toLowerCase(), ".*"))).collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     public static ObservableList<Product> filtrerEtterPris(int pris, ObservableList<Product> a) {
-        return a.stream().filter(objekt -> objekt.getAntall() == pris).
+        return a.stream().filter(objekt -> objekt.getQuantity() == pris).
                 collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 

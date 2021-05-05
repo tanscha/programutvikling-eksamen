@@ -79,11 +79,11 @@ public class KundeBestillController extends Window implements Initializable {
         App.setRoot("kundevalg");
     }
 
-    //Metode som returnerer ObservableList med komponenter av en valgt type
+    //Metode som returnerer ObservableList med komponenter av en valgt category
     private ObservableList<Product> FinnKomponenter(ArrayList<Product> liste, String type) {
         ArrayList<Product> typeliste = new ArrayList<>();
         for (Product k : liste) {
-            if (type.equals(k.type)) {
+            if (type.equals(k.category)) {
                 typeliste.add(k);
             }
         }
@@ -91,16 +91,16 @@ public class KundeBestillController extends Window implements Initializable {
         return otypeliste;
     }
 
-    //Metode som beregner antall fra valgte produkter (Henter fra comobobox)
+    //Metode som beregner quantity fra valgte produkter (Henter fra comobobox)
     //Skriver ut totalpris til lblPris
     private void beregnPris() {
-        int harddiskpris = (harddiskbox.getValue()).antall;
-        int minnepris = (minnebox.getValue()).antall;
-        int muspris = (musbox.getValue()).antall;
-        int skjermpris = (skjermbox.getValue()).antall;
-        int skjermkortpris = (skjermkortbox.getValue()).antall;
-        int tastaturpris = (tastaturbox.getValue()).antall;
-        int prosessorpris = (prosessorbox.getValue()).antall;
+        int harddiskpris = (harddiskbox.getValue()).quantity;
+        int minnepris = (minnebox.getValue()).quantity;
+        int muspris = (musbox.getValue()).quantity;
+        int skjermpris = (skjermbox.getValue()).quantity;
+        int skjermkortpris = (skjermkortbox.getValue()).quantity;
+        int tastaturpris = (tastaturbox.getValue()).quantity;
+        int prosessorpris = (prosessorbox.getValue()).quantity;
 
         int totalsum = harddiskpris + minnepris + muspris + skjermpris + skjermkortpris + tastaturpris + prosessorpris;
         lblPris.setText(totalsum + " NOK");
