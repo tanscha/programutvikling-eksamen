@@ -1,8 +1,4 @@
-package org.openjfx.filbehandling2;
-
-import org.openjfx.Kunde.Bestilling;
-import org.openjfx.Kunde.Kunde;
-import org.openjfx.komponenter.Product;
+package org.openjfx.Filbehandling;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -10,6 +6,7 @@ import java.util.ArrayList;
 
 
 public class LagreJOBJ {
+    /*
 
     //Metode som skriver en komponent-arrayliste til gitt jobj-fil
     public static void lagreKompTilListe(String filnavn, ArrayList<Product> listeinn) {
@@ -39,5 +36,5 @@ public class LagreJOBJ {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

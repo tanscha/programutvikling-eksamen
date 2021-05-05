@@ -1,8 +1,8 @@
 package org.openjfx;
 
 import javafx.concurrent.Task;
-import org.openjfx.filbehandling2.FileOpener;
-import org.openjfx.filbehandling2.FileOpenerJOBJ;
+import org.openjfx.Filbehandling.FileOpener;
+import org.openjfx.Filbehandling.FileOpenerJOBJ;
 import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 

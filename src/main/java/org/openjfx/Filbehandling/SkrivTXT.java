@@ -1,14 +1,11 @@
-package org.openjfx.filbehandling2;
-
-import org.openjfx.komponenter.Product;
+package org.openjfx.Filbehandling;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class SkrivTXT {
-
+/*
     //Metode som skriver liste fra parameter til Handlevogn.txt
     public static void save(ArrayList<Product> a) throws IOException {
         Files.write(Paths.get("src/main/java/org/openjfx/Filer/Handlevogn.csv"), printString(a));
@@ -24,5 +21,5 @@ public class SkrivTXT {
         }
         return tekst.getBytes();
     }
-
+*/
 }
