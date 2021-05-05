@@ -15,7 +15,7 @@ import org.openjfx.Kunde.Kunde;
 import org.openjfx.filbehandling2.FileOpener;
 import org.openjfx.filbehandling2.FileOpenerJOBJ;
 import org.openjfx.filbehandling2.SkrivTXT;
-import org.openjfx.komponenter.Komponent;
+import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 import org.openjfx.komponenter.ListeKonverterer;
 
@@ -35,7 +35,7 @@ public class AlleOrdreController extends Window implements Initializable {
     public Label lblKundenr;
     public Label lblFeilMld;
 
-    public TableView<Komponent> TableViewAlle;
+    public TableView<Product> TableViewAlle;
     public TableColumn<Object, String> colNavn;
     public TableColumn<Object, Integer> colPris;
     public TableColumn<Object, String> colType;
@@ -88,8 +88,8 @@ public class AlleOrdreController extends Window implements Initializable {
                 if (b.ordrenr == valgt) {
                     ordrenr = b.ordrenr;
                     liste = (ListeKonverterer.fraArraytilKomponent(b.handlevogn2));
-                    for (Komponent k : b.handlevogn2) {
-                        sum += k.pris;
+                    for (Product k : b.handlevogn2) {
+                        sum += k.antall;
                     }
                 }
             }

@@ -1,6 +1,6 @@
 package org.openjfx.Kunde;
 
-import org.openjfx.komponenter.Komponent;
+import org.openjfx.komponenter.Product;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,9 +9,9 @@ public class Bestilling implements Serializable {
 
     public int kundenr;
     public int ordrenr;
-    public ArrayList<Komponent> handlevogn2;
+    public ArrayList<Product> handlevogn2;
 
-    public Bestilling(int kundenr, int ordrenr, ArrayList<Komponent> a) {
+    public Bestilling(int kundenr, int ordrenr, ArrayList<Product> a) {
         this.kundenr = kundenr;
         this.ordrenr = ordrenr;
         handlevogn2 = a;
@@ -33,11 +33,11 @@ public class Bestilling implements Serializable {
         this.ordrenr = ordrenr;
     }
 
-    public ArrayList<Komponent> getHandlevogn2() {
+    public ArrayList<Product> getHandlevogn2() {
         return handlevogn2;
     }
 
-    public void setHandlevogn2(ArrayList<Komponent> handlevogn2) {
+    public void setHandlevogn2(ArrayList<Product> handlevogn2) {
         this.handlevogn2 = handlevogn2;
     }
 

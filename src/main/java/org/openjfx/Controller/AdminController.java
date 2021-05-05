@@ -14,7 +14,7 @@ import org.openjfx.App;
 import org.openjfx.Sleep;
 import org.openjfx.avvik.InvalidPrisException;
 import org.openjfx.filbehandling2.LagreJOBJ;
-import org.openjfx.komponenter.Komponent;
+import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 import org.openjfx.validering.Validerer;
 
@@ -57,7 +57,7 @@ public class AdminController implements Initializable {
     @FXML
     private ChoiceBox<String> kolonnesøk;
     @FXML
-    private TableView<Komponent> tableView;
+    private TableView<Product> tableView;
 
 
     @FXML
@@ -88,7 +88,7 @@ public class AdminController implements Initializable {
         writer.print("");
         writer.close();
 
-        ArrayList<Komponent> ferdigliste = fraKomponenttilArray(dataliste);
+        ArrayList<Product> ferdigliste = fraKomponenttilArray(dataliste);
         LagreJOBJ.lagreKompTilListe("Komponenter.jobj", ferdigliste);
         lblFeilmld.setText("Komponentene er lagret");
         lblPrisogNavn.setText("");
@@ -105,14 +105,14 @@ public class AdminController implements Initializable {
             try {
                 Integer.parseInt(txtPris.getText());
             } catch (IllegalArgumentException e) {
-                lblPrisogNavn.setText("Skriv inn riktig navn og pris");
+                lblPrisogNavn.setText("Skriv inn riktig navn og antall");
                 lblFeilmld.setText("");
             }
         } else {
             try {
                 int pris = Integer.parseInt(txtPris.getText());
                 if (pris > 0) {
-                    var komponent = new Komponent(navn, pris, comboType.getValue());
+                    var komponent = new Product(navn, pris, comboType.getValue());
                     nullstillTxt();
                     dataliste.addObjekt(komponent);
                     lblFeilmld.setText("Komponent er lagt til. Husk å lagre!");
@@ -125,32 +125,32 @@ public class AdminController implements Initializable {
                 }
 
             } catch (IllegalArgumentException e) {
-                lblPrisogNavn.setText("Skriv inn riktig pris");
+                lblPrisogNavn.setText("Skriv inn riktig antall");
                 lblFeilmld.setText("");
                 txtPris.setText("");
             }
         }
     }
 
-    //Endre komponentene (navn/pris) i tableview
+    //Endre komponentene (navn/antall) i tableview
     @FXML
-    void editTvNavn(TableColumn.CellEditEvent<Komponent, String> cellEditEvent) {
-        Komponent komponent = tableView.getSelectionModel().getSelectedItem();
+    void editTvNavn(TableColumn.CellEditEvent<Product, String> cellEditEvent) {
+        Product product = tableView.getSelectionModel().getSelectedItem();
         String navn = cellEditEvent.getNewValue();
-        komponent.setNavn(navn);
+        product.setNavn(navn);
         tableView.refresh();
         lblFeilmld.setText("Navnet er endret. Husk å lagre!");
         lblPrisogNavn.setText("");
     }
 
     @FXML
-    void editTvPris(TableColumn.CellEditEvent<Komponent, Integer> cellEditEvent) {
-        Komponent komponent = tableView.getSelectionModel().getSelectedItem();
+    void editTvPris(TableColumn.CellEditEvent<Product, Integer> cellEditEvent) {
+        Product product = tableView.getSelectionModel().getSelectedItem();
 
         try {
             int pris = cellEditEvent.getNewValue();
             Validerer.gyldigPris(pris);
-            komponent.setPris(pris);
+            product.setAntall(pris);
             lblFeilmld.setText("Prisen er endret. Husk å lagre!");
             lblPrisogNavn.setText("");
 
@@ -166,7 +166,7 @@ public class AdminController implements Initializable {
     //Knapp som sletter et valgt objekt fra tableview
     @FXML
     void btnSlett(ActionEvent event){
-        Komponent selectedItem = tableView.getSelectionModel().getSelectedItem();
+        Product selectedItem = tableView.getSelectionModel().getSelectedItem();
         dataliste.fjern(selectedItem);
         lblFeilmld.setText("Valgt produkt er slettet. Husk å lagre!");
         lblPrisogNavn.setText("");
@@ -251,11 +251,11 @@ public class AdminController implements Initializable {
     //Metode som finner alle type komponenter og lager en Stringliste med typene som så blir vist i combobox
     private void setTypevalg() {
         ArrayList<String> typer = new ArrayList<>();
-        ArrayList<Komponent> a = fraKomponenttilArray(dataliste);
+        ArrayList<Product> a = fraKomponenttilArray(dataliste);
 
         typer.add("Alle");
 
-        for (Komponent k : a) {
+        for (Product k : a) {
             boolean ikkefrafør = true;
             for (String s : typer) {
                 if (k.type.equals(s)) {
@@ -273,13 +273,13 @@ public class AdminController implements Initializable {
     }
 
     // Metode som finner valgt type fra combobox og lager en liste med disse komponentene
-    private ObservableList<Komponent> valgtTypeListe() {
+    private ObservableList<Product> valgtTypeListe() {
         String typestring = typevalg.getValue().toString();
 
-        ArrayList<Komponent> alle = fraKomponenttilArray(dataliste);
-        ObservableList<Komponent> ny = FXCollections.observableArrayList();
+        ArrayList<Product> alle = fraKomponenttilArray(dataliste);
+        ObservableList<Product> ny = FXCollections.observableArrayList();
 
-        for (Komponent k : alle) {
+        for (Product k : alle) {
             if (k.type.matches(typestring) || typestring.equals("Alle")) {
                 ny.add(k);
             }
@@ -311,14 +311,14 @@ public class AdminController implements Initializable {
             tableView.setItems(valgtTypeListe());
             return;
         }
-        ObservableList<Komponent> søkeresultat = null;
-        ObservableList<Komponent> liste = valgtTypeListe();
+        ObservableList<Product> søkeresultat = null;
+        ObservableList<Product> liste = valgtTypeListe();
 
         switch (kolonnesøk.getValue().toLowerCase()) {
             case "navn":
                 søkeresultat = Komponentliste.filtrerEtterNavn(txtSøk.getText(), liste);
                 break;
-            case "pris":
+            case "antall":
                 try {
                     søkeresultat = Komponentliste.filtrerEtterPris((Integer.parseInt(txtSøk.getText())), liste);
                 } catch (NumberFormatException e) {

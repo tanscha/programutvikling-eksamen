@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class ListeKonverterer {
 
     //Metode som omgjør ArrayList til Komponentliste
-    public static Komponentliste fraArraytilKomponent(ArrayList<Komponent> a) {
+    public static Komponentliste fraArraytilKomponent(ArrayList<Product> a) {
         Komponentliste ny = new Komponentliste();
 
-        for (Komponent element : a) {
+        for (Product element : a) {
             ny.addObjekt(element);
         }
         return ny;
@@ -27,10 +27,10 @@ public class ListeKonverterer {
     }
 
     //Metode som omgjør Komponentliste til ArrayList
-    public static ArrayList<Komponent> fraKomponenttilArray(Komponentliste a) {
+    public static ArrayList<Product> fraKomponenttilArray(Komponentliste a) {
         var aa = a.getRegister();
-        ArrayList<Komponent> ny = new ArrayList<>();
-        for (Komponent e : aa) {
+        ArrayList<Product> ny = new ArrayList<>();
+        for (Product e : aa) {
             ny.add(e);
         }
         return ny;

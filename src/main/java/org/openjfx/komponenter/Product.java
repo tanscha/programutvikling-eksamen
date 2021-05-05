@@ -3,15 +3,15 @@ package org.openjfx.komponenter;
 import java.io.Serializable;
 
 
-public class Komponent implements Serializable {
+public class Product implements Serializable {
 
     public String navn;
-    public int pris;
+    public int antall;
     public String type;
 
-    public Komponent(String navn, int pris, String type) {
+    public Product(String navn, int antall, String type) {
         this.navn = navn;
-        this.pris = pris;
+        this.antall = antall;
         this.type = type;
     }
 
@@ -19,8 +19,8 @@ public class Komponent implements Serializable {
         return navn;
     }
 
-    public int getPris() {
-        return pris;
+    public int getAntall() {
+        return antall;
     }
 
     public String getType() {
@@ -31,8 +31,8 @@ public class Komponent implements Serializable {
         this.navn = navn;
     }
 
-    public void setPris(int pris) {
-        this.pris = pris;
+    public void setAntall(int antall) {
+        this.antall = antall;
     }
 
     public void setType(String type) {
@@ -41,7 +41,7 @@ public class Komponent implements Serializable {
 
     @Override
     public String toString() {
-        return String.format(navn + ", " + pris + ",-");
+        return String.format(navn + ", " + antall + ",-");
     }
 
     public String getKompType() {

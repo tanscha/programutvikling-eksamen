@@ -10,18 +10,18 @@ import java.util.stream.Collectors;
 public class Komponentliste implements Serializable {
 
     private static final long serialVersionUID = 1;
-    private static ObservableList<Komponent> register = FXCollections.observableArrayList();
+    private static ObservableList<Product> register = FXCollections.observableArrayList();
 
 
-    public void attachTableView(TableView<Komponent> tableView) {
+    public void attachTableView(TableView<Product> tableView) {
         tableView.setItems(register);
     }
 
-    public void addObjekt(Komponent k) {
+    public void addObjekt(Product k) {
         register.add(k);
     }
 
-    public ObservableList<Komponent> getRegister() {
+    public ObservableList<Product> getRegister() {
         return register;
     }
 
@@ -29,7 +29,7 @@ public class Komponentliste implements Serializable {
         register.clear();
     }
 
-    public void fjern(Komponent k) {
+    public void fjern(Product k) {
         register.remove(k);
     }
 
@@ -46,23 +46,23 @@ public class Komponentliste implements Serializable {
     }
 
 
-    //Metoder som filtrer ut komponenter etter gitt navn, pris eller type
+    //Metoder som filtrer ut komponenter etter gitt navn, antall eller type
     //Returner en observablelist med disse komponentene
-    public static ObservableList<Komponent> filtrerEtterNavn(String navn, ObservableList<Komponent> a) {
+    public static ObservableList<Product> filtrerEtterNavn(String navn, ObservableList<Product> a) {
         return a.stream().filter(objekt -> objekt.getNavn().
                 toLowerCase().matches(String.format("%s%s%s", ".*", navn.
                 toLowerCase(), ".*"))).collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
-    public static ObservableList<Komponent> filtrerEtterPris(int pris, ObservableList<Komponent> a) {
-        return a.stream().filter(objekt -> objekt.getPris() == pris).
+    public static ObservableList<Product> filtrerEtterPris(int pris, ObservableList<Product> a) {
+        return a.stream().filter(objekt -> objekt.getAntall() == pris).
                 collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Komponent k : register) {
+        for (Product k : register) {
             stringBuilder.append(k.toString());
             stringBuilder.append(System.lineSeparator());
         }

@@ -14,7 +14,7 @@ import org.openjfx.Kunde.Bestilling;
 import org.openjfx.Kunde.Bestillinger;
 import org.openjfx.filbehandling2.FileOpener;
 import org.openjfx.filbehandling2.FileOpenerJOBJ;
-import org.openjfx.komponenter.Komponent;
+import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 import org.openjfx.komponenter.ListeKonverterer;
 
@@ -46,19 +46,19 @@ public class KundeBestillController extends Window implements Initializable {
     private Label lblLastned;
 
     @FXML
-    private ComboBox<Komponent> harddiskbox;
+    private ComboBox<Product> harddiskbox;
     @FXML
-    private ComboBox<Komponent> minnebox;
+    private ComboBox<Product> minnebox;
     @FXML
-    private ComboBox<Komponent> musbox;
+    private ComboBox<Product> musbox;
     @FXML
-    private ComboBox<Komponent> skjermbox;
+    private ComboBox<Product> skjermbox;
     @FXML
-    private ComboBox<Komponent> skjermkortbox;
+    private ComboBox<Product> skjermkortbox;
     @FXML
-    private ComboBox<Komponent> tastaturbox;
+    private ComboBox<Product> tastaturbox;
     @FXML
-    private ComboBox<Komponent> prosessorbox;
+    private ComboBox<Product> prosessorbox;
 
     @FXML
     private Button btnHandlevogn;
@@ -80,27 +80,27 @@ public class KundeBestillController extends Window implements Initializable {
     }
 
     //Metode som returnerer ObservableList med komponenter av en valgt type
-    private ObservableList<Komponent> FinnKomponenter(ArrayList<Komponent> liste, String type) {
-        ArrayList<Komponent> typeliste = new ArrayList<>();
-        for (Komponent k : liste) {
+    private ObservableList<Product> FinnKomponenter(ArrayList<Product> liste, String type) {
+        ArrayList<Product> typeliste = new ArrayList<>();
+        for (Product k : liste) {
             if (type.equals(k.type)) {
                 typeliste.add(k);
             }
         }
-        ObservableList<Komponent> otypeliste = FXCollections.observableArrayList(typeliste);
+        ObservableList<Product> otypeliste = FXCollections.observableArrayList(typeliste);
         return otypeliste;
     }
 
-    //Metode som beregner pris fra valgte produkter (Henter fra comobobox)
+    //Metode som beregner antall fra valgte produkter (Henter fra comobobox)
     //Skriver ut totalpris til lblPris
     private void beregnPris() {
-        int harddiskpris = (harddiskbox.getValue()).pris;
-        int minnepris = (minnebox.getValue()).pris;
-        int muspris = (musbox.getValue()).pris;
-        int skjermpris = (skjermbox.getValue()).pris;
-        int skjermkortpris = (skjermkortbox.getValue()).pris;
-        int tastaturpris = (tastaturbox.getValue()).pris;
-        int prosessorpris = (prosessorbox.getValue()).pris;
+        int harddiskpris = (harddiskbox.getValue()).antall;
+        int minnepris = (minnebox.getValue()).antall;
+        int muspris = (musbox.getValue()).antall;
+        int skjermpris = (skjermbox.getValue()).antall;
+        int skjermkortpris = (skjermkortbox.getValue()).antall;
+        int tastaturpris = (tastaturbox.getValue()).antall;
+        int prosessorpris = (prosessorbox.getValue()).antall;
 
         int totalsum = harddiskpris + minnepris + muspris + skjermpris + skjermkortpris + tastaturpris + prosessorpris;
         lblPris.setText(totalsum + " NOK");
@@ -150,9 +150,9 @@ public class KundeBestillController extends Window implements Initializable {
 
         //Åpner komponenter.jobj fil (Som admin kan redigere)
         FileOpener les = new FileOpenerJOBJ();
-        ArrayList<Komponent> liste = null;
+        ArrayList<Product> liste = null;
         try {
-            liste = (ArrayList<Komponent>) les.read("src/main/java/org/openjfx/Filer/Komponenter.jobj");
+            liste = (ArrayList<Product>) les.read("src/main/java/org/openjfx/Filer/Komponenter.jobj");
 
             //Comboboxer som henter komponenter fra fil
             harddiskbox.setItems(FinnKomponenter(liste, "Harddisk"));
@@ -203,13 +203,13 @@ public class KundeBestillController extends Window implements Initializable {
     //Metode som lagrer nyttprodukt fra valgte komponenter
     public void lagreNyttProdukt() {
         //Henter komponenter fra combobox
-        Komponent prosessor = prosessorbox.getSelectionModel().getSelectedItem();
-        Komponent harddisk = harddiskbox.getSelectionModel().getSelectedItem();
-        Komponent minne = minnebox.getSelectionModel().getSelectedItem();
-        Komponent mus = musbox.getSelectionModel().getSelectedItem();
-        Komponent skjerm = skjermbox.getSelectionModel().getSelectedItem();
-        Komponent skjermkort = skjermkortbox.getSelectionModel().getSelectedItem();
-        Komponent tastatur = tastaturbox.getSelectionModel().getSelectedItem();
+        Product prosessor = prosessorbox.getSelectionModel().getSelectedItem();
+        Product harddisk = harddiskbox.getSelectionModel().getSelectedItem();
+        Product minne = minnebox.getSelectionModel().getSelectedItem();
+        Product mus = musbox.getSelectionModel().getSelectedItem();
+        Product skjerm = skjermbox.getSelectionModel().getSelectedItem();
+        Product skjermkort = skjermkortbox.getSelectionModel().getSelectedItem();
+        Product tastatur = tastaturbox.getSelectionModel().getSelectedItem();
 
         //Tømmer komponentliste før nye produkter legges inn
         nyttProdukt.fjernAlt();

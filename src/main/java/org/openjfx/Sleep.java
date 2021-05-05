@@ -3,7 +3,7 @@ package org.openjfx;
 import javafx.concurrent.Task;
 import org.openjfx.filbehandling2.FileOpener;
 import org.openjfx.filbehandling2.FileOpenerJOBJ;
-import org.openjfx.komponenter.Komponent;
+import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Sleep extends Task<Komponentliste> {
 
     public Sleep(){
         try{FileOpener les = new FileOpenerJOBJ();
-        var liste = (ArrayList<Komponent>) les.read("src/main/java/org/openjfx/Filer/Komponenter.jobj");
+        var liste = (ArrayList<Product>) les.read("src/main/java/org/openjfx/Filer/Komponenter.jobj");
         Komponentliste alle = fraArraytilKomponent(liste);
         fil = alle;}
         catch (Exception e){
