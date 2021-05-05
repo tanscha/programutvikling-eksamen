@@ -5,6 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.openjfx.Filbehandling.LagreCSV;
+import org.openjfx.Lagring.Lagring;
+import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.Produkt;
+import org.openjfx.Produkter.Produktliste;
 
 import java.io.IOException;
 
@@ -36,7 +41,23 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         launch();
+        //nyttProdukt();
+    }
+
+    public static void nyttProdukt() throws IOException {
+        Lagring.LeggTil("Traktor");
+        Lagring.LeggTil("Klær");
+
+        Kategori k = Lagring.finnKategori("Traktor");
+
+        Produkt p = new Produkt("Rød", "Rask", 1, k);
+        Produktliste pl = new Produktliste();
+        pl.addObjekt(p);
+
+        LagreCSV.save(pl);
+
+
     }
 }

@@ -22,25 +22,30 @@
             <Button fx:id="btnSlett" layoutX="306.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnSlett" text="Slett valgt" />
             <Button layoutX="35.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnTilbake" text="Logg ut" />
 
-            <!-- <TableView fx:id="tableView" layoutX="305.0" layoutY="178.0" prefHeight="242.0" prefWidth="538.0">
+            <TableView fx:id="tableView" layoutX="305.0" layoutY="178.0" prefHeight="242.0" prefWidth="538.0">
                 <columns>
                     <TableColumn fx:id="colNavn" onEditCommit="#editTvNavn" prefWidth="222.0" text="Navn">
                         <cellValueFactory>
                             <PropertyValueFactory property="navn" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="colPris" onEditCommit="#editTvPris" prefWidth="117.0" text="Pris">
+                    <TableColumn fx:id="colKategori" editable="false" prefWidth="176.0" text="Type">
                         <cellValueFactory>
-                            <PropertyValueFactory property="pris" />
+                            <PropertyValueFactory property="kategori" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="colType" editable="false" prefWidth="176.0" text="Type">
+                    <TableColumn fx:id="colEgenskap" editable="false" prefWidth="176.0" text="Egenskap">
                         <cellValueFactory>
-                            <PropertyValueFactory property="kompType" />
+                            <PropertyValueFactory property="egenskap" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colAntall" onEditCommit="#editTvAntall" prefWidth="117.0" text="Antall">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="antall" />
                         </cellValueFactory>
                     </TableColumn>
                 </columns>
-            </TableView> -->
+            </TableView>
 
             <ComboBox fx:id="comboKategori" layoutX="35.0" layoutY="178.0" prefHeight="27" prefWidth="155" />
             <Label fx:id="lblFeilmld" alignment="CENTER_RIGHT" layoutX="419.0" layoutY="449.0" prefHeight="27.0" prefWidth="228.0" wrapText="true">

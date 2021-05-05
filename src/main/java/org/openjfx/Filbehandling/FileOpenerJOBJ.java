@@ -1,20 +1,28 @@
 package org.openjfx.Filbehandling;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import org.openjfx.Produkter.Kategorier;
+
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileOpenerJOBJ implements FileOpener {
-    public ArrayList<? extends Serializable> read(String pathInn) throws IOException, ClassNotFoundException {
+    public void openFile(Kategorier kategorier, Path path) throws IOException {
+        Kategorier.fjernAlt();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toFile()))) {
+        }
+    }
 
-        try (InputStream is = Files.newInputStream(Paths.get(pathInn));
-             ObjectInputStream in = new ObjectInputStream(is))
-        {
-            ArrayList<? extends Serializable> ArrayList =  (ArrayList<? extends Serializable>) in.readObject();
+    @Override
+    public ArrayList<? extends Serializable> read(String string) throws IOException {
+        ArrayList<? extends Serializable> ArrayList = null;
+        try (InputStream is = Files.newInputStream(Paths.get(string));
+             ObjectInputStream ois = new ObjectInputStream(is)) {
+            ArrayList = (ArrayList<? extends Serializable>) ois.readObject();
+            return ArrayList;
+        } catch (ClassNotFoundException e) {
             return ArrayList;
         }
     }

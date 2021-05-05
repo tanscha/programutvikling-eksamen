@@ -28,7 +28,7 @@ public class Lagring {
         return ny;
     }
 
-    private static void lastNed(){
+    public static void lastNed(){
         try{
             FileOpener les = new FileOpenerJOBJ();
             var liste = (ArrayList<Kategori>) les.read("src/main/java/org/openjfx/Filer/Kategorier.jobj");
@@ -38,6 +38,29 @@ public class Lagring {
 
     }
 
+    public static ArrayList<Kategori> alleKategorier(){
+        lastNed();
+        return fraKategoritilArray(fil);
+    }
+
+    public static Kategori finnKategori(String navn) throws FileNotFoundException {
+        ArrayList<Kategori> ak = alleKategorier();
+        System.out.println(alleKategorier());
+        Kategori kategori = null;
+        for (Kategori k : ak) {
+            if (k.navn.equalsIgnoreCase(navn)) {
+                kategori = k;
+            } else {
+                lastNed();
+                Kategori nyk = new Kategori(navn);
+                fil.addObjekt(nyk);
+                lagre();
+                kategori = nyk;
+            }
+        }
+        return kategori;
+    }
+
     public static void LeggTil(String navn) throws FileNotFoundException {
         lastNed();
         Kategori k = new Kategori(navn);
@@ -45,7 +68,7 @@ public class Lagring {
         lagre();
     }
 
-    private static void lagre() throws FileNotFoundException {
+    public static void lagre() throws FileNotFoundException {
         PrintWriter writer = new PrintWriter("src/main/java/org/openjfx/Filer/Kategorier.jobj");
         writer.print("");
         writer.close();

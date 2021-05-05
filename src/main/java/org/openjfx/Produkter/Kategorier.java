@@ -16,7 +16,7 @@ public class Kategorier implements Serializable {
         return kategorier;
     }
 
-    public void fjernAlt() {
+    public static void fjernAlt() {
         kategorier.clear();
     }
 
