@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class SkrivTXT {
-/*
-    //Metode som skriver liste fra parameter til Handlevogn.txt
+public class LagreCSV {
+/*/
+
     public static void save(ArrayList<Product> a) throws IOException {
-        Files.write(Paths.get("src/main/java/org/openjfx/Filer/Handlevogn.csv"), printString(a));
+        Files.write(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), printString(a));
     }
 
     //Metode som gjør liste om til string
@@ -20,6 +20,6 @@ public class SkrivTXT {
             tekst += k.category + "\t" + k.name + "\t" + k.quantity + "\n";
         }
         return tekst.getBytes();
-    }
-*/
+    }*/
+
 }

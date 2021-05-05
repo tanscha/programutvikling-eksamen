@@ -6,9 +6,9 @@ public class Produkt implements Serializable {
     String navn;
     String egenskap;
     int antall;
-    String kategori;
+    Kategori kategori;
 
-    public Produkt(String navn, String egenskap, int antall, String kategori) {
+    public Produkt(String navn, String egenskap, int antall, Kategori kategori) {
         this.navn = navn;
         this.egenskap = egenskap;
         this.antall = antall;
@@ -39,11 +39,11 @@ public class Produkt implements Serializable {
         this.antall = antall;
     }
 
-    public String getKategori() {
+    public Kategori getKategori() {
         return kategori;
     }
 
-    public void setKategori(String kategori) {
+    public void setKategori(Kategori kategori) {
         this.kategori = kategori;
     }
 
