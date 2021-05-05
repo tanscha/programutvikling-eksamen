@@ -2,20 +2,48 @@ package org.openjfx.Produkter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.io.Serializable;
 
-public enum Kategorier {
-    Gjodsel("Gjødsel"),
-    Arbeidskler("Arbeidsklær"),
-    Traktor("Traktor"),
-    Korn("Korn");
-    Kategorier(String objekt){
+public class Kategorier implements Serializable {
+
+    private static ObservableList<Kategori> kategorier = FXCollections.observableArrayList();
+
+    public void addObjekt(Kategori k) {
+        kategorier.add(k);
     }
 
-    public static ObservableList<String> kategoriListe(){
-        ObservableList<String> kategorier = FXCollections.observableArrayList();
-        for(Kategorier k: Kategorier.values()){
-            kategorier.add(k.toString());
-        }
+    public ObservableList<Kategori> getKategorier() {
         return kategorier;
     }
+
+    public void fjernAlt() {
+        kategorier.clear();
+    }
+
+    public void fjern(Kategori k) {
+        kategorier.remove(k);
+    }
+
+    public boolean isEmpty() {
+        if (kategorier.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int size() {
+        return kategorier.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Kategori k : kategorier) {
+            stringBuilder.append(k.toString());
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString();
+    }
 }
+

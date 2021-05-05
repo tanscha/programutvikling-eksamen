@@ -1,5 +1,7 @@
 package org.openjfx.Filbehandling;
 
+import org.openjfx.Produkter.Kategori;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,10 +18,9 @@ public class LagreJOBJ {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    //Metode som skriver en kunde-arrayliste til gitt jobj-fil
-    public static void lagreKundeTilListe(String filnavn, ArrayList<Kunde> listeinn) {
+    public static void lagreKategoriTilListe(String filnavn, ArrayList<Kategori> listeinn) {
         try {
             FilesSaver saver = new FileSaverJOBJ();
             saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));
@@ -27,7 +28,7 @@ public class LagreJOBJ {
             e.printStackTrace();
         }
     }
-
+/*
     //Metode som skriver en bestilling-arrayliste til gitt jobj-fil
     public static void lagreBestillingTilListe(String filnavn, ArrayList<Bestilling> listeinn) {
         try {
