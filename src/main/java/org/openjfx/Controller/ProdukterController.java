@@ -1,5 +1,7 @@
 package org.openjfx.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,8 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static org.openjfx.Lagring.Lagring.LeggTil;
-import static org.openjfx.Produkter.KonverterListe.fraKategoritilArray;
+import static org.openjfx.Lagring.Lagring.*;
 
 
 public class ProdukterController implements Initializable {
@@ -52,7 +53,7 @@ public class ProdukterController implements Initializable {
     public Button btnLeggtilKat;
     public TableView tableView;
 
-    private Kategorier dataliste = new Kategorier();
+
     @FXML
     private ChoiceBox<String> kolonnesøk;
 
@@ -111,7 +112,7 @@ public class ProdukterController implements Initializable {
         colType.setCellFactory(TextFieldTableCell.forTableColumn());
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colPris.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        //comboType.setItems(typeListe());
+        //comboTypeSetItems();
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");
         //btnLagre.setDisable(true);
@@ -119,6 +120,7 @@ public class ProdukterController implements Initializable {
         //btnfjern.setDisable(true);
 
     }
+
 
 
     public void velgKategori(ActionEvent event) {
