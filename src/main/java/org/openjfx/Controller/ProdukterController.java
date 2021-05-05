@@ -4,12 +4,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
+import org.openjfx.Filbehandling.LagreJOBJ;
+import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.Kategorier;
+import org.openjfx.Produkter.Produkt;
+import org.openjfx.Lagring.Lagring;
+
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static org.openjfx.Lagring.Lagring.LeggTil;
+import static org.openjfx.Produkter.KonverterListe.fraKategoritilArray;
 
 
 public class ProdukterController implements Initializable {
@@ -23,9 +37,9 @@ public class ProdukterController implements Initializable {
     public Label lblPrisogNavn;
     public TextField txtPris;
     public TextField txtNavn;
-    //public TableColumn<Object, String> colNavn;
-    //public TableColumn<Object, Integer> colPris;
-    //public TableColumn<Object, String> colType;
+    public TableColumn<Object, String> colNavn;
+    public TableColumn<Object, Integer> colPris;
+    public TableColumn<Object, String> colType;
     public ComboBox<String> comboType;
     public Label lblFeilmld;
     public TextField txtSøk;
@@ -36,8 +50,9 @@ public class ProdukterController implements Initializable {
     public TextField txtEgenskap;
     public TextField txtKategori;
     public Button btnLeggtilKat;
+    public TableView tableView;
 
-
+    private Kategorier dataliste = new Kategorier();
     @FXML
     private ChoiceBox<String> kolonnesøk;
 
@@ -48,8 +63,8 @@ public class ProdukterController implements Initializable {
 
     //Tømmer tekstfelt
     private void nullstillTxt() {
-        txtNavn.setText("");
-        txtPris.setText("");
+        txtKategori.setText("");
+
     }
 
     // Metode som aktiver knapper osv
@@ -57,7 +72,7 @@ public class ProdukterController implements Initializable {
         btnÅpne.setDisable(false);
         btnfjern.setDisable(false);
         btnLeggtil.setDisable(false);
-        //tableView.setDisable(false);
+        tableView.setDisable(false);
         txtSøk.setDisable(false);
         kolonnesøk.setDisable(false);
         txtNavn.setDisable(false);
@@ -92,10 +107,10 @@ public class ProdukterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //tableView.setEditable(true);
-        //colType.setCellFactory(TextFieldTableCell.forTableColumn());
-        //colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
-        //colPris.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tableView.setEditable(true);
+        colType.setCellFactory(TextFieldTableCell.forTableColumn());
+        colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
+        colPris.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         //comboType.setItems(typeListe());
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");
@@ -104,6 +119,7 @@ public class ProdukterController implements Initializable {
         //btnfjern.setDisable(true);
 
     }
+
 
     public void velgKategori(ActionEvent event) {
     }
@@ -123,7 +139,13 @@ public class ProdukterController implements Initializable {
     public void btnSlett(ActionEvent event) {
     }
 
-    public void btnLeggTilKat(ActionEvent event) {
+    public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
+        LeggTil(txtKategori.getText());
+    }
 
+    public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {
+    }
+
+    public void editTvPris(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
     }
 }

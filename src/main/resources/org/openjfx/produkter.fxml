@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
     <children>
         <AnchorPane layoutY="-11.0" prefHeight="550.0" prefWidth="900.0">
@@ -14,7 +15,7 @@
             <Button fx:id="btnSlett" layoutX="306.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnSlett" text="Slett valgt" />
             <Button layoutX="35.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnTilbake" text="Logg ut" />
 
-            <!-- <TableView fx:id="tableView" layoutX="305.0" layoutY="178.0" prefHeight="242.0" prefWidth="538.0">
+            <TableView fx:id="tableView" layoutX="305.0" layoutY="178.0" prefHeight="242.0" prefWidth="538.0">
                 <columns>
                     <TableColumn fx:id="colNavn" onEditCommit="#editTvNavn" prefWidth="222.0" text="Navn">
                         <cellValueFactory>
@@ -32,8 +33,7 @@
                         </cellValueFactory>
                     </TableColumn>
                 </columns>
-            </TableView> -->
-
+            </TableView>
             <ComboBox fx:id="comboKategori" layoutX="35.0" layoutY="178.0" prefHeight="27" prefWidth="155" />
             <Label fx:id="lblFeilmld" alignment="CENTER_RIGHT" layoutX="419.0" layoutY="449.0" prefHeight="27.0" prefWidth="228.0" wrapText="true">
                 <font>
