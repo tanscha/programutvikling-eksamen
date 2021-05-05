@@ -6,6 +6,5 @@ module org.openjfx {
 
     opens org.openjfx.Controller to javafx.fxml;
     exports org.openjfx;
-    opens org.openjfx.komponenter to javafx.base;
 
 }
