@@ -13,7 +13,7 @@ import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Sleep;
 import org.openjfx.avvik.InvalidPrisException;
-import org.openjfx.filbehandling2.LagreJOBJ;
+import org.openjfx.Filbehandling.LagreJOBJ;
 import org.openjfx.komponenter.Product;
 import org.openjfx.komponenter.Komponentliste;
 import org.openjfx.validering.Validerer;
