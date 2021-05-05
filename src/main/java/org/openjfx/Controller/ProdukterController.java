@@ -1,21 +1,36 @@
 package org.openjfx.Controller;
 
 import javafx.concurrent.WorkerStateEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 import org.openjfx.Sleep;
 
+import org.openjfx.Filbehandling.LagreJOBJ;
+import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.Kategorier;
+import org.openjfx.Produkter.Produkt;
+import org.openjfx.Lagring.Lagring;
+
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static org.openjfx.Lagring.Lagring.*;
 
 
 public class ProdukterController implements Initializable {
@@ -45,7 +60,23 @@ public class ProdukterController implements Initializable {
     public Button btnLeggtil;
     public Button btnSlett;
     public Button btnLagre;
+    public Label lblPrisogNavn;
+    public TextField txtPris;
+    public TextField txtNavn;
+    public TableColumn<Object, String> colNavn;
+    public TableColumn<Object, Integer> colPris;
+    public TableColumn<Object, String> colType;
+    public ComboBox<String> comboType;
     public Label lblFeilmld;
+    public TextField txtSøk;
+    public Button btnSlett;
+    public ComboBox comboKategori;
+    public ComboBox KategoriValg;
+    public Spinner spnAntall;
+    public TextField txtEgenskap;
+    public TextField txtKategori;
+    public Button btnLeggtilKat;
+    public TableView tableView;
 
     private Sleep task;
 
@@ -66,12 +97,15 @@ public class ProdukterController implements Initializable {
     private void nullstillTxt() {
         txtNavn.setText("");
         txtEgenskap.setText("");
+        txtKategori.setText("");
     }
 
     private void oppdater() {
         tableView.getItems().removeAll();
         //tableView.setItems();
         txtSøk.clear();
+
+
     }
 
     @FXML
@@ -115,13 +149,14 @@ public class ProdukterController implements Initializable {
     private void aktiverKnapper() {
         btnÅpne.setDisable(false);
         btnLeggtil.setDisable(false);
-        //tableView.setDisable(false);
+        tableView.setDisable(false);
         txtSøk.setDisable(false);
         kolonnesøk.setDisable(false);
         txtNavn.setDisable(false);
         //comboType.setDisable(false);
         //typevalg.setDisable(false);
         btnLagre.setDisable(false);
+        btnLeggtilKat.setDisable(false);
     }
 
     //Metode som hemmer knapper osv
@@ -160,6 +195,8 @@ public class ProdukterController implements Initializable {
 
     }
 
+
+
     public void velgKategori(ActionEvent event) {
     }
 
@@ -183,5 +220,15 @@ public class ProdukterController implements Initializable {
     }
 
     public void editTvAntall(TableColumn.CellEditEvent cellEditEvent) {
+    }
+
+    public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
+        LeggTil(txtKategori.getText());
+    }
+
+    public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {
+    }
+
+    public void editTvPris(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
     }
 }
