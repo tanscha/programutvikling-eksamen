@@ -225,7 +225,6 @@ public class ProdukterController implements Initializable {
         LagringKategori.LeggTil(nyttnavn.get());
         comboKategori.setItems(finnKategorier());
         lblPrisogNavn.setText("Kategori lagt til");
-
     }
 
 
