@@ -35,7 +35,7 @@ public class ProdukterController implements Initializable {
     public ComboBox comboKategori;
     public TextField txtNavn;
     public TextField txtEgenskap;
-    public Spinner spnAntall;
+    public Spinner <Integer> spnAntall;
     public Label lblPrisogNavn;
 
     public TableColumn<Object, Integer> colAntall;
