@@ -5,6 +5,7 @@ module org.openjfx {
     requires java.desktop;
 
     opens org.openjfx.Controller to javafx.fxml;
+    opens org.openjfx.Produkter to javafx.base;
     exports org.openjfx;
 
 }

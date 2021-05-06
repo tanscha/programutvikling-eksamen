@@ -70,9 +70,9 @@
             <ComboBox fx:id="KategoriValg" layoutX="475.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
          <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="337.0" prefHeight="17.0" prefWidth="155.0" />
-         <Spinner fx:id="spnAntall" initialValue="1" editable="true" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0" >
+         <Spinner fx:id="spnAntall" initialValue="0" editable="false" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0" >
          <valueFactory>
-             <SpinnerValueFactory.IntegerSpinnerValueFactory min="1" max="1000"/>
+             <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="1000"/>
          </valueFactory>
          </Spinner>
          <Label layoutX="88.0" layoutY="280.0" text="Antall:" />

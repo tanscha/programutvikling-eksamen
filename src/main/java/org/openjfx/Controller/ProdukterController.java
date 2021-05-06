@@ -24,19 +24,14 @@ import org.openjfx.Sleep;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import static org.openjfx.Lagring.LagringKategori.*;
 
 
 public class ProdukterController implements Initializable {
 
-
-
-
-
+    ObservableList<Produkt> produktObservableList;
+    ObservableList<Kategori> kategoriObservableList;
 
     public ComboBox<String> comboKategori;
 
@@ -71,6 +66,8 @@ public class ProdukterController implements Initializable {
     private ChoiceBox<String> kolonnesøk;
     @FXML
     private TableView<Produkt> tableView;
+    private Kategoriliste kategorier;
+
 
     @FXML
     void btnTilbake(ActionEvent event) throws IOException {
@@ -181,12 +178,22 @@ public class ProdukterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //produktObservableList = FXCollections.observableArrayList(produktliste.getRegister());
+        //kategoriObservableList = FXCollections.observableArrayList(kategorier.getKategorier());
         tableView.setEditable(true);
+        tableView.setItems(produktObservableList);
         colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         comboKategori.setItems(finnKategorier());
         comboKategori.getSelectionModel().selectFirst();
+
+        //views = new ArrayList<>(Arrays.asList(produktliste, kategorier));
+
+        //liste = new ArrayList<>(Arrays.asList(produktliste.getRegister(), kategorier.getKategorier()));
+
+
+
 
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");

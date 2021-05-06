@@ -2,11 +2,18 @@ package org.openjfx.Produkter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+
 import java.io.Serializable;
 
 public class Kategoriliste implements Serializable {
 
     private static ObservableList<Kategori> kategorier = FXCollections.observableArrayList();
+
+    public void attachTableView(TableView<Kategori> tableView){
+        System.out.println(kategorier);
+        tableView.setItems(kategorier);
+    }
 
     public void addObjekt(Kategori k) {
         kategorier.add(k);
