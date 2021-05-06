@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
+import org.openjfx.Filbehandling.FileOpener;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
@@ -93,7 +94,6 @@ public class ProdukterController implements Initializable {
     private void oppdater() {
         tableView.getItems().removeAll();
         tableView.setItems(valgtTypeListe());
-        setKategorivalg();
         txtSøk.clear();
 
 
@@ -122,6 +122,7 @@ public class ProdukterController implements Initializable {
         }
         else {
         produktliste.attachTableView(tableView);
+        setKategorivalg();
         if (produktliste.isEmpty()){
             lblFeilmld.setText("Fant ingen produkter");
         }
@@ -129,7 +130,6 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("Viser alle lagrede produkter");
         }}
         aktiverKnapper();
-        setKategorivalg();
         oppdater();
     }
 
@@ -178,10 +178,7 @@ public class ProdukterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //produktObservableList = FXCollections.observableArrayList(produktliste.getRegister());
-        //kategoriObservableList = FXCollections.observableArrayList(kategorier.getKategorier());
         tableView.setEditable(true);
-        tableView.setItems(produktObservableList);
         colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -195,18 +192,12 @@ public class ProdukterController implements Initializable {
         btnLeggtilKat.setDisable(true);
         btnFjernKat.setDisable(true);
 
-        //views = new ArrayList<>(Arrays.asList(produktliste, kategorier));
+        try {
+            produktliste = FileOpenerCSV.ListefraCSV();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //liste = new ArrayList<>(Arrays.asList(produktliste.getRegister(), kategorier.getKategorier()));
-
-
-
-
-        //comboType.getSelectionModel().selectFirst();
-        //kolonnesøk.setValue("Navn");
-        //btnLagre.setDisable(true);
-        //btnLeggtil.setDisable(true);
-        //btnfjern.setDisable(true);
 
     }
     private void setKategorivalg(){
@@ -218,9 +209,8 @@ public class ProdukterController implements Initializable {
         for (Produkt p : a){
             boolean finnes = false;
             for (String s : kategorier) {
-                if (p.getKategori().equalsIgnoreCase(s)){
+                if (p.getKategori().equalsIgnoreCase(s))
                     finnes = true;
-                }
             }
             if (!finnes) {
                 kategorier.add(p.getKategori());
@@ -239,7 +229,7 @@ public class ProdukterController implements Initializable {
         ObservableList<Produkt> ny = FXCollections.observableArrayList();
 
         for (Produkt p : alle){
-            if (p.getKategori().equalsIgnoreCase(typestring) || typestring.equalsIgnoreCase("Alle"))
+            if (p.getKategori().matches(typestring) || typestring.equalsIgnoreCase("Alle"))
             {ny.add(p); }
         }
         return ny;
@@ -296,7 +286,9 @@ public class ProdukterController implements Initializable {
                     LagreCSV.save(produktliste);
                     lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
                     lblPrisogNavn.setText("");
+                    produktliste.attachTableView(tableView);
                     oppdater();
+                    setKategorivalg();
                 } else {
                     lblPrisogNavn.setText("Prisen må være med enn 0");
                     lblFeilmld.setText("");
@@ -308,7 +300,9 @@ public class ProdukterController implements Initializable {
                 txtEgenskap.setText("");
             }
         }
+        setKategorivalg();
         oppdater();
+
     }
 
     public void btnSlett(ActionEvent event) {
