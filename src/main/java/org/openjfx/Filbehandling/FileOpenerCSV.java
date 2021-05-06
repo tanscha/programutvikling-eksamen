@@ -38,19 +38,20 @@ public class FileOpenerCSV {
 
     public static Produktliste ListefraCSV() throws FileNotFoundException {
         ArrayList<String[]> liste = readCSV();
-        liste.remove(0);
         Produktliste produktliste = new Produktliste();
+        if (!liste.isEmpty()) {
+            liste.remove(0);
 
-
-        for(String[] x : liste){
-            Kategori k = LagringKategori.finnKategori(x[3]);
-            System.out.println(k);
-            Produkt produkt = new Produkt(x[0], x[1], Integer.parseInt(x[2]), k);
-            System.out.println("Fileopener:"+ produkt);
-            produktliste.addObjekt(produkt);
+            for (String[] x : liste) {
+                Kategori k = LagringKategori.finnKategori(x[3]);
+                System.out.println(k);
+                Produkt produkt = new Produkt(x[0], x[1], Integer.parseInt(x[2]), k);
+                System.out.println("Fileopener:" + produkt);
+                produktliste.addObjekt(produkt);
+            }
         }
-
         return produktliste;
+
     }
 }
 

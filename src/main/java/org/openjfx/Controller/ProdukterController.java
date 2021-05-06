@@ -14,6 +14,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
+import org.openjfx.Filbehandling.FileOpenerCSV;
+import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Produkter.*;
 import org.openjfx.Sleep;
@@ -91,7 +93,6 @@ public class ProdukterController implements Initializable {
     private void nullstillTxt() {
         txtNavn.setText("");
         txtEgenskap.setText("");
-        txtKategori.setText("");
     }
 
     private void oppdater() {
@@ -232,11 +233,15 @@ public class ProdukterController implements Initializable {
         }
         else {
             try {
-                int antall = Integer.parseInt(spnAntall.getPromptText());
+                int antall = spnAntall.getValue();
+                System.out.println(antall);
                 if (antall > 0) {
                     Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
                     nullstillTxt();
+                    produktliste = FileOpenerCSV.ListefraCSV();
                     produktliste.addObjekt(produkt);
+                    LagreCSV.save(produktliste);
+                    produktliste.fjernAlt();
                     lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
                     lblPrisogNavn.setText("");
                     oppdater();
@@ -244,7 +249,7 @@ public class ProdukterController implements Initializable {
                     lblPrisogNavn.setText("Prisen må være med enn 0");
                     lblFeilmld.setText("");
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IOException e) {
                 lblPrisogNavn.setText("Skriv inn riktig antall");
                 lblFeilmld.setText("");
                 txtNavn.setText("");
