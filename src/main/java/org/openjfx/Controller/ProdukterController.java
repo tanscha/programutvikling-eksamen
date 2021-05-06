@@ -1,25 +1,29 @@
 package org.openjfx.Controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
-import org.openjfx.Produkter.Kategori;
-import org.openjfx.Produkter.Kategoriliste;
-import org.openjfx.Produkter.Produkt;
-import org.openjfx.Produkter.Produktliste;
+import org.openjfx.Lagring.LagringKategori;
+import org.openjfx.Produkter.*;
 import org.openjfx.Sleep;
 
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static org.openjfx.Lagring.LagringKategori.*;
@@ -32,7 +36,8 @@ public class ProdukterController implements Initializable {
 
 
 
-    public ComboBox comboKategori;
+    public ComboBox<String> comboKategori;
+
     public TextField txtNavn;
     public TextField txtEgenskap;
     public Spinner spnAntall;
@@ -55,6 +60,7 @@ public class ProdukterController implements Initializable {
     public Label lblFeilmld;
     public TextField txtKategori;
     public Button btnLeggtilKat;
+    public Button btnFjernKat;
 
     private Sleep task;
 
@@ -70,6 +76,16 @@ public class ProdukterController implements Initializable {
     }
 
     private Produktliste produktliste = new Produktliste();
+
+    private ObservableList<String> finnKategorier() {
+        ObservableList<String> kategorier = FXCollections.observableArrayList();
+
+        ArrayList<Kategori> liste = KonverterListe.fraKategoritilArray(LagringKategori.hentKategorier());
+        for (Kategori k : liste){
+            kategorier.add(k.getNavn());
+        }
+        return kategorier;
+    }
 
     //Tømmer tekstfelt
     private void nullstillTxt() {
@@ -162,14 +178,14 @@ public class ProdukterController implements Initializable {
     void SøkeValg(ActionEvent event) {
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.setEditable(true);
         colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        //comboType.setItems(typeListe());
+        comboKategori.setItems(finnKategorier());
+        comboKategori.getSelectionModel().selectFirst();
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");
         //btnLagre.setDisable(true);
@@ -200,7 +216,27 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
-        LeggTil(txtKategori.getText());
+
+        TextInputDialog td = new TextInputDialog("Nytt navn på kategori...");
+        td.setHeaderText("Legg til ny kategori");
+        Optional<String> nyttnavn = td.showAndWait();
+        Button d = new Button("Legg til");
+
+        LagringKategori.LeggTil(nyttnavn.get());
+        comboKategori.setItems(finnKategorier());
+        lblPrisogNavn.setText("Kategori lagt til");
+
+    }
+
+
+
+    public void btnFjern(ActionEvent event) throws FileNotFoundException {
+        String kategori = comboKategori.getValue();
+        LagringKategori.slettKategori(kategori);
+        comboKategori.setItems(finnKategorier());
+        comboKategori.getSelectionModel().selectFirst();
+        lblPrisogNavn.setText("Kategori slettet");
+
     }
 
     public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {
@@ -208,4 +244,5 @@ public class ProdukterController implements Initializable {
 
     public void editTvPris(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
     }
+
 }

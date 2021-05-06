@@ -22,6 +22,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("logginn"));
         stage.setScene(scene);
         stage.show();
+        Oppstart.leggTilKategorier();
     }
 
     public static Scene getScene() {
