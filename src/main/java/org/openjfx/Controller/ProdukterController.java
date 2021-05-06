@@ -45,7 +45,7 @@ public class ProdukterController implements Initializable {
 
     public TableColumn<Object, Integer> colAntall;
     public TableColumn<Object, String> colNavn;
-    public TableColumn<Object, Kategori> colKategori;
+    public TableColumn<Object, String> colKategori;
     public TableColumn<Object, String> colEgenskap;
 
     public TextField txtSøk;
@@ -128,8 +128,8 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("Fant ingen produkter");
         }
         else {
-            lblFeilmld.setText("Viser alle lagrede produkter");
-            System.out.println(produktliste);
+            //lblFeilmld.setText("Viser alle lagrede produkter");
+            lblFeilmld.setText(produktliste.getRegister().get(1).getKategori().navn);
         }}
         aktiverKnapper();
         oppdater();
@@ -186,6 +186,7 @@ public class ProdukterController implements Initializable {
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         comboKategori.setItems(finnKategorier());
         comboKategori.getSelectionModel().selectFirst();
+
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");
         //btnLagre.setDisable(true);

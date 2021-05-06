@@ -7,12 +7,14 @@ public class Produkt implements Serializable {
     String egenskap;
     int antall;
     Kategori kategori;
+    String kategorinavn;
 
     public Produkt(String navn, String egenskap, int antall, Kategori kategori) {
         this.navn = navn;
         this.egenskap = egenskap;
         this.antall = antall;
         this.kategori = kategori;
+        this.kategorinavn = kategori.getNavn();
     }
 
     public String getNavn() {
@@ -47,13 +49,21 @@ public class Produkt implements Serializable {
         this.kategori = kategori;
     }
 
+    public String getKategorinavn() {
+        return kategorinavn;
+    }
+
+    public void setKategorinavn(String kategorinavn) {
+        this.kategorinavn = kategorinavn;
+    }
+
     @Override
     public String toString() {
         return "Produkt{" +
                 "navn='" + navn + '\'' +
                 ", egenskap='" + egenskap + '\'' +
                 ", antall=" + antall +
-                ", kategori='" + kategori.getNavn() + '\'' +
+                ", kategori='" + kategorinavn + '\'' +
                 '}';
     }
 }

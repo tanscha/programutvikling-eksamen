@@ -34,7 +34,7 @@
                     </TableColumn>
                     <TableColumn fx:id="colKategori" editable="false" prefWidth="176.0" text="Kategori">
                         <cellValueFactory>
-                            <PropertyValueFactory property="kategori" />
+                            <PropertyValueFactory property="kategorinavn" />
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="colEgenskap" editable="false" prefWidth="176.0" text="Egenskap">
