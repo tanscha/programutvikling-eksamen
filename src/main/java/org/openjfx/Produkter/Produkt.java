@@ -7,14 +7,12 @@ public class Produkt implements Serializable {
     String egenskap;
     int antall;
     Kategori kategori;
-    String kategorinavn;
 
     public Produkt(String navn, String egenskap, int antall, Kategori kategori) {
         this.navn = navn;
         this.egenskap = egenskap;
         this.antall = antall;
         this.kategori = kategori;
-        this.kategorinavn = kategori.getNavn();
     }
 
     public String getNavn() {
@@ -41,20 +39,12 @@ public class Produkt implements Serializable {
         this.antall = antall;
     }
 
-    public Kategori getKategori() {
-        return kategori;
+    public String getKategori() {
+        return kategori.getNavn();
     }
 
     public void setKategori(Kategori kategori) {
         this.kategori = kategori;
-    }
-
-    public String getKategorinavn() {
-        return kategorinavn;
-    }
-
-    public void setKategorinavn(String kategorinavn) {
-        this.kategorinavn = kategorinavn;
     }
 
     @Override
@@ -63,7 +53,7 @@ public class Produkt implements Serializable {
                 "navn='" + navn + '\'' +
                 ", egenskap='" + egenskap + '\'' +
                 ", antall=" + antall +
-                ", kategori='" + kategorinavn + '\'' +
+                ", kategori='" + kategori + '\'' +
                 '}';
     }
 }
