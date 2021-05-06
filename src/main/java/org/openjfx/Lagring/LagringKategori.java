@@ -16,9 +16,20 @@ public class LagringKategori {
     private static Kategoriliste fil = new Kategoriliste();
 
     public static void fjernAlt() throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter("src/main/java/org/openjfx/Filer/Kategorier.jobj");
-        writer.print("");
-        writer.close();
+        ArrayList<Kategori> ferdigliste = new ArrayList<>();
+        LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", ferdigliste);
+
+
+    }
+
+    public static void slettKategori(String navn) throws FileNotFoundException {
+        Kategoriliste kl = hentKategorier();
+        Kategori k = finnKategori(navn);
+        ArrayList<Kategori> akl = KonverterListe.fraKategoritilArray(kl);
+
+        kl.fjern(k);
+        LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", akl);
+
     }
 
     public static void lastNed(){
@@ -32,8 +43,6 @@ public class LagringKategori {
     }
 
     public static void lagre(Kategoriliste kategoriliste) throws FileNotFoundException {
-        fjernAlt();
-
         ArrayList<Kategori> ferdigliste = KonverterListe.fraKategoritilArray(kategoriliste);
         LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", ferdigliste);
     }
@@ -44,10 +53,23 @@ public class LagringKategori {
     }
 
     public static void LeggTil(String navn) throws FileNotFoundException {
-        lastNed();
-        Kategori k = new Kategori(navn);
-        fil.addObjekt(k);
-        lagre(fil);
+        if (!(sjekkKategori(navn) && navn!=null)){
+            lastNed();
+            Kategori k = new Kategori(navn);
+            fil.addObjekt(k);
+            lagre(fil);}
+    }
+
+    public static boolean sjekkKategori(String navn){
+        ArrayList<Kategori> ArrayKategorier = KonverterListe.fraKategoritilArray(hentKategorier());
+        boolean finnes = false;
+
+        for (Kategori k : ArrayKategorier){
+            if (k.getNavn().equalsIgnoreCase(navn)){
+                finnes = true;
+            }
+        }
+        return finnes;
     }
 
     public static Kategori finnKategori(String navn) throws FileNotFoundException {

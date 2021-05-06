@@ -12,6 +12,7 @@ import java.io.IOException;
 public class Oppstart {
 
     public static void leggTilKategorier() throws FileNotFoundException {
+        LagringKategori.fjernAlt();
 
         LagringKategori.LeggTil("Traktor");
         LagringKategori.LeggTil("Arbeidsklær");
