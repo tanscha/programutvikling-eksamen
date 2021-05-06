@@ -1,8 +1,9 @@
 package org.openjfx;
 
 import javafx.concurrent.Task;
-import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Produkter.Produktliste;
+
+import static org.openjfx.Filbehandling.FileOpenerCSV.*;
 
 
 public class Sleep extends Task<Produktliste> {
@@ -11,8 +12,7 @@ public class Sleep extends Task<Produktliste> {
 
     public Sleep(){
         try {
-            Produktliste alle = FileOpenerCSV.ListefraCSV();
-            fil = alle; }
+            fil = ListefraCSV(); }
         catch (Exception e){}
     }
 

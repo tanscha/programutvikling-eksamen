@@ -1,6 +1,6 @@
 package org.openjfx.Filbehandling;
 
-import org.openjfx.Produkter.Kategorier;
+import org.openjfx.Produkter.Kategoriliste;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileOpenerJOBJ implements FileOpener {
-    public void openFile(Kategorier kategorier, Path path) throws IOException {
-        Kategorier.fjernAlt();
+    public void openFile(Kategoriliste kategoriliste, Path path) throws IOException {
+        Kategoriliste.fjernAlt();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toFile()))) {
         }
     }

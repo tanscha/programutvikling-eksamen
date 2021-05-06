@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.Serializable;
 
-public class Kategorier implements Serializable {
+public class Kategoriliste implements Serializable {
 
     private static ObservableList<Kategori> kategorier = FXCollections.observableArrayList();
 

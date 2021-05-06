@@ -31,4 +31,19 @@ public class KonverterListe {
         }
         return ny;
     }
+
+    public static Kategoriliste fraArraytilKategorier(ArrayList<Kategori> a) {
+        Kategoriliste ny = new Kategoriliste();
+
+        for (Kategori element : a) {
+            ny.addObjekt(element);
+        }
+        return ny;
+    }
+
+    public static ArrayList<Kategori> fraKategoritilArray(Kategoriliste a) {
+        var aa = a.getKategorier();
+        ArrayList<Kategori> ny = new ArrayList<>(aa);
+        return ny;
+    }
 }

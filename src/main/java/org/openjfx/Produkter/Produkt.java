@@ -39,8 +39,8 @@ public class Produkt implements Serializable {
         this.antall = antall;
     }
 
-    public Kategori getKategori() {
-        return kategori;
+    public String getKategori() {
+        return kategori.getNavn();
     }
 
     public void setKategori(Kategori kategori) {

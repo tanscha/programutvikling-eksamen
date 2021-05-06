@@ -22,8 +22,7 @@ public class LagreCSV {
     private static byte[] printString(ArrayList<Produkt> a) {
         String tekst = "Navn\t Egenskap\t Antall\t Kategori \n";
         for (Produkt p : a) {
-            Kategori k = p.getKategori();
-            tekst += p.getNavn() + "\t" + p.getEgenskap() + "\t" + p.getAntall() + "\t" + k.getNavn() + "\n";
+            tekst += p.getNavn() + "\t" + p.getEgenskap() + "\t" + p.getAntall() + "\t" + p.getKategori() + "\n";
         }
         return tekst.getBytes();
     }

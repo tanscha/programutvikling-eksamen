@@ -1,36 +1,25 @@
 package org.openjfx.Controller;
 
-import javafx.concurrent.WorkerStateEvent;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 import org.openjfx.Sleep;
 
-import org.openjfx.Filbehandling.LagreJOBJ;
-import org.openjfx.Produkter.Kategori;
-import org.openjfx.Produkter.Kategorier;
-import org.openjfx.Produkter.Produkt;
-import org.openjfx.Lagring.Lagring;
-
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static org.openjfx.Lagring.Lagring.*;
+import static org.openjfx.Lagring.LagringKategori.*;
 
 
 public class ProdukterController implements Initializable {
@@ -60,23 +49,9 @@ public class ProdukterController implements Initializable {
     public Button btnLeggtil;
     public Button btnSlett;
     public Button btnLagre;
-    public Label lblPrisogNavn;
-    public TextField txtPris;
-    public TextField txtNavn;
-    public TableColumn<Object, String> colNavn;
-    public TableColumn<Object, Integer> colPris;
-    public TableColumn<Object, String> colType;
-    public ComboBox<String> comboType;
     public Label lblFeilmld;
-    public TextField txtSøk;
-    public Button btnSlett;
-    public ComboBox comboKategori;
-    public ComboBox KategoriValg;
-    public Spinner spnAntall;
-    public TextField txtEgenskap;
     public TextField txtKategori;
     public Button btnLeggtilKat;
-    public TableView tableView;
 
     private Sleep task;
 
@@ -102,7 +77,7 @@ public class ProdukterController implements Initializable {
 
     private void oppdater() {
         tableView.getItems().removeAll();
-        //tableView.setItems();
+        tableView.setItems((ObservableList<Produkt>) produktliste);
         txtSøk.clear();
 
 
@@ -125,13 +100,17 @@ public class ProdukterController implements Initializable {
 
     private void threadDone(WorkerStateEvent workerStateEvent) {
         produktliste = task.getValue();
-        System.out.println(produktliste);
+        if (produktliste == null){
+            lblFeilmld.setText("Fant ingen produkter");
+        }
+        else {
         produktliste.attachTableView(tableView);
         if (produktliste.isEmpty()){
             lblFeilmld.setText("Fant ingen produkter");
-        } else {
-            lblFeilmld.setText("Viser alle lagrede produkter");
         }
+        else {
+            lblFeilmld.setText("Viser alle lagrede produkter");
+        }}
         aktiverKnapper();
         oppdater();
     }
@@ -211,12 +190,6 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnSlett(ActionEvent event) {
-    }
-
-    public void editTvNavn(TableColumn.CellEditEvent cellEditEvent) {
-    }
-
-    public void editTvPris(TableColumn.CellEditEvent cellEditEvent) {
     }
 
     public void editTvAntall(TableColumn.CellEditEvent cellEditEvent) {

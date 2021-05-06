@@ -1,8 +1,7 @@
 package org.openjfx.Filbehandling;
 
-import org.openjfx.Lagring.Lagring;
+import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Produkter.Kategori;
-import org.openjfx.Produkter.Kategorier;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 
@@ -17,7 +16,7 @@ public class FileOpenerCSV {
     public static ArrayList<String[]> readCSV() {
         ArrayList<String[]> liste = new ArrayList<>();
 
-            String line = "";
+            String line;
             String splitBy = "\t";
             try
             {
@@ -39,11 +38,12 @@ public class FileOpenerCSV {
 
     public static Produktliste ListefraCSV() throws FileNotFoundException {
         ArrayList<String[]> liste = readCSV();
-        Produktliste produktliste = new Produktliste();
         liste.remove(0);
+        Produktliste produktliste = new Produktliste();
+
 
         for(String[] x : liste){
-            Kategori k = Lagring.finnKategori(x[3]);
+            Kategori k = LagringKategori.finnKategori(x[3]);
             System.out.println(k);
             Produkt produkt = new Produkt(x[0], x[1], Integer.parseInt(x[2]), k);
             produktliste.addObjekt(produkt);
