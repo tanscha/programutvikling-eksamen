@@ -39,8 +39,8 @@ public class Produkt implements Serializable {
         this.antall = antall;
     }
 
-    public String getKategori() {
-        return kategori.getNavn();
+    public Kategori getKategori() {
+        return kategori;
     }
 
     public void setKategori(Kategori kategori) {
@@ -53,7 +53,7 @@ public class Produkt implements Serializable {
                 "navn='" + navn + '\'' +
                 ", egenskap='" + egenskap + '\'' +
                 ", antall=" + antall +
-                ", kategori='" + kategori + '\'' +
+                ", kategori='" + kategori.getNavn() + '\'' +
                 '}';
     }
 }

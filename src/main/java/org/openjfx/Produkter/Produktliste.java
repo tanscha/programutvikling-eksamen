@@ -12,7 +12,7 @@ public class Produktliste implements Serializable {
     private static ObservableList<Produkt> produktliste = FXCollections.observableArrayList();
 
     public void attachTableView(TableView<Produkt> tableView) {
-
+        System.out.println("tableview:" + produktliste);
         tableView.setItems(produktliste);
     }
 

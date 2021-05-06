@@ -6,9 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.Kategoriliste;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 import org.openjfx.Sleep;
@@ -77,7 +80,7 @@ public class ProdukterController implements Initializable {
 
     private void oppdater() {
         tableView.getItems().removeAll();
-        tableView.setItems((ObservableList<Produkt>) produktliste);
+        tableView.setItems(produktliste.getRegister());
         txtSøk.clear();
 
 
@@ -110,6 +113,7 @@ public class ProdukterController implements Initializable {
         }
         else {
             lblFeilmld.setText("Viser alle lagrede produkter");
+            System.out.println(produktliste);
         }}
         aktiverKnapper();
         oppdater();
@@ -143,7 +147,7 @@ public class ProdukterController implements Initializable {
         btnÅpne.setDisable(true);
         btnSlett.setDisable(true);
         btnLeggtil.setDisable(true);
-        //tableView.setDisable(true);
+        tableView.setDisable(true);
         //txtSøk.setDisable(true);
         //kolonnesøk.setDisable(true);
         txtNavn.setDisable(true);
@@ -161,10 +165,10 @@ public class ProdukterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //tableView.setEditable(true);
-        //colType.setCellFactory(TextFieldTableCell.forTableColumn());
-        //colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
-        //colPris.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tableView.setEditable(true);
+        colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
+        colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
+        colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         //comboType.setItems(typeListe());
         //comboType.getSelectionModel().selectFirst();
         //kolonnesøk.setValue("Navn");
