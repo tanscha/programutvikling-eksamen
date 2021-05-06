@@ -207,13 +207,53 @@ public class ProdukterController implements Initializable {
     public void btnlagre(ActionEvent event) {
     }
 
-    public void btnLeggTil(ActionEvent event) {
+    public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
+        String navn = txtNavn.getText();
+        String egenskap = txtEgenskap.getText();
+        Kategori kategori = LagringKategori.finnKategori(comboKategori.getValue());
+        if (navn == null || navn.isEmpty()) {
+            lblPrisogNavn.setText("Skriv inn riktig navn");
+            lblFeilmld.setText("");
+            try{
+                Integer.parseInt(spnAntall.getPromptText());
+            } catch (IllegalArgumentException e){
+                lblPrisogNavn.setText("Skriv inn riktig navn og pris");
+                lblFeilmld.setText("");
+            }
+        } else if (egenskap == null || egenskap.isEmpty()){
+            lblPrisogNavn.setText("Skriv inn riktig egenskap");
+            lblFeilmld.setText("");
+            try{
+                Integer.parseInt(spnAntall.getPromptText());
+            } catch (IllegalArgumentException e){
+                lblPrisogNavn.setText("Skriv inn riktig egenskap og pris");
+                lblFeilmld.setText("");
+            }
+        }
+        else {
+            try {
+                int antall = Integer.parseInt(spnAntall.getPromptText());
+                if (antall > 0) {
+                    Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
+                    nullstillTxt();
+                    produktliste.addObjekt(produkt);
+                    lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
+                    lblPrisogNavn.setText("");
+                    oppdater();
+                } else {
+                    lblPrisogNavn.setText("Prisen må være med enn 0");
+                    lblFeilmld.setText("");
+                }
+            } catch (IllegalArgumentException e) {
+                lblPrisogNavn.setText("Skriv inn riktig antall");
+                lblFeilmld.setText("");
+                txtNavn.setText("");
+                txtEgenskap.setText("");
+            }
+        }
     }
 
     public void btnSlett(ActionEvent event) {
-    }
-
-    public void editTvAntall(TableColumn.CellEditEvent cellEditEvent) {
     }
 
     public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
@@ -229,20 +269,18 @@ public class ProdukterController implements Initializable {
     }
 
 
-
     public void btnFjern(ActionEvent event) throws FileNotFoundException {
         String kategori = comboKategori.getValue();
         LagringKategori.slettKategori(kategori);
         comboKategori.setItems(finnKategorier());
         comboKategori.getSelectionModel().selectFirst();
         lblPrisogNavn.setText("Kategori slettet");
-
     }
 
     public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {
     }
 
-    public void editTvPris(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
+    public void editTvAntall(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
     }
 
 }
