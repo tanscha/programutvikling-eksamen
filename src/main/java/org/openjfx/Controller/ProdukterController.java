@@ -63,8 +63,6 @@ public class ProdukterController implements Initializable {
 
 
     @FXML
-    private ChoiceBox<String> kolonnesøk;
-    @FXML
     private TableView<Produkt> tableView;
     private Kategoriliste kategorier;
 
@@ -94,7 +92,8 @@ public class ProdukterController implements Initializable {
 
     private void oppdater() {
         tableView.getItems().removeAll();
-        tableView.setItems(produktliste.getRegister());
+        tableView.setItems(valgtTypeListe());
+        setKategorivalg();
         txtSøk.clear();
 
 
@@ -117,6 +116,7 @@ public class ProdukterController implements Initializable {
 
     private void threadDone(WorkerStateEvent workerStateEvent) {
         produktliste = task.getValue();
+        produktliste.attachTableView(tableView);
         if (produktliste == null){
             lblFeilmld.setText("Fant ingen produkter");
         }
@@ -126,10 +126,10 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("Fant ingen produkter");
         }
         else {
-            //lblFeilmld.setText("Viser alle lagrede produkter");
-            lblFeilmld.setText(produktliste.getRegister().get(1).getKategori().navn);
+            lblFeilmld.setText("Viser alle lagrede produkter");
         }}
         aktiverKnapper();
+        setKategorivalg();
         oppdater();
     }
 
@@ -140,20 +140,19 @@ public class ProdukterController implements Initializable {
     }
 
 
-
-
     // Metode som aktiver knapper osv
     private void aktiverKnapper() {
         btnÅpne.setDisable(false);
         btnLeggtil.setDisable(false);
         tableView.setDisable(false);
         txtSøk.setDisable(false);
-        kolonnesøk.setDisable(false);
         txtNavn.setDisable(false);
-        //comboType.setDisable(false);
-        //typevalg.setDisable(false);
+        txtEgenskap.setDisable(false);
+        spnAntall.setDisable(false);
+        comboKategori.setDisable(false);
         btnLagre.setDisable(false);
         btnLeggtilKat.setDisable(false);
+        btnFjernKat.setDisable(false);
     }
 
     //Metode som hemmer knapper osv
@@ -163,11 +162,12 @@ public class ProdukterController implements Initializable {
         btnLeggtil.setDisable(true);
         tableView.setDisable(true);
         //txtSøk.setDisable(true);
-        //kolonnesøk.setDisable(true);
         txtNavn.setDisable(true);
         //comboType.setDisable(true);
         //typevalg.setDisable(true);
         btnLagre.setDisable(true);
+        btnLeggtilKat.setDisable(true);
+        btnFjernKat.setDisable(true);
     }
 
 
@@ -187,6 +187,13 @@ public class ProdukterController implements Initializable {
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         comboKategori.setItems(finnKategorier());
         comboKategori.getSelectionModel().selectFirst();
+        btnLeggtil.setDisable(true);
+        txtNavn.setDisable(true);
+        txtEgenskap.setDisable(true);
+        spnAntall.setDisable(true);
+        comboKategori.setDisable(true);
+        btnLeggtilKat.setDisable(true);
+        btnFjernKat.setDisable(true);
 
         //views = new ArrayList<>(Arrays.asList(produktliste, kategorier));
 
@@ -202,10 +209,48 @@ public class ProdukterController implements Initializable {
         //btnfjern.setDisable(true);
 
     }
+    private void setKategorivalg(){
+        ArrayList<String> kategorier = new ArrayList<>();
+        ArrayList<Produkt> a = KonverterListe.fraKomponenttilArray(produktliste);
 
+        kategorier.add("Alle");
+
+        for (Produkt p : a){
+            boolean finnes = false;
+            for (String s : kategorier) {
+                if (p.getKategori().equalsIgnoreCase(s)){
+                    finnes = true;
+                }
+            }
+            if (!finnes) {
+                kategorier.add(p.getKategori());
+            }
+        }
+
+        ObservableList<String> os = KonverterListe.fraArraytilObservable(kategorier);
+        KategoriValg.setItems(os);
+        KategoriValg.getSelectionModel().selectFirst();
+    }
+
+    private ObservableList<Produkt> valgtTypeListe() {
+        String typestring = KategoriValg.getValue().toString();
+
+        ArrayList<Produkt> alle = KonverterListe.fraKomponenttilArray(produktliste);
+        ObservableList<Produkt> ny = FXCollections.observableArrayList();
+
+        for (Produkt p : alle){
+            if (p.getKategori().equalsIgnoreCase(typestring) || typestring.equalsIgnoreCase("Alle"))
+            {ny.add(p); }
+        }
+        return ny;
+    }
 
 
     public void velgKategori(ActionEvent event) {
+        try {
+            tableView.setItems(valgtTypeListe());
+        } catch (Exception e){}
+
     }
 
 
@@ -216,6 +261,7 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
+        produktliste.fjernAlt();
         String navn = txtNavn.getText();
         String egenskap = txtEgenskap.getText();
         Kategori kategori = LagringKategori.finnKategori(comboKategori.getValue());
@@ -248,7 +294,6 @@ public class ProdukterController implements Initializable {
                     produktliste = FileOpenerCSV.ListefraCSV();
                     produktliste.addObjekt(produkt);
                     LagreCSV.save(produktliste);
-                    produktliste.fjernAlt();
                     lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
                     lblPrisogNavn.setText("");
                     oppdater();
@@ -263,6 +308,7 @@ public class ProdukterController implements Initializable {
                 txtEgenskap.setText("");
             }
         }
+        oppdater();
     }
 
     public void btnSlett(ActionEvent event) {
