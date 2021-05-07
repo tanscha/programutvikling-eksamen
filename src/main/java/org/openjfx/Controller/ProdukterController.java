@@ -306,7 +306,7 @@ public class ProdukterController implements Initializable {
         }
     }
 
-    public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
+    public void btnLeggTil(ActionEvent event) throws IOException {
         Produktliste.fjernAlt();
         String navn = txtNavn.getText();
         String egenskap = txtEgenskap.getText();
@@ -316,16 +316,8 @@ public class ProdukterController implements Initializable {
             lblPrisogNavn.setText("Skriv inn riktig navn");
             lblFeilmld.setText("");
         }
-        try {
-                Regex.antallRegex(antall);
-            }
-            catch (InvalidAntallException e) {
-                lblPrisogNavn.setText("Skriv inn riktig navn og antall");
-                lblFeilmld.setText("");
-            }
-        try {
-            if (antall > 0) {
-                Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
+        else  {
+            Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
                 nullstillTxt();
                 produktliste = FileOpenerCSV.ListefraCSV();
                 LagringProdukt.leggTilProdukt(produkt, produktliste);
@@ -336,15 +328,6 @@ public class ProdukterController implements Initializable {
                 oppdater();
                 setKategorivalg();
                 setKategorier();
-            } else {
-                lblPrisogNavn.setText("Antall må være med enn 0");
-                lblFeilmld.setText("");
-                }
-            } catch (InvalidAntallException | IOException e) {
-                lblPrisogNavn.setText("Skriv inn riktig antall");
-                lblFeilmld.setText("");
-                txtNavn.setText("");
-                txtEgenskap.setText("");
             }
         }
 
