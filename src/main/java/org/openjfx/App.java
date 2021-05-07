@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.openjfx.Hjelpeklasser.Oppstart;
-import org.openjfx.Lagring.LagringKategori;
 
 import java.io.IOException;
 
