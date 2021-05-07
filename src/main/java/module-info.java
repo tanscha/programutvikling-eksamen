@@ -7,5 +7,6 @@ module org.openjfx {
     opens org.openjfx.Controller to javafx.fxml;
     opens org.openjfx.Produkter to javafx.base;
     exports org.openjfx;
+    exports org.openjfx.Bruker;
 
 }
