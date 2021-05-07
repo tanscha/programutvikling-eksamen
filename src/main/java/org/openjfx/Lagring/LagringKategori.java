@@ -4,14 +4,23 @@ import org.openjfx.Filbehandling.*;
 import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.Kategoriliste;
 import org.openjfx.Produkter.KonverterListe;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class LagringKategori {
 
-    public static void fjernAlt() {
-        ArrayList<Kategori> ferdigliste = new ArrayList<>();
-        LagreJOBJ.lagreKategoriTilFil("Kat.jobj", ferdigliste);
-        
+    public static void fjernAlt(){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("src/main/java/org/openjfx/Filer/Kat.jobj");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        writer.print("");
+        writer.close();
     }
 
     public static void slettKategori(String navn) {
@@ -38,27 +47,31 @@ public class LagringKategori {
         return KonverterListe.fraArraytilKategorier(hentFraFil());
     }
 
-    public static void lagre(Kategoriliste kategoriliste) {
+    public static void lagre(Kategoriliste kategoriliste) throws IOException {
+        fjernAlt();
         ArrayList<Kategori> ferdigliste = KonverterListe.fraKategoritilArray(kategoriliste);
         LagreJOBJ.lagreKategoriTilFil("Kat.jobj", ferdigliste);
     }
 
-    public static void LeggTil(String navn) {
+    public static void LeggTil(String navn) throws IOException {
         Kategoriliste fil = lastNed();
         
-        if (!(sjekkKategori(navn) && navn!=null)){
+        if (!(sjekkKategori(navn) && (navn != null))){
             Kategori k = new Kategori(navn);
             fil.addObjekt(k);
-            lagre(fil);}
+            lagre(fil);
+            System.out.println("hei og hopp "+k);
+        }
     }
 
     public static boolean sjekkKategori(String navn)  {
-        ArrayList<Kategori> ArrayKategorier = KonverterListe.fraKategoritilArray(lastNed());
+        ArrayList<Kategori> ArrayKategorier = hentFraFil();
         boolean finnes = false;
 
         for (Kategori k : ArrayKategorier){
-            if (k.getNavn().equalsIgnoreCase(navn)){
+            if (k.getNavn().equalsIgnoreCase(navn)) {
                 finnes = true;
+                break;
             }
         }
         return finnes;

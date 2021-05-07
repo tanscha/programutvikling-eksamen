@@ -3,13 +3,14 @@ package org.openjfx.Filbehandling;
 import org.openjfx.Produkter.Kategori;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
 public class LagreJOBJ {
 
-    public static void lagreKategoriTilFil(String filnavn, ArrayList<Kategori> listeinn) {
+    public static void lagreKategoriTilFil(String filnavn, ArrayList<Kategori> listeinn){
         try {
             FilesSaver saver = new FileSaverJOBJ();
             saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));

@@ -192,7 +192,6 @@ public class ProdukterController implements Initializable {
         colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        comboKategori.setItems(finnKategorier());
         comboKategori.getSelectionModel().selectFirst();
         btnLeggtil.setDisable(true);
         txtNavn.setDisable(true);
@@ -349,12 +348,11 @@ public class ProdukterController implements Initializable {
         lagre();
     }
 
-    public void btnLeggTilKat(ActionEvent event) {
+    public void btnLeggTilKat(ActionEvent event) throws IOException {
 
         TextInputDialog td = new TextInputDialog("Nytt navn på kategori...");
         td.setHeaderText("Legg til ny kategori");
         Optional<String> nyttnavn = td.showAndWait();
-        Button d = new Button("Legg til");
 
         LagringKategori.LeggTil(nyttnavn.get());
         setKategorier();
