@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,8 +13,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
-<?import javafx.scene.control.SpinnerValueFactory?>
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
     <children>
         <AnchorPane layoutY="-11.0" prefHeight="550.0" prefWidth="900.0">
@@ -21,7 +20,7 @@
             <Button fx:id="btnLeggtil" layoutX="139.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnLeggTil" text="Legg til" />
             <Button fx:id="btnLeggtilKat" layoutX="197.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnLeggTilKat" text="+" />
             <Button fx:id="btnSlett" layoutX="306.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnSlett" text="Slett valgt" />
-            <Button layoutX="35.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnTilbake" text="Logg ut" />
+            <Button fx:id="btnTilbake" layoutX="35.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnTilbake" text="Logg ut" />
 
             <TableView fx:id="tableView" layoutX="305.0" layoutY="178.0" prefHeight="242.0" prefWidth="538.0">
                 <columns>
@@ -49,29 +48,29 @@
             </TableView>
 
             <ComboBox fx:id="comboKategori" layoutX="35.0" layoutY="178.0" prefHeight="27" prefWidth="155" />
-            <Label fx:id="lblFeilmld" alignment="CENTER_RIGHT" layoutX="419.0" layoutY="449.0" prefHeight="27.0" prefWidth="228.0" wrapText="true">
+            <Label fx:id="lblFeilmld" alignment="CENTER_RIGHT" layoutX="517.0" layoutY="449.0" prefHeight="27.0" prefWidth="228.0" wrapText="true">
                 <font>
-                    <Font size="14.0" />
+                    <Font name="System Bold" size="14.0" />
                 </font>
             </Label>
-            <Button fx:id="btnÅpne" layoutX="741.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnÅpne" text="Last inn lagrede" />
-            <Label layoutX="47.0" layoutY="97.0" text="Registrer produkter">
+            <Label fx:id="lblVis0" layoutX="47.0" layoutY="97.0" text="Registrer produkter">
                 <font>
                     <Font size="30.0" />
                 </font>
             </Label>
             <TextField fx:id="txtSøk" layoutX="661.0" layoutY="134.0" onKeyTyped="#Søk" prefHeight="27.0" prefWidth="183.0" promptText="Søk..." />
             <ComboBox fx:id="KategoriValg" layoutX="534.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
-         <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
+         <Button fx:id="btnLagre" layoutX="759.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre som..." />
          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="45.0" layoutY="347.0" prefHeight="17.0" prefWidth="155.0" />
          <Spinner fx:id="spnAntall" editable="false" initialValue="0" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0">
          <valueFactory>
-             <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1"/>
+             <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="1" />
          </valueFactory>
          </Spinner>
-         <Label layoutX="88.0" layoutY="280.0" text="Antall:" />
+         <Label fx:id="lblVis1" layoutX="88.0" layoutY="280.0" text="Antall:" />
          <TextField fx:id="txtEgenskap" layoutX="35.0" layoutY="243.0" prefHeight="27.0" prefWidth="155.0" promptText="Egenskap" />
          <Button fx:id="btnFjernKat" layoutX="226.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnFjern" prefHeight="27.0" prefWidth="26.0" text="-" />
+         <Label fx:id="lblVis2" layoutX="508.0" layoutY="139.0" text="Vis" />
         </AnchorPane>
     </children>
 </Pane>

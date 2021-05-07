@@ -2,6 +2,7 @@ package org.openjfx.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,10 +40,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.sleep;
 import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
 
 
 public class ProdukterController implements Initializable {
+
+
 
     ObservableList<Produkt> produktObservableList;
     ObservableList<Kategori> kategoriObservableList;
@@ -61,22 +65,23 @@ public class ProdukterController implements Initializable {
 
     public TextField txtSøk;
     public ComboBox<String> KategoriValg;
+    public Label lblVis0;
+    public Label lblVis1;
+    public Label lblVis2;
 
-    public Button btnÅpne;
     public Button btnLeggtil;
     public Button btnSlett;
     public Button btnLagre;
     public Label lblFeilmld;
-    public TextField txtKategori;
     public Button btnLeggtilKat;
     public Button btnFjernKat;
+    public Button btnTilbake;
 
     private Sleep task;
 
 
     @FXML
     private TableView<Produkt> tableView;
-    private Kategoriliste kategorier;
 
     @FXML
     void btnTilbake(ActionEvent event) throws IOException {
@@ -121,11 +126,10 @@ public class ProdukterController implements Initializable {
 
     }
 
-    @FXML
-    private void btnÅpne(ActionEvent event) {
+    private void lastinn() {
         Produktliste.fjernAlt();
         hemKnapper();
-        lblFeilmld.setText("Produkter lastes inn...");
+        lblFeilmld.setText("Produkter oppdateres..");
         lblPrisogNavn.setText("");
         setKategorier();
         task = new Sleep();
@@ -146,12 +150,15 @@ public class ProdukterController implements Initializable {
             setKategorivalg();
             if (produktliste.isEmpty()) {
                 lblFeilmld.setText("Fant ingen produkter");
+
             } else {
                 lblFeilmld.setText("Viser alle lagrede produkter");
+
             }
         }
         aktiverKnapper();
         oppdater();
+
     }
 
     private void threadFailed(WorkerStateEvent event) {
@@ -163,7 +170,6 @@ public class ProdukterController implements Initializable {
 
     // Metode som aktiver knapper osv
     private void aktiverKnapper() {
-        btnÅpne.setDisable(false);
         btnLeggtil.setDisable(false);
         tableView.setDisable(false);
         txtSøk.setDisable(false);
@@ -175,22 +181,30 @@ public class ProdukterController implements Initializable {
         btnLeggtilKat.setDisable(false);
         btnFjernKat.setDisable(false);
         btnSlett.setDisable(false);
+        KategoriValg.setDisable(false);
+        lblVis0.setDisable(false);
+        lblVis1.setDisable(false);
+        lblVis2.setDisable(false);
+        btnTilbake.setDisable(false);
+
     }
 
     //Metode som hemmer knapper osv
     private void hemKnapper() {
-        btnÅpne.setDisable(true);
         btnSlett.setDisable(true);
         btnLeggtil.setDisable(true);
         tableView.setDisable(true);
-        //txtSøk.setDisable(true);
+        txtSøk.setDisable(true);
         txtNavn.setDisable(true);
-        //comboType.setDisable(true);
-        //typevalg.setDisable(true);
+        KategoriValg.setDisable(true);
         btnLagre.setDisable(true);
         btnLeggtilKat.setDisable(true);
         btnFjernKat.setDisable(true);
         btnSlett.setDisable(true);
+        lblVis0.setDisable(true);
+        lblVis1.setDisable(true);
+        lblVis2.setDisable(true);
+        btnTilbake.setDisable(true);
     }
 
 
@@ -222,6 +236,8 @@ public class ProdukterController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        lastinn();
 
 
     }
@@ -339,6 +355,7 @@ public class ProdukterController implements Initializable {
                 setKategorivalg();
                 setKategorier();
             }
+        lastinn();
         }
 
 
@@ -348,6 +365,7 @@ public class ProdukterController implements Initializable {
         lblFeilmld.setText("Produktet er slettet!");
         oppdater();
         lagre();
+        lastinn();
     }
 
     public void btnLeggTilKat(ActionEvent event) throws IOException {
@@ -406,6 +424,7 @@ public class ProdukterController implements Initializable {
         tableView.refresh();
         lblFeilmld.setText("Navnet er endret!");
         lagre();
+        lastinn();
     }
 
     public void editTvAntall(TableColumn.CellEditEvent<Object, Integer> cellEditEvent) throws IOException {
@@ -425,6 +444,7 @@ public class ProdukterController implements Initializable {
         }
         tableView.refresh();
         lagre();
+        lastinn();
     }
     public void editTvEgenskap(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
         Produkt produkt = tableView.getSelectionModel().getSelectedItem();
@@ -438,6 +458,7 @@ public class ProdukterController implements Initializable {
         }
         tableView.refresh();
         lagre();
+        lastinn();
     }
 
 }
