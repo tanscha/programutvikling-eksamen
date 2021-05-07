@@ -71,6 +71,7 @@ public class ProdukterController implements Initializable {
 
     public Button btnLeggtil;
     public Button btnSlett;
+
     public Button btnLagre;
     public Label lblFeilmld;
     public Button btnLeggtilKat;
@@ -227,6 +228,7 @@ public class ProdukterController implements Initializable {
         comboKategori.setDisable(true);
         btnLeggtilKat.setDisable(true);
         btnFjernKat.setDisable(true);
+        colKategori.setStyle("-fx-background-color: rgba(216,216,216,0.45); ");
         setKategorier();
 
         try {
