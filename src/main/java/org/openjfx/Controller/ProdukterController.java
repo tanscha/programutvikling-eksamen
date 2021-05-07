@@ -301,8 +301,6 @@ public class ProdukterController implements Initializable {
                 txtEgenskap.setText("");
             }
         }
-        setKategorivalg();
-        oppdater();
 
     }
 
