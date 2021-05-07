@@ -6,8 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import org.openjfx.App;
+import org.openjfx.Bruker.Bruker;
+import org.openjfx.Bruker.Brukere;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LogginnController {
 
@@ -24,12 +27,35 @@ public class LogginnController {
 
 
     private void logginn() throws IOException {
-        if (!txtPassord.getText().equals("passord") || !txtBrukernavn.getText().toLowerCase().equals("admin")) {
-            lblFeil.setText("Feil brukernavn og/eller passord!");
-            txtPassord.clear();
-        } else {
-            App.setRoot("produkter");
+        sjekkBruker(txtBrukernavn.getText(), txtPassord.getText());
+    }
+
+    private void sjekkBruker(String navn, String passord) throws IOException {
+        ArrayList<Bruker> brukere = Brukere.HentBrukere();
+        boolean finnes = false;
+
+        for (Bruker b : brukere){
+
+            if (b.getBrukernavn().equalsIgnoreCase(navn)){
+                finnes = true;
+                if (b.getPassord().equalsIgnoreCase(passord)){
+                    App.setRoot("produkter");
+                }
+            }
         }
+
+        if(finnes){
+            lblFeil.setText("Feil passord! Prøv igjen");
+            txtPassord.clear();
+        }
+        else {
+            lblFeil.setText("Bruker eksisterer ikke. Lag ny bruker!");
+            txtPassord.clear();
+            txtBrukernavn.clear();
+        }
+
+
+
     }
 
 
