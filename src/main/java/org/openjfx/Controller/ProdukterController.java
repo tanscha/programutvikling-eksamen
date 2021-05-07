@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
+import javafx.stage.FileChooser;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
@@ -26,10 +27,14 @@ import org.openjfx.Validering.Regex;
 
 
 import java.awt.print.Printable;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -284,7 +289,23 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnlagre(ActionEvent event) throws IOException {
-        lagre();
+        LagreCSV.save(fraKomponenttilArray(produktliste));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lagre registrering...");
+        fileChooser.setInitialFileName("Register"+ LocalDate.now());
+        FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("CSV files (*.csv", "*.csv");
+        FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("TXT files (*.txt", "*.txt");
+        fileChooser.getExtensionFilters().add(filter1);
+        fileChooser.getExtensionFilters().add(filter2);
+        File dest = fileChooser.showSaveDialog(null);
+        if (dest != null){
+            try {
+                Files.copy(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), dest.toPath());
+            }
+            catch (IOException e){
+                lblFeilmld.setText("Filen ble ikke lastet ned. Vennligst prøv igjen.");
+            }
+        }
     }
 
     public void btnLeggTil(ActionEvent event) throws FileNotFoundException {

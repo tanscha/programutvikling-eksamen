@@ -55,7 +55,7 @@
             </Label>
             <TextField fx:id="txtSøk" layoutX="661.0" layoutY="134.0" onKeyTyped="#Søk" prefHeight="27.0" prefWidth="183.0" promptText="Søk..." />
             <ComboBox fx:id="KategoriValg" layoutX="534.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
-         <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
+         <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre som..." />
          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="337.0" prefHeight="17.0" prefWidth="155.0" />
          <Spinner fx:id="spnAntall" editable="false" initialValue="0" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0">
          <valueFactory>
