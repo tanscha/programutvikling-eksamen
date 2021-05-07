@@ -8,10 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static org.openjfx.Produkter.Kategoriliste.fjernAlt;
+
 
 public class FileOpenerJOBJ implements FileOpener {
     public void openFile(Kategoriliste kategoriliste, Path path) throws IOException {
-        Kategoriliste.fjernAlt();
+        fjernAlt();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toFile()))) {
         }
     }
@@ -22,9 +24,7 @@ public class FileOpenerJOBJ implements FileOpener {
         try (InputStream is = Files.newInputStream(Paths.get(string));
              ObjectInputStream ois = new ObjectInputStream(is)) {
             ArrayList = (ArrayList<? extends Serializable>) ois.readObject();
-            return ArrayList;
         } catch (ClassNotFoundException e) {
-            return ArrayList;
-        }
+        } return ArrayList;
     }
 }

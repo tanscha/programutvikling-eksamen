@@ -356,7 +356,6 @@ public class ProdukterController implements Initializable {
 
         LagringKategori.LeggTil(nyttnavn.get());
         setKategorier();
-        lblPrisogNavn.setText("Kategori lagt til");
     }
 
 

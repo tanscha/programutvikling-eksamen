@@ -11,13 +11,6 @@ import java.io.IOException;
 
 public class Oppstart {
 
-    public static void leggTilKategorier() throws IOException {
-        LagringKategori.fjernAlt();
-
-        LagringKategori.LeggTil("Traktor");
-        LagringKategori.LeggTil("Arbeidsklær");
-        LagringKategori.LeggTil("Korn/Frø");
-    }
 
     public static void leggTilProdukter() throws IOException {
 

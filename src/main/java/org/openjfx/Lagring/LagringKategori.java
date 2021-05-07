@@ -51,16 +51,17 @@ public class LagringKategori {
         fjernAlt();
         ArrayList<Kategori> ferdigliste = KonverterListe.fraKategoritilArray(kategoriliste);
         LagreJOBJ.lagreKategoriTilFil("Kat.jobj", ferdigliste);
+        Kategoriliste.fjernAlt();
     }
 
     public static void LeggTil(String navn) throws IOException {
+        Kategoriliste.fjernAlt();
         Kategoriliste fil = lastNed();
-        
+
         if (!(sjekkKategori(navn) && (navn != null))){
             Kategori k = new Kategori(navn);
             fil.addObjekt(k);
             lagre(fil);
-            System.out.println("hei og hopp "+k);
         }
     }
 
