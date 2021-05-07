@@ -71,6 +71,7 @@ public class ProdukterController implements Initializable {
     public Button btnLeggtilKat;
     public Button btnFjernKat;
     public Button btnTilbake;
+    public Label lblVis4;
 
     private Sleep task;
 
@@ -165,22 +166,24 @@ public class ProdukterController implements Initializable {
 
     // Metode som aktiver knapper osv
     private void aktiverKnapper() {
+        btnSlett.setDisable(false);
         btnLeggtil.setDisable(false);
         tableView.setDisable(false);
         txtSøk.setDisable(false);
         txtNavn.setDisable(false);
-        txtEgenskap.setDisable(false);
-        spnAntall.setDisable(false);
-        comboKategori.setDisable(false);
-        btnLagre.setDisable(false);
-        btnLeggtilKat.setDisable(false);
-        btnFjernKat.setDisable(false);
-        btnSlett.setDisable(false);
         KategoriValg.setDisable(false);
+        btnLagre.setDisable(false);
+        btnSlett.setDisable(false);
         lblVis0.setDisable(false);
         lblVis1.setDisable(false);
         lblVis2.setDisable(false);
         btnTilbake.setDisable(false);
+        lblVis4.setDisable(false);
+        txtEgenskap.setDisable(false);
+        spnAntall.setDisable(false);
+        comboKategori.setDisable(false);
+        btnLeggtilKat.setDisable(false);
+        btnFjernKat.setDisable(false);
 
     }
 
@@ -193,13 +196,17 @@ public class ProdukterController implements Initializable {
         txtNavn.setDisable(true);
         KategoriValg.setDisable(true);
         btnLagre.setDisable(true);
-        btnLeggtilKat.setDisable(true);
-        btnFjernKat.setDisable(true);
         btnSlett.setDisable(true);
         lblVis0.setDisable(true);
         lblVis1.setDisable(true);
         lblVis2.setDisable(true);
         btnTilbake.setDisable(true);
+        lblVis4.setDisable(true);
+        txtEgenskap.setDisable(true);
+        spnAntall.setDisable(true);
+        comboKategori.setDisable(true);
+        btnLeggtilKat.setDisable(true);
+        btnFjernKat.setDisable(true);
     }
 
 
@@ -210,13 +217,7 @@ public class ProdukterController implements Initializable {
         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         comboKategori.getSelectionModel().selectFirst();
-        btnLeggtil.setDisable(true);
-        txtNavn.setDisable(true);
-        txtEgenskap.setDisable(true);
-        spnAntall.setDisable(true);
-        comboKategori.setDisable(true);
-        btnLeggtilKat.setDisable(true);
-        btnFjernKat.setDisable(true);
+
         colKategori.setStyle("-fx-background-color: rgba(216,216,216,0.45); ");
         setKategorier();
 

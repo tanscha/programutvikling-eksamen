@@ -30,7 +30,7 @@ public class LogginnController {
         String navn = txtBrukernavn.getText();
         String passord = txtPassord.getText();
 
-        if (navn.equalsIgnoreCase("admin") && passord.equalsIgnoreCase("passord")){
+        if (navn.equalsIgnoreCase("bruker") && passord.equalsIgnoreCase("bruker123")){
             App.setRoot("produkter");
         }
         else { sjekkBruker(navn, passord);}

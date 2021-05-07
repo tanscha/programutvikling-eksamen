@@ -13,16 +13,16 @@
             <Font size="38.0" />
         </font>
     </Label>
-    <TextField fx:id="txtBrukernavn" layoutX="384.0" layoutY="129.0" promptText="Skriv inn brukernavn" />
-    <PasswordField fx:id="txtPassord" layoutX="384.0" layoutY="165.0" promptText="Skriv inn passord" />
-    <Button fx:id="btnLoggInn" layoutX="473.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnLoggInn" prefHeight="27.0" prefWidth="72.0" text="Logg inn" />
-    <Label fx:id="lblFeil" alignment="CENTER" layoutX="350.0" layoutY="245.0" prefHeight="30" prefWidth="222.0" textFill="#8c8c8ccf" />
-    <Label layoutX="35.0" layoutY="409.0" text="brukernavn: admin" textFill="#8a8a8acf">
+    <TextField fx:id="txtBrukernavn" layoutX="373.0" layoutY="128.0" prefHeight="25.0" prefWidth="175.0" promptText="Skriv inn brukernavn" />
+    <PasswordField fx:id="txtPassord" layoutX="373.0" layoutY="165.0" prefHeight="25.0" prefWidth="175.0" promptText="Skriv inn passord" />
+    <Button fx:id="btnLoggInn" layoutX="476.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnLoggInn" prefHeight="25.0" prefWidth="72.0" text="Logg inn" />
+    <Label fx:id="lblFeil" alignment="CENTER" layoutX="350.0" layoutY="252.0" prefHeight="30" prefWidth="222.0" textFill="#8c8c8ccf" />
+    <Label layoutX="35.0" layoutY="409.0" text="brukernavn: bruker" textFill="#8a8a8acf">
         <font>
             <Font size="14.0" />
         </font>
     </Label>
-    <Label layoutX="35.0" layoutY="426.0" text="passord: passord" textFill="#8a8a8acf">
+    <Label layoutX="35.0" layoutY="426.0" text="passord: bruker123" textFill="#8a8a8acf">
         <font>
             <Font size="14.0" />
         </font>
@@ -32,5 +32,5 @@
             <Font size="11.0" />
         </font>
     </Button>
-   <Button fx:id="btnNyBruker" layoutX="384.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnNyBruker" text="Ny bruker" />
+   <Button fx:id="btnNyBruker" layoutX="373.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnNyBruker" text="Ny bruker" />
 </AnchorPane>
