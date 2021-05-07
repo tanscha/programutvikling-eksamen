@@ -13,6 +13,7 @@ public class LogginnController {
 
     public Button btnLoggInn;
     public Button btnUten;
+    public Button btnNyBruker;
 
     @FXML
     private PasswordField txtPassord;
@@ -31,6 +32,7 @@ public class LogginnController {
         }
     }
 
+
     @FXML
     void btnLoggInn(ActionEvent event) throws IOException {
         logginn();
@@ -39,5 +41,9 @@ public class LogginnController {
     @FXML
     void loggInnUten(ActionEvent event) throws IOException {
         App.setRoot("produkter");
+    }
+
+    public void btnNyBruker(ActionEvent event) throws IOException {
+        App.setRoot("nyBruker");
     }
 }

@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.NyBrukerController">
+<AnchorPane prefHeight="394.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.NyBrukerController">
     <Label alignment="CENTER" layoutX="349.0" layoutY="89.0" text="Registrer ny bruker">
         <font>
             <Font size="30.0" />
         </font>
     </Label>
-    <Button layoutX="35.0" layoutY="35.0" mnemonicParsing="false" onAction="#btnTilbake" text="Tilbake" />
+    <Button fx:id="btnTilbake" layoutX="35.0" layoutY="35.0" mnemonicParsing="false" onAction="#btnTilbake" text="Tilbake" />
     <Label fx:id="lblMld" alignment="TOP_LEFT" layoutX="349.0" layoutY="276.0" prefHeight="73.0" prefWidth="234.0" textFill="#8a8a8afa">
         <font>
             <Font size="14.0" />
         </font>
     </Label>
     <TextField fx:id="txtNavn" layoutX="351.0" layoutY="164.0" promptText="Navn.." />
-    <Button layoutX="522.0" layoutY="187.0" mnemonicParsing="false" onAction="#Registrer" text="Registrer" />
-   <PasswordField fx:id="txtPassord" layoutX="351.0" layoutY="212.0" promptText="Passord.."  />
+    <Button fx:id="btnRegistrer" layoutX="522.0" layoutY="187.0" mnemonicParsing="false" onAction="#btnRegistrer" text="Registrer" />
+   <PasswordField fx:id="txtPassord" layoutX="351.0" layoutY="212.0" promptText="Passord.." />
 </AnchorPane>

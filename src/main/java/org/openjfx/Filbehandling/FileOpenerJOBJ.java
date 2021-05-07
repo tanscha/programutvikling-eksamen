@@ -8,12 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static org.openjfx.Produkter.Kategoriliste.fjernAlt;
 
 
 public class FileOpenerJOBJ implements FileOpener {
     public void openFile(Kategoriliste kategoriliste, Path path) throws IOException {
-        fjernAlt();
+        kategoriliste.fjernAlt();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toFile()))) {
         }
     }

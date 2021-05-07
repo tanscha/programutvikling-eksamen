@@ -20,6 +20,8 @@ public class Brukere implements Serializable {
         writer.print("");
         writer.close();
 
+        LagreJOBJ.lagreBrukerTilFil("Brukere.jobj", list);
+
     }
 
     public static ArrayList<Bruker> HentBrukere(){
