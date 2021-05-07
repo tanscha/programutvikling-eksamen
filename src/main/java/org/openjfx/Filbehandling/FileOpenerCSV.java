@@ -4,6 +4,7 @@ import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
+import org.openjfx.Validering.FeilFil;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class FileOpenerCSV {
 
-    public static ArrayList<String[]> readCSV() {
+    public static ArrayList<String[]> readCSV() throws IOException {
         ArrayList<String[]> liste = new ArrayList<>();
 
             String line;
@@ -43,9 +44,14 @@ public class FileOpenerCSV {
             liste.remove(0);
 
             for (String[] x : liste) {
+                try {
                 Kategori k = LagringKategori.finnKategori(x[3]);
                 Produkt produkt = new Produkt(x[0], x[1], Integer.parseInt(x[2]), k);
                 produktliste.addObjekt(produkt);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();}
+
             }
         }
         return produktliste;

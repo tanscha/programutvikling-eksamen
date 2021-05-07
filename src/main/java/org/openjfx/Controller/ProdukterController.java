@@ -24,6 +24,7 @@ import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Lagring.LagringProdukt;
 import org.openjfx.Produkter.*;
 import org.openjfx.Sleep;
+import org.openjfx.Validering.FeilFil;
 import org.openjfx.Validering.Regex;
 
 
@@ -87,6 +88,15 @@ public class ProdukterController implements Initializable {
     private void setKategorier() {
         ArrayList<Kategori> liste = LagringKategori.hentFraFil();
         ArrayList<String> ut = new ArrayList<>();
+
+        if (liste.isEmpty()){
+            try {
+                FeilFil.kategorifraProdukt();
+                liste = LagringKategori.hentFraFil();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         for (Kategori k : liste){
             ut.add(k.getNavn());
