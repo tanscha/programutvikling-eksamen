@@ -5,6 +5,7 @@ import org.openjfx.Produkter.KonverterListe;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class LagreCSV {
 
     public static void save(ArrayList<Produkt> a) throws IOException {
+        blank();
         Files.write(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), printString(a));
     }
 
@@ -29,6 +31,13 @@ public class LagreCSV {
 
     public static void save(Produktliste pl) throws IOException {
         save(KonverterListe.fraKomponenttilArray(pl));
+    }
+
+    public static void blank() throws IOException {
+        String blank = "";
+        byte[] blynk = blank.getBytes();
+        Files.write(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), blynk);
+
     }
 
 }

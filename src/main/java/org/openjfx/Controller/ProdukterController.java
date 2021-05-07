@@ -18,6 +18,7 @@ import org.openjfx.Filbehandling.FileOpener;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
+import org.openjfx.Lagring.LagringProdukt;
 import org.openjfx.Produkter.*;
 import org.openjfx.Sleep;
 
@@ -91,7 +92,7 @@ public class ProdukterController implements Initializable {
         txtEgenskap.setText("");
     }
 
-    private void oppdater() {
+    private void oppdater(){
         tableView.getItems().removeAll();
         tableView.setItems(valgtTypeListe());
         txtSøk.clear();
@@ -282,11 +283,11 @@ public class ProdukterController implements Initializable {
                     Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
                     nullstillTxt();
                     produktliste = FileOpenerCSV.ListefraCSV();
-                    produktliste.addObjekt(produkt);
-                    LagreCSV.save(produktliste);
+                    LagringProdukt.LeggTilProdukt(produkt, produktliste);
                     lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
                     lblPrisogNavn.setText("");
-                    produktliste.attachTableView(tableView);
+                    produktliste.fjernAlt();
+                    produktliste = FileOpenerCSV.ListefraCSV();
                     oppdater();
                     setKategorivalg();
                 } else {
