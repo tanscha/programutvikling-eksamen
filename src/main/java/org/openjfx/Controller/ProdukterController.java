@@ -15,6 +15,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
+import org.openjfx.Exceptions.InvalidEgenskapException;
+import org.openjfx.Exceptions.InvalidNavnException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
@@ -27,6 +29,9 @@ import org.openjfx.Validering.Regex;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -280,7 +285,23 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnlagre(ActionEvent event) throws IOException {
-        lagre();
+        LagreCSV.save(fraKomponenttilArray(produktliste));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lagre registrering...");
+        fileChooser.setInitialFileName("Register"+ LocalDate.now());
+        FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("CSV files (*.csv", "*.csv");
+        FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("TXT files (*.txt", "*.txt");
+        fileChooser.getExtensionFilters().add(filter1);
+        fileChooser.getExtensionFilters().add(filter2);
+        File dest = fileChooser.showSaveDialog(null);
+        if (dest != null){
+            try {
+                Files.copy(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), dest.toPath());
+            }
+            catch (IOException e){
+                lblFeilmld.setText("Filen ble ikke lastet ned. Vennligst prøv igjen.");
+            }
+        }
     }
 
     public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
@@ -293,8 +314,8 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("");
             try {
                 Integer.parseInt(spnAntall.getPromptText());
-            } catch (IllegalArgumentException e){
-                lblPrisogNavn.setText("Skriv inn riktig navn og pris");
+            } catch (InvalidNavnException | InvalidAntallException e){
+                lblPrisogNavn.setText("Skriv inn riktig navn og antall");
                 lblFeilmld.setText("");
             }
         } else if (egenskap == null || egenskap.isEmpty()) {
@@ -302,8 +323,8 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("");
             try {
                 Integer.parseInt(spnAntall.getPromptText());
-            } catch (IllegalArgumentException e) {
-                lblPrisogNavn.setText("Skriv inn riktig egenskap og pris");
+            } catch (InvalidEgenskapException | InvalidAntallException e) {
+                lblPrisogNavn.setText("Skriv inn riktig egenskap og antall");
                 lblFeilmld.setText("");
             }
         } else {
@@ -323,10 +344,10 @@ public class ProdukterController implements Initializable {
                     setKategorivalg();
                     setKategorier();
                 } else {
-                    lblPrisogNavn.setText("Prisen må være med enn 0");
+                    lblPrisogNavn.setText("Antall må være med enn 0");
                     lblFeilmld.setText("");
                 }
-            } catch (IllegalArgumentException | IOException e) {
+            } catch (InvalidAntallException | IOException e) {
                 lblPrisogNavn.setText("Skriv inn riktig antall");
                 lblFeilmld.setText("");
                 txtNavn.setText("");
@@ -352,6 +373,7 @@ public class ProdukterController implements Initializable {
 
         LagringKategori.LeggTil(nyttnavn.get());
         setKategorier();
+        lblPrisogNavn.setText("Kategori lagt til");
     }
 
 
@@ -387,8 +409,15 @@ public class ProdukterController implements Initializable {
 
     public void editTvNavn(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
         Produkt produkt = tableView.getSelectionModel().getSelectedItem();
-        String navn = cellEditEvent.getNewValue();
-        produkt.setNavn(navn);
+        try {
+            String navn = cellEditEvent.getNewValue();
+            Regex.navnRegex(navn);
+            produkt.setNavn(navn);
+            lblFeilmld.setText("Navnet er endret!");
+        }
+        catch (InvalidNavnException e){
+            lblFeilmld.setText("Ugyldig navn. Vennligst prøv igjen.");
+        }
         tableView.refresh();
         lblFeilmld.setText("Navnet er endret!");
         lagre();
