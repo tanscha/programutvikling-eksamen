@@ -10,9 +10,9 @@ public class Regex {
         }
         else throw new InvalidNavnException("Ugyldig navn, vennligst prøv igjen");
     }
-    public static int antallRegex(String string){
-        if (string.matches("[0-9.]+")){
-            return Integer.parseInt(string);
+    public static int antallRegex(int i){
+        if (i >= 0){
+            return i;
         }
         else throw new InvalidAntallException("Ugyldig antall, vennligst prøv igjen");
     }

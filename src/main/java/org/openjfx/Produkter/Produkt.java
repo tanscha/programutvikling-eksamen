@@ -49,11 +49,6 @@ public class Produkt implements Serializable {
 
     @Override
     public String toString() {
-        return "Produkt{" +
-                "navn='" + navn + '\'' +
-                ", egenskap='" + egenskap + '\'' +
-                ", antall=" + antall +
-                ", kategori='" + kategori + '\'' +
-                '}';
+        return  navn + egenskap + antall + kategori;
     }
 }

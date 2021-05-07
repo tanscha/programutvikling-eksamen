@@ -4,30 +4,32 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
-import org.openjfx.Filbehandling.FileOpener;
+import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
+import org.openjfx.Filbehandling.LagreJOBJ;
 import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Lagring.LagringProdukt;
 import org.openjfx.Produkter.*;
 import org.openjfx.Sleep;
+import org.openjfx.Validering.Regex;
 
 
+import java.awt.print.Printable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
+import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
 
 
 public class ProdukterController implements Initializable {
@@ -154,6 +156,7 @@ public class ProdukterController implements Initializable {
         btnLagre.setDisable(false);
         btnLeggtilKat.setDisable(false);
         btnFjernKat.setDisable(false);
+        btnSlett.setDisable(false);
     }
 
     //Metode som hemmer knapper osv
@@ -169,6 +172,7 @@ public class ProdukterController implements Initializable {
         btnLagre.setDisable(true);
         btnLeggtilKat.setDisable(true);
         btnFjernKat.setDisable(true);
+        btnSlett.setDisable(true);
     }
 
 
@@ -203,7 +207,7 @@ public class ProdukterController implements Initializable {
     }
     private void setKategorivalg(){
         ArrayList<String> kategorier = new ArrayList<>();
-        ArrayList<Produkt> a = KonverterListe.fraKomponenttilArray(produktliste);
+        ArrayList<Produkt> a = fraKomponenttilArray(produktliste);
 
         kategorier.add("Alle");
 
@@ -226,7 +230,7 @@ public class ProdukterController implements Initializable {
     private ObservableList<Produkt> valgtTypeListe() {
         String typestring = KategoriValg.getValue().toString();
 
-        ArrayList<Produkt> alle = KonverterListe.fraKomponenttilArray(produktliste);
+        ArrayList<Produkt> alle = fraKomponenttilArray(produktliste);
         ObservableList<Produkt> ny = FXCollections.observableArrayList();
 
         for (Produkt p : alle){
@@ -246,9 +250,31 @@ public class ProdukterController implements Initializable {
 
 
     public void Søk(KeyEvent keyEvent) {
+        if (txtSøk.getText().isBlank()){
+            tableView.setItems(valgtTypeListe());
+            return;
+        }
+        ObservableList<Produkt> resultat;
+        ObservableList<Produkt> l = valgtTypeListe();
+
+        if (txtSøk.getText() != null){
+            resultat = Produktliste.søkEtterString(txtSøk.getText(), l);
+
+            if (resultat == null){
+            tableView.setItems(FXCollections.observableArrayList());
+            }
+            else {
+                tableView.setItems(resultat);
+            }
+        }
+
+    }
+    private void lagre() throws IOException {
+        LagreCSV.save(fraKomponenttilArray(produktliste));
     }
 
-    public void btnlagre(ActionEvent event) {
+    public void btnlagre(ActionEvent event) throws IOException {
+        lagre();
     }
 
     public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
@@ -304,7 +330,12 @@ public class ProdukterController implements Initializable {
 
     }
 
-    public void btnSlett(ActionEvent event) {
+    public void btnSlett(ActionEvent event) throws IOException {
+        Produkt slett = tableView.getSelectionModel().getSelectedItem();
+        produktliste.fjern(slett);
+        lblFeilmld.setText("Produktet er slettet!");
+        oppdater();
+        lagre();
     }
 
     public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
@@ -328,10 +359,28 @@ public class ProdukterController implements Initializable {
         lblPrisogNavn.setText("Kategori slettet");
     }
 
-    public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {
+    public void editTvNavn(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
+        Produkt produkt = tableView.getSelectionModel().getSelectedItem();
+        String navn = cellEditEvent.getNewValue();
+        produkt.setNavn(navn);
+        tableView.refresh();
+        lblFeilmld.setText("Navnet er endret!");
+        lagre();
     }
 
-    public void editTvAntall(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {
+    public void editTvAntall(TableColumn.CellEditEvent<Object, Integer> cellEditEvent) throws IOException {
+        Produkt produkt = tableView.getSelectionModel().getSelectedItem();
+        try {
+            int antall = cellEditEvent.getNewValue();
+            Regex.antallRegex(antall);
+            produkt.setAntall(antall);
+            lblFeilmld.setText("Antall er endret!");
+        }
+        catch (InvalidAntallException e){
+            lblFeilmld.setText("Antall må være over null!");
+        }
+        tableView.refresh();
+        lagre();
     }
 
 }
