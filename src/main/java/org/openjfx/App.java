@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openjfx.Hjelpeklasser.Oppstart;
+import org.openjfx.Lagring.LagringKategori;
 
 import java.io.IOException;
 
@@ -22,7 +23,6 @@ public class App extends Application {
         scene = new Scene(loadFXML("logginn"));
         stage.setScene(scene);
         stage.show();
-        Oppstart.leggTilKategorier();
     }
 
     public static Scene getScene() {

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Oppstart {
 
-    public static void leggTilKategorier() throws FileNotFoundException {
+    public static void leggTilKategorier() throws IOException {
         LagringKategori.fjernAlt();
 
         LagringKategori.LeggTil("Traktor");
