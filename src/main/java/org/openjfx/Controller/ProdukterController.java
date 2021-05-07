@@ -16,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
-import org.openjfx.Bruker.AktivBruker;
 import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Exceptions.InvalidEgenskapException;
 import org.openjfx.Exceptions.InvalidNavnException;
@@ -80,7 +79,6 @@ public class ProdukterController implements Initializable {
 
     private Sleep task;
 
-    int aktivbruker = AktivBruker.getBrukernr();
 
     @FXML
     private TableView<Produkt> tableView;
@@ -355,9 +353,8 @@ public class ProdukterController implements Initializable {
                 produktliste = FileOpenerCSV.ListefraCSV();
                 oppdater();
                 setKategorivalg();
-                setKategorier();
             }
-        lastinn();
+        lagre();
         }
 
 
