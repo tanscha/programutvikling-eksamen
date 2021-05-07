@@ -1,0 +1,223 @@
+Index: src/main/resources/org/openjfx/registrerprodukt.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/org/openjfx/registrerprodukt.fxml b/src/main/resources/org/openjfx/registrerprodukt.fxml
+new file mode 100644
+--- /dev/null	(date 1620249531841)
++++ b/src/main/resources/org/openjfx/registrerprodukt.fxml	(date 1620249531841)
+@@ -0,0 +1,160 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import java.lang.*?>
++<?import java.util.*?>
++<?import javafx.scene.*?>
++<?import javafx.scene.control.*?>
++<?import javafx.scene.layout.*?>
++
++<?import javafx.scene.shape.Rectangle?>
++<?import javafx.scene.text.Text?>
++<?import javafx.scene.text.Font?>
++<?import javafx.scene.shape.Line?>
++<?import javafx.scene.control.cell.PropertyValueFactory?>
++<?import javafx.collections.FXCollections?>
++<?import javafx.scene.shape.Circle?>
++<AnchorPane xmlns="http://javafx.com/javafx"
++            xmlns:fx="http://javafx.com/fxml"
++            fx:controller="org.openjfx.Controller.RegistrerproduktController"
++            prefHeight="400.0" prefWidth="600.0">
++    <children>
++        <BorderPane prefHeight="780.0" prefWidth="1100.0">
++            <left>
++                <Pane prefHeight="200.0" prefWidth="282.0" styleClass="gradient"  BorderPane.alignment="CENTER">
++                    <children>
++                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffffb0" height="167.0" layoutX="24.0" layoutY="163.0" stroke="#e8e8e800" strokeLineJoin="ROUND" strokeMiterLimit="15.0" strokeType="INSIDE" width="225.0" />
++                        <Button fx:id="loggOut" layoutX="18.0" layoutY="732.0" mnemonicParsing="false" onAction="#forsideBtn" prefHeight="25.0" prefWidth="243.0" styleClass="button-basket" stylesheets="@../styles.css" text="Logg ut" />
++                        <Text fill="WHITE" layoutX="50.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-under-header" text="ADMINISTRATORSIDE">
++                            <font>
++                                <Font size="18.0" />
++                            </font>
++                        </Text>
++                        <Text fill="WHITE" layoutX="24.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-header" text="RÅFETDATA.NO">
++                            <font>
++                                <Font name="System Bold" size="30.0" />
++                            </font>
++                        </Text>
++                        <Line endX="124.0" layoutX="125.0" layoutY="89.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="1.25" />
++                        <Text fill="#656565" layoutX="34.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tilbakemeldinger:">
++                            <font>
++                                <Font name="System Bold" size="17.0" />
++                            </font>
++                        </Text>
++                        <Label fx:id="lblMessage" alignment="TOP_LEFT" layoutX="36.0" layoutY="200.0" prefHeight="116.0" prefWidth="200.0">
++                            <font>
++                                <Font size="14.0" />
++                            </font></Label>
++                    </children>
++                </Pane>
++            </left>
++            <center>
++                <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" styleClass="bg-white"  BorderPane.alignment="CENTER">
++                    <children>
++                        <Text fill="#f89a76" layoutX="90.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRER NYTT KOMPONENT">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategori" wrappingWidth="92.73095703125" />
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pris" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="produktPris" layoutX="91.0" layoutY="673.0" prefHeight="29.0" prefWidth="132.0"  />
++                        <Button fx:id="slettRader" layoutX="525.0" layoutY="309.0" mnemonicParsing="false" onAction="#slettRader" prefHeight="25.0" prefWidth="244.0" styleClass="delete" stylesheets="@../styles.css" text="Slett valgt rad" />
++                        <TableView fx:id="komponenter" layoutX="89.0" layoutY="68.0" prefHeight="234.0" prefWidth="679.0" >
++                            <columns>
++                                <TableColumn fx:id="produktnavn" onEditCommit="#endreTableViewDataString" prefWidth="202.0" text="Produktnavn">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="navn" />
++                                    </cellValueFactory>
++                                    <cellFactory>
++                                    </cellFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="kategori" onEditCommit="#endreTableViewDataString" prefWidth="164.0" text="Kategori">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="kategori" />
++                                    </cellValueFactory>
++                                    <cellFactory>
++                                    </cellFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="pris" minWidth="0.0" onEditCommit="#endreTableViewDataDouble" prefWidth="159.0" text="Pris">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="pris" />
++                                    </cellValueFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="duplikat" onEditCommit="#endreTableViewDataBool" prefWidth="153.0" text="Antall pr. konfigurasjon">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="duplikat" />
++                                    </cellValueFactory>
++
++                                </TableColumn>
++
++                            </columns>
++                        </TableView>
++                        <Text fill="#f89a76" layoutX="89.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-header-lower" text="KOMPONENTLISTE">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#f89a76" layoutX="526.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRER BRUKER">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="528.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type (admin/vanlig bruker)" wrappingWidth="202.73095703125" />
++                        <Text fill="#5e5e5e" layoutX="527.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brukernavn" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="user" layoutX="527.0" layoutY="614.0" prefHeight="27.0" prefWidth="180.0"  />
++                        <Text fill="#5e5e5e" layoutX="528.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="pass" layoutX="528.0" layoutY="673.0" prefHeight="27.0" prefWidth="179.0"  />
++                        <Button fx:id="registrerBruker" layoutX="599.0" layoutY="717.0" mnemonicParsing="false" onAction="#registrerbtn" prefHeight="25.0" prefWidth="108.0" styleClass="save"  text="Registrer" />
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produktnavn" wrappingWidth="140.02001953125" />
++                        <TextField fx:id="produktNavn" layoutX="91.0" layoutY="558.0" prefHeight="29.0" prefWidth="329.0"  />
++                        <TextField fx:id="kategoriNavn" layoutX="231.0" layoutY="614.0" prefHeight="29.0" prefWidth="189.0"  />
++                        <Text fill="#5e5e5e" layoutX="233.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorinavn " wrappingWidth="141.73095703125" />
++                        <Button fx:id="registrerProduktBtn" layoutX="311.0" layoutY="715.0" mnemonicParsing="false" onAction="#registererProdukt" prefHeight="25.0" prefWidth="108.0" styleClass="save" text="Registrer" />
++
++                        <ComboBox fx:id="adminORuser" layoutX="527.0" layoutY="558.0" prefHeight="27.0" prefWidth="179.0" promptText="Velg" styleClass="choicebox-product">
++                            <items>
++                                <FXCollections fx:factory="observableArrayList">
++                                    <String fx:id="admin" fx:value="Admin" />
++                                    <String fx:id="bruker" fx:value="Bruker" />
++                                </FXCollections>
++                            </items>
++                        </ComboBox>
++                        <ComboBox fx:id="kategoriCombobox" layoutX="89.0" layoutY="614.0" onAction="#setKategoriTilgjengelig" prefHeight="27.0" prefWidth="135.0" styleClass="choicebox-product" stylesheets="@../styles.css" value="Velg kategori" />
++                        <Button fx:id="setMasterFil" layoutX="443.0" layoutY="442.0" mnemonicParsing="false" onAction="#setMasterFil" prefHeight="25.0" prefWidth="261.0" styleClass="save" stylesheets="@../styles.css" text="Sett nåværende komponetliste til master" />
++                        <TextField fx:id="filteredData" layoutX="95.0" layoutY="309.0" prefHeight="28.0" prefWidth="417.0" promptText="Søk etter komponent" styleClass="search-bar" stylesheets="@../styles.css">
++                            <font>
++                                <Font size="11.0" />
++                            </font></TextField>
++                        <Line endX="529.0" layoutX="191.0" layoutY="481.0" startX="-100.0" stroke="#c6c6c6" />
++                        <Button fx:id="hentFraFil" layoutX="89.0" layoutY="437.0" mnemonicParsing="false" onAction="#hentFraFil" prefHeight="25.0" prefWidth="97.0" styleClass="button-basket" stylesheets="@../styles.css" text="Hent" />
++                        <ComboBox fx:id="filListe" layoutX="90.0" layoutY="404.0" prefHeight="25.0" prefWidth="205.0" promptText="Velg versjon" styleClass="choicebox-product" stylesheets="@../styles.css" />
++                        <Text fill="#3c3c3c" layoutX="90.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filbehandling for komponentliste">
++                            <font>
++                                <Font name="System Bold" size="17.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="234.0" layoutY="668.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall pr. konfigurasjon" wrappingWidth="208.02001953125" />
++                        <Circle fill="#ffffff00" layoutX="484.0" layoutY="320.0" radius="8.0" stroke="#7c7c7c" strokeType="INSIDE" strokeWidth="2.5" />
++                        <Line endX="-95.0" endY="8.0" layoutX="589.0" layoutY="323.0" startX="-100.0" startY="1.666656494140625" stroke="#7c7c7c" strokeWidth="2.5" />
++                        <TextField fx:id="produktAntall" layoutX="232.0" layoutY="674.0" prefHeight="29.0" prefWidth="187.0" stylesheets="@../styles.css" />
++                        <Button fx:id="lagreTilFil" layoutX="198.0" layoutY="437.0" mnemonicParsing="false" onAction="#lagreTilFil" prefHeight="25.0" prefWidth="97.0" styleClass="save" stylesheets="@../styles.css" text="Lagre" />
++                        <Button fx:id="hentFraMaster" layoutX="443.0" layoutY="409.0" mnemonicParsing="false" onAction="#hentMasterFil" prefHeight="25.0" prefWidth="261.0" styleClass="button-basket" stylesheets="@../styles.css" text="Hent masterliste" />
++                        <Text layoutX="91.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valgt komponentliste:" />
++                        <Label fx:id="lblFilNavn" layoutX="218.0" layoutY="382.0" text="filnavn" textFill="#e46d13" />
++                        <Text fill="#3c3c3c" layoutX="443.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filbehandling for masterliste">
++                            <font>
++                                <Font size="17.0" />
++                            </font>
++                        </Text>
++                        <Line endX="183.0" endY="-30.0" layoutX="206.0" layoutY="497.0" startX="183.0" startY="-140.0" stroke="#c6c6c6" />
++                        <Label fx:id="lblMaster" layoutX="580.0" layoutY="382.0" text="master" textFill="#e46d13" />
++                        <Text layoutX="443.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nåværende masterliste:" />
++                    </children>
++                </Pane>
++            </center>
++        </BorderPane>
++    </children>
++</AnchorPane>
+Index: src/main/java/org/openjfx/Controller/RegistrerproduktController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/RegistrerproduktController.java b/src/main/java/org/openjfx/Controller/RegistrerproduktController.java
+new file mode 100644
+--- /dev/null	(date 1620249531834)
++++ b/src/main/java/org/openjfx/Controller/RegistrerproduktController.java	(date 1620249531834)
+@@ -0,0 +1,43 @@
++package org.openjfx.Controller;
++
++import javafx.event.ActionEvent;
++import javafx.scene.control.TableColumn;
++
++public class RegistrerproduktController {
++
++    public void forsideBtn(ActionEvent actionEvent) {
++    }
++
++    public void endreTableViewDataString(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void endreTableViewDataDouble(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void endreTableViewDataBool(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void setKategoriTilgjengelig(ActionEvent actionEvent) {
++    }
++
++    public void slettRader(ActionEvent actionEvent) {
++    }
++
++    public void registrerbtn(ActionEvent actionEvent) {
++    }
++
++    public void registererProdukt(ActionEvent actionEvent) {
++    }
++
++    public void setMasterFil(ActionEvent actionEvent) {
++    }
++
++    public void hentFraFil(ActionEvent actionEvent) {
++    }
++
++    public void lagreTilFil(ActionEvent actionEvent) {
++    }
++
++    public void hentMasterFil(ActionEvent actionEvent) {
++    }
++}

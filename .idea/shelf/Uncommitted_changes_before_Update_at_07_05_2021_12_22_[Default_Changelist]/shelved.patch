@@ -1,0 +1,15 @@
+Index: src/main/java/org/openjfx/Filer/Produkter.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Navn\t Egenskap\t Antall\t Kategori \r\ndff\tfsfd\t1\tHeis\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filer/Produkter.csv b/src/main/java/org/openjfx/Filer/Produkter.csv
+--- a/src/main/java/org/openjfx/Filer/Produkter.csv	(revision e2a37e34a543d8897b18b58f16d458994886b1f2)
++++ b/src/main/java/org/openjfx/Filer/Produkter.csv	(date 1620378989874)
+@@ -1,2 +1,3 @@
+ Navn	 Egenskap	 Antall	 Kategori 
+-dff	fsfd	1	Heis
++blå	10hk	4	Traktor
++rød	hei	2	Traktor

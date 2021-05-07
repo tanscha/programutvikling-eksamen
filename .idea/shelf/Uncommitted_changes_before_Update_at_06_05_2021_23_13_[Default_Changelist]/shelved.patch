@@ -1,0 +1,583 @@
+Index: src/main/java/org/openjfx/Filer/Produkter.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Navn\t Egenskap\t Antall\t Kategori \r\nGrønn\t10 hK\t1\tTraktor\r\nRød\t20 hK\t2\tTraktor\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filer/Produkter.csv b/src/main/java/org/openjfx/Filer/Produkter.csv
+--- a/src/main/java/org/openjfx/Filer/Produkter.csv	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/java/org/openjfx/Filer/Produkter.csv	(date 1620321260839)
+@@ -1,3 +1,24 @@
+ Navn	 Egenskap	 Antall	 Kategori 
+ Grønn	10 hK	1	Traktor
+ Rød	20 hK	2	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++hei	20 hk	1	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++hei	20 hk	1	Traktor
++hei	10hk	1	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++hei	20 hk	1	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++Grønn	10 hK	1	Traktor
++Rød	20 hK	2	Traktor
++hei	20 hk	1	Traktor
++hei	10hk	1	Traktor
++tanja	50 hk	2	Traktor
+Index: src/main/java/org/openjfx/Filbehandling/LagreCSV.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Filbehandling;\r\n\r\nimport org.openjfx.Produkter.Kategori;\r\nimport org.openjfx.Produkter.KonverterListe;\r\nimport org.openjfx.Produkter.Produkt;\r\nimport org.openjfx.Produkter.Produktliste;\r\n\r\nimport java.io.IOException;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Paths;\r\nimport java.util.ArrayList;\r\n\r\npublic class LagreCSV {\r\n\r\n    public static void save(ArrayList<Produkt> a) throws IOException {\r\n        Files.write(Paths.get(\"src/main/java/org/openjfx/Filer/Produkter.csv\"), printString(a));\r\n    }\r\n\r\n    //Metode som gjør liste om til string\r\n    //Skriver name, category og quantity med tabulator mellom slik at filen kan åpnes av excel\r\n    //Velger tabulator som delimiter fordi noen av navnene har komma eller \" i seg\r\n    private static byte[] printString(ArrayList<Produkt> a) {\r\n        String tekst = \"Navn\\t Egenskap\\t Antall\\t Kategori \\n\";\r\n        for (Produkt p : a) {\r\n            tekst += p.getNavn() + \"\\t\" + p.getEgenskap() + \"\\t\" + p.getAntall() + \"\\t\" + p.getKategorinavn() + \"\\n\";\r\n        }\r\n        return tekst.getBytes();\r\n    }\r\n\r\n    public static void save(Produktliste pl) throws IOException {\r\n        save(KonverterListe.fraKomponenttilArray(pl));\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filbehandling/LagreCSV.java b/src/main/java/org/openjfx/Filbehandling/LagreCSV.java
+--- a/src/main/java/org/openjfx/Filbehandling/LagreCSV.java	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/java/org/openjfx/Filbehandling/LagreCSV.java	(date 1620330615779)
+@@ -22,7 +22,7 @@
+     private static byte[] printString(ArrayList<Produkt> a) {
+         String tekst = "Navn\t Egenskap\t Antall\t Kategori \n";
+         for (Produkt p : a) {
+-            tekst += p.getNavn() + "\t" + p.getEgenskap() + "\t" + p.getAntall() + "\t" + p.getKategorinavn() + "\n";
++            tekst += p.getNavn() + "\t" + p.getEgenskap() + "\t" + p.getAntall() + "\t" + p.getKategori() + "\n";
+         }
+         return tekst.getBytes();
+     }
+Index: src/main/java/org/openjfx/Produkter/Produkt.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Produkter;\r\n\r\nimport java.io.Serializable;\r\n\r\npublic class Produkt implements Serializable {\r\n    String navn;\r\n    String egenskap;\r\n    int antall;\r\n    Kategori kategori;\r\n    String kategorinavn;\r\n\r\n    public Produkt(String navn, String egenskap, int antall, Kategori kategori) {\r\n        this.navn = navn;\r\n        this.egenskap = egenskap;\r\n        this.antall = antall;\r\n        this.kategori = kategori;\r\n        this.kategorinavn = kategori.getNavn();\r\n    }\r\n\r\n    public String getNavn() {\r\n        return navn;\r\n    }\r\n\r\n    public void setNavn(String navn) {\r\n        this.navn = navn;\r\n    }\r\n\r\n    public String getEgenskap() {\r\n        return egenskap;\r\n    }\r\n\r\n    public void setEgenskap(String egenskap) {\r\n        this.egenskap = egenskap;\r\n    }\r\n\r\n    public int getAntall() {\r\n        return antall;\r\n    }\r\n\r\n    public void setAntall(int antall) {\r\n        this.antall = antall;\r\n    }\r\n\r\n    public Kategori getKategori() {\r\n        return kategori;\r\n    }\r\n\r\n    public void setKategori(Kategori kategori) {\r\n        this.kategori = kategori;\r\n    }\r\n\r\n    public String getKategorinavn() {\r\n        return kategorinavn;\r\n    }\r\n\r\n    public void setKategorinavn(String kategorinavn) {\r\n        this.kategorinavn = kategorinavn;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Produkt{\" +\r\n                \"navn='\" + navn + '\\'' +\r\n                \", egenskap='\" + egenskap + '\\'' +\r\n                \", antall=\" + antall +\r\n                \", kategori='\" + kategorinavn + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Produkter/Produkt.java b/src/main/java/org/openjfx/Produkter/Produkt.java
+--- a/src/main/java/org/openjfx/Produkter/Produkt.java	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/java/org/openjfx/Produkter/Produkt.java	(date 1620330580838)
+@@ -7,14 +7,12 @@
+     String egenskap;
+     int antall;
+     Kategori kategori;
+-    String kategorinavn;
+ 
+     public Produkt(String navn, String egenskap, int antall, Kategori kategori) {
+         this.navn = navn;
+         this.egenskap = egenskap;
+         this.antall = antall;
+         this.kategori = kategori;
+-        this.kategorinavn = kategori.getNavn();
+     }
+ 
+     public String getNavn() {
+@@ -41,29 +39,21 @@
+         this.antall = antall;
+     }
+ 
+-    public Kategori getKategori() {
+-        return kategori;
++    public String getKategori() {
++        return kategori.getNavn();
+     }
+ 
+     public void setKategori(Kategori kategori) {
+         this.kategori = kategori;
+     }
+ 
+-    public String getKategorinavn() {
+-        return kategorinavn;
+-    }
+-
+-    public void setKategorinavn(String kategorinavn) {
+-        this.kategorinavn = kategorinavn;
+-    }
+-
+     @Override
+     public String toString() {
+         return "Produkt{" +
+                 "navn='" + navn + '\'' +
+                 ", egenskap='" + egenskap + '\'' +
+                 ", antall=" + antall +
+-                ", kategori='" + kategorinavn + '\'' +
++                ", kategori='" + kategori + '\'' +
+                 '}';
+     }
+ }
+Index: src/main/java/org/openjfx/Filer/Kategorier.jobj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heisq\u0000~\u0000\u0002t\u0000\u0004Hei3x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heisq\u0000~\u0000\u0002t\u0000\u0004Hei3x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0004Hei2x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0004Hei2x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0004w\u0004\u0000\u0000\u0000\u0004sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøsq\u0000~\u0000\u0002t\u0000\u0003Heix��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0000w\u0004\u0000\u0000\u0000\u0000x��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærx��\u0000\u0005sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Eorg.openjfx.Produkter.Kategori�����v��\u0002\u0000\u0001L\u0000\u0004navnt\u0000\u0012Ljava/lang/String;xpt\u0000\u0007Traktorsq\u0000~\u0000\u0002t\u0000\fArbeidsklærsq\u0000~\u0000\u0002t\u0000\tKorn/Frøx
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filer/Kategorier.jobj b/src/main/java/org/openjfx/Filer/Kategorier.jobj
+--- a/src/main/java/org/openjfx/Filer/Kategorier.jobj	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/java/org/openjfx/Filer/Kategorier.jobj	(date 1620331656173)
+@@ -1,1 +1,1 @@
+-�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heisq ~ t Hei3x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heisq ~ t Hei3x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Hei2x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Hei2x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx
+\ No newline at end of file
++�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t 	Korn/Frøsq ~ t heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heisq ~ t Hei3x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heisq ~ t Hei3x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Hei2x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Hei2x�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Heix�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøsq ~ t Gjødselx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx�� sr java.util.ArrayListx����a� I sizexp    w    x�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærx�� sr java.util.ArrayListx����a� I sizexp   w   sr org.openjfx.Produkter.Kategori�����v�� L navnt Ljava/lang/String;xpt Traktorsq ~ t Arbeidsklærsq ~ t 	Korn/Frøx
+\ No newline at end of file
+Index: src/main/java/org/openjfx/Controller/ProdukterController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Controller;\r\n\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.concurrent.WorkerStateEvent;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.control.cell.TextFieldTableCell;\r\nimport javafx.scene.input.KeyEvent;\r\nimport javafx.scene.layout.TilePane;\r\nimport javafx.util.converter.IntegerStringConverter;\r\nimport org.openjfx.App;\r\nimport org.openjfx.Filbehandling.FileOpenerCSV;\r\nimport org.openjfx.Filbehandling.LagreCSV;\r\nimport org.openjfx.Lagring.LagringKategori;\r\nimport org.openjfx.Produkter.*;\r\nimport org.openjfx.Sleep;\r\n\r\n\r\nimport java.io.FileNotFoundException;\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.*;\r\n\r\n\r\n\r\npublic class ProdukterController implements Initializable {\r\n\r\n    ObservableList<Produkt> produktObservableList;\r\n    ObservableList<Kategori> kategoriObservableList;\r\n\r\n    public ComboBox<String> comboKategori;\r\n\r\n    public TextField txtNavn;\r\n    public TextField txtEgenskap;\r\n    public Spinner <Integer> spnAntall;\r\n    public Label lblPrisogNavn;\r\n\r\n    public TableColumn<Object, Integer> colAntall;\r\n    public TableColumn<Object, String> colNavn;\r\n    public TableColumn<Object, String> colKategori;\r\n    public TableColumn<Object, String> colEgenskap;\r\n\r\n    public TextField txtSøk;\r\n    public ComboBox typevalg;\r\n    public ComboBox<String> comboType;\r\n    public ComboBox KategoriValg;\r\n\r\n    public Button btnÅpne;\r\n    public Button btnLeggtil;\r\n    public Button btnSlett;\r\n    public Button btnLagre;\r\n    public Label lblFeilmld;\r\n    public TextField txtKategori;\r\n    public Button btnLeggtilKat;\r\n    public Button btnFjernKat;\r\n\r\n    private Sleep task;\r\n\r\n\r\n    @FXML\r\n    private ChoiceBox<String> kolonnesøk;\r\n    @FXML\r\n    private TableView<Produkt> tableView;\r\n    private Kategoriliste kategorier;\r\n\r\n\r\n    @FXML\r\n    void btnTilbake(ActionEvent event) throws IOException {\r\n        App.setRoot(\"logginn\");\r\n    }\r\n\r\n    private Produktliste produktliste = new Produktliste();\r\n\r\n    private ObservableList<String> finnKategorier() {\r\n        ObservableList<String> kategorier = FXCollections.observableArrayList();\r\n\r\n        ArrayList<Kategori> liste = KonverterListe.fraKategoritilArray(LagringKategori.hentKategorier());\r\n        for (Kategori k : liste){\r\n            kategorier.add(k.getNavn());\r\n        }\r\n        return kategorier;\r\n    }\r\n\r\n    //Tømmer tekstfelt\r\n    private void nullstillTxt() {\r\n        txtNavn.setText(\"\");\r\n        txtEgenskap.setText(\"\");\r\n    }\r\n\r\n    private void oppdater() {\r\n        tableView.getItems().removeAll();\r\n        tableView.setItems(produktliste.getRegister());\r\n        txtSøk.clear();\r\n\r\n\r\n    }\r\n\r\n    @FXML\r\n    private void btnÅpne(ActionEvent event) throws IOException {\r\n        produktliste.fjernAlt();\r\n        hemKnapper();\r\n        lblFeilmld.setText(\"Produkter lastes inn...\");\r\n        lblPrisogNavn.setText(\"\");\r\n\r\n        task = new Sleep();\r\n        task.setOnSucceeded(this::threadDone);\r\n        task.setOnFailed(this::threadFailed);\r\n        Thread th = new Thread(task);\r\n        th.setDaemon(true);\r\n        th.start();\r\n    }\r\n\r\n    private void threadDone(WorkerStateEvent workerStateEvent) {\r\n        produktliste = task.getValue();\r\n        if (produktliste == null){\r\n            lblFeilmld.setText(\"Fant ingen produkter\");\r\n        }\r\n        else {\r\n        produktliste.attachTableView(tableView);\r\n        if (produktliste.isEmpty()){\r\n            lblFeilmld.setText(\"Fant ingen produkter\");\r\n        }\r\n        else {\r\n            //lblFeilmld.setText(\"Viser alle lagrede produkter\");\r\n            lblFeilmld.setText(produktliste.getRegister().get(1).getKategori().navn);\r\n        }}\r\n        aktiverKnapper();\r\n        oppdater();\r\n    }\r\n\r\n    private void threadFailed(WorkerStateEvent event) {\r\n        var e = event.getSource().getException();\r\n        lblFeilmld.setText(\"Feil ved åpning av fil\");\r\n        aktiverKnapper();\r\n    }\r\n\r\n\r\n\r\n\r\n    // Metode som aktiver knapper osv\r\n    private void aktiverKnapper() {\r\n        btnÅpne.setDisable(false);\r\n        btnLeggtil.setDisable(false);\r\n        tableView.setDisable(false);\r\n        txtSøk.setDisable(false);\r\n        kolonnesøk.setDisable(false);\r\n        txtNavn.setDisable(false);\r\n        //comboType.setDisable(false);\r\n        //typevalg.setDisable(false);\r\n        btnLagre.setDisable(false);\r\n        btnLeggtilKat.setDisable(false);\r\n    }\r\n\r\n    //Metode som hemmer knapper osv\r\n    private void hemKnapper() {\r\n        btnÅpne.setDisable(true);\r\n        btnSlett.setDisable(true);\r\n        btnLeggtil.setDisable(true);\r\n        tableView.setDisable(true);\r\n        //txtSøk.setDisable(true);\r\n        //kolonnesøk.setDisable(true);\r\n        txtNavn.setDisable(true);\r\n        //comboType.setDisable(true);\r\n        //typevalg.setDisable(true);\r\n        btnLagre.setDisable(true);\r\n    }\r\n\r\n\r\n    //Søkefelt som filtrerer dataliste\r\n    @FXML\r\n    void SøkeValg(ActionEvent event) {\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle resourceBundle) {\r\n        //produktObservableList = FXCollections.observableArrayList(produktliste.getRegister());\r\n        //kategoriObservableList = FXCollections.observableArrayList(kategorier.getKategorier());\r\n        tableView.setEditable(true);\r\n        tableView.setItems(produktObservableList);\r\n        colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());\r\n        colNavn.setCellFactory(TextFieldTableCell.forTableColumn());\r\n        colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));\r\n        comboKategori.setItems(finnKategorier());\r\n        comboKategori.getSelectionModel().selectFirst();\r\n\r\n        //views = new ArrayList<>(Arrays.asList(produktliste, kategorier));\r\n\r\n        //liste = new ArrayList<>(Arrays.asList(produktliste.getRegister(), kategorier.getKategorier()));\r\n\r\n\r\n\r\n\r\n        //comboType.getSelectionModel().selectFirst();\r\n        //kolonnesøk.setValue(\"Navn\");\r\n        //btnLagre.setDisable(true);\r\n        //btnLeggtil.setDisable(true);\r\n        //btnfjern.setDisable(true);\r\n\r\n    }\r\n\r\n\r\n\r\n    public void velgKategori(ActionEvent event) {\r\n    }\r\n\r\n\r\n    public void Søk(KeyEvent keyEvent) {\r\n    }\r\n\r\n    public void btnlagre(ActionEvent event) {\r\n    }\r\n\r\n    public void btnLeggTil(ActionEvent event) throws FileNotFoundException {\r\n        String navn = txtNavn.getText();\r\n        String egenskap = txtEgenskap.getText();\r\n        Kategori kategori = LagringKategori.finnKategori(comboKategori.getValue());\r\n        if (navn == null || navn.isEmpty()) {\r\n            lblPrisogNavn.setText(\"Skriv inn riktig navn\");\r\n            lblFeilmld.setText(\"\");\r\n            try{\r\n                Integer.parseInt(spnAntall.getPromptText());\r\n            } catch (IllegalArgumentException e){\r\n                lblPrisogNavn.setText(\"Skriv inn riktig navn og pris\");\r\n                lblFeilmld.setText(\"\");\r\n            }\r\n        } else if (egenskap == null || egenskap.isEmpty()){\r\n            lblPrisogNavn.setText(\"Skriv inn riktig egenskap\");\r\n            lblFeilmld.setText(\"\");\r\n            try{\r\n                Integer.parseInt(spnAntall.getPromptText());\r\n            } catch (IllegalArgumentException e){\r\n                lblPrisogNavn.setText(\"Skriv inn riktig egenskap og pris\");\r\n                lblFeilmld.setText(\"\");\r\n            }\r\n        }\r\n        else {\r\n            try {\r\n                int antall = spnAntall.getValue();\r\n                System.out.println(antall);\r\n                if (antall > 0) {\r\n                    Produkt produkt = new Produkt(navn, egenskap, antall, kategori);\r\n                    nullstillTxt();\r\n                    produktliste = FileOpenerCSV.ListefraCSV();\r\n                    produktliste.addObjekt(produkt);\r\n                    LagreCSV.save(produktliste);\r\n                    produktliste.fjernAlt();\r\n                    lblFeilmld.setText(\"Produkt lagt til. Husk å lagre!\");\r\n                    lblPrisogNavn.setText(\"\");\r\n                    oppdater();\r\n                } else {\r\n                    lblPrisogNavn.setText(\"Prisen må være med enn 0\");\r\n                    lblFeilmld.setText(\"\");\r\n                }\r\n            } catch (IllegalArgumentException | IOException e) {\r\n                lblPrisogNavn.setText(\"Skriv inn riktig antall\");\r\n                lblFeilmld.setText(\"\");\r\n                txtNavn.setText(\"\");\r\n                txtEgenskap.setText(\"\");\r\n            }\r\n        }\r\n    }\r\n\r\n    public void btnSlett(ActionEvent event) {\r\n    }\r\n\r\n    public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {\r\n\r\n        TextInputDialog td = new TextInputDialog(\"Nytt navn på kategori...\");\r\n        td.setHeaderText(\"Legg til ny kategori\");\r\n        Optional<String> nyttnavn = td.showAndWait();\r\n        Button d = new Button(\"Legg til\");\r\n\r\n        LagringKategori.LeggTil(nyttnavn.get());\r\n        comboKategori.setItems(finnKategorier());\r\n        lblPrisogNavn.setText(\"Kategori lagt til\");\r\n    }\r\n\r\n\r\n    public void btnFjern(ActionEvent event) throws FileNotFoundException {\r\n        String kategori = comboKategori.getValue();\r\n        LagringKategori.slettKategori(kategori);\r\n        comboKategori.setItems(finnKategorier());\r\n        comboKategori.getSelectionModel().selectFirst();\r\n        lblPrisogNavn.setText(\"Kategori slettet\");\r\n    }\r\n\r\n    public void editTvNavn(TableColumn.CellEditEvent<Object, String> objectStringCellEditEvent) {\r\n    }\r\n\r\n    public void editTvAntall(TableColumn.CellEditEvent<Object, Integer> objectIntegerCellEditEvent) {\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/ProdukterController.java b/src/main/java/org/openjfx/Controller/ProdukterController.java
+--- a/src/main/java/org/openjfx/Controller/ProdukterController.java	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/java/org/openjfx/Controller/ProdukterController.java	(date 1620334789627)
+@@ -4,14 +4,11 @@
+ import javafx.collections.ObservableList;
+ import javafx.concurrent.WorkerStateEvent;
+ import javafx.event.ActionEvent;
+-import javafx.event.EventHandler;
+ import javafx.fxml.FXML;
+ import javafx.fxml.Initializable;
+-import javafx.scene.Scene;
+ import javafx.scene.control.*;
+ import javafx.scene.control.cell.TextFieldTableCell;
+ import javafx.scene.input.KeyEvent;
+-import javafx.scene.layout.TilePane;
+ import javafx.util.converter.IntegerStringConverter;
+ import org.openjfx.App;
+ import org.openjfx.Filbehandling.FileOpenerCSV;
+@@ -26,6 +23,8 @@
+ import java.net.URL;
+ import java.util.*;
+ 
++import static org.openjfx.Produkter.KonverterListe.fraKategoritilArray;
++import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
+ 
+ 
+ public class ProdukterController implements Initializable {
+@@ -66,7 +65,7 @@
+     private ChoiceBox<String> kolonnesøk;
+     @FXML
+     private TableView<Produkt> tableView;
+-    private Kategoriliste kategorier;
++    private Kategoriliste kategoridata = new Kategoriliste();
+ 
+ 
+     @FXML
+@@ -76,10 +75,14 @@
+ 
+     private Produktliste produktliste = new Produktliste();
+ 
+-    private ObservableList<String> finnKategorier() {
++    private ObservableList<String> finnKategorier(boolean alle) {
+         ObservableList<String> kategorier = FXCollections.observableArrayList();
+ 
+-        ArrayList<Kategori> liste = KonverterListe.fraKategoritilArray(LagringKategori.hentKategorier());
++        if (alle){
++            kategorier.add("Alle");
++        }
++
++        ArrayList<Kategori> liste = fraKategoritilArray(LagringKategori.hentKategorier());
+         for (Kategori k : liste){
+             kategorier.add(k.getNavn());
+         }
+@@ -126,8 +129,7 @@
+             lblFeilmld.setText("Fant ingen produkter");
+         }
+         else {
+-            //lblFeilmld.setText("Viser alle lagrede produkter");
+-            lblFeilmld.setText(produktliste.getRegister().get(1).getKategori().navn);
++            lblFeilmld.setText("Viser alle lagrede produkter");
+         }}
+         aktiverKnapper();
+         oppdater();
+@@ -148,12 +150,12 @@
+         btnLeggtil.setDisable(false);
+         tableView.setDisable(false);
+         txtSøk.setDisable(false);
+-        kolonnesøk.setDisable(false);
+         txtNavn.setDisable(false);
+-        //comboType.setDisable(false);
+-        //typevalg.setDisable(false);
++        comboKategori.setDisable(false);
+         btnLagre.setDisable(false);
+         btnLeggtilKat.setDisable(false);
++        comboType.setDisable(false);
++        kolonnesøk.setDisable(false);
+     }
+ 
+     //Metode som hemmer knapper osv
+@@ -162,18 +164,19 @@
+         btnSlett.setDisable(true);
+         btnLeggtil.setDisable(true);
+         tableView.setDisable(true);
+-        //txtSøk.setDisable(true);
+-        //kolonnesøk.setDisable(true);
++        txtSøk.setDisable(true);
+         txtNavn.setDisable(true);
+-        //comboType.setDisable(true);
+-        //typevalg.setDisable(true);
++        comboKategori.setDisable(true);
+         btnLagre.setDisable(true);
++        comboType.setDisable(true);
++        kolonnesøk.setDisable(true);
+     }
+ 
+ 
+     //Søkefelt som filtrerer dataliste
+     @FXML
+     void SøkeValg(ActionEvent event) {
++
+     }
+ 
+     @Override
+@@ -185,8 +188,10 @@
+         colEgenskap.setCellFactory(TextFieldTableCell.forTableColumn());
+         colNavn.setCellFactory(TextFieldTableCell.forTableColumn());
+         colAntall.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+-        comboKategori.setItems(finnKategorier());
++        comboKategori.setItems(finnKategorier(false));
+         comboKategori.getSelectionModel().selectFirst();
++        comboType.setItems(finnKategorier(false));
++        comboType.getSelectionModel().selectFirst();
+ 
+         //views = new ArrayList<>(Arrays.asList(produktliste, kategorier));
+ 
+@@ -203,11 +208,41 @@
+ 
+     }
+ 
+-
+-
+     public void velgKategori(ActionEvent event) {
+-    }
++        String valg = comboKategori.getValue();
++
++        Produktliste nyproduktliste = new Produktliste();
++        Produktliste alle = (Produktliste) produktliste.getRegister();
++        ArrayList<Produkt> allearray= KonverterListe.fraKomponenttilArray(alle);
++
++        for (Produkt p : allearray){
++            if (p.getKategori().equalsIgnoreCase(valg)){
++                nyproduktliste.addObjekt(p);
++            }
++        }
++        tableView.setItems(nyproduktliste.getRegister());
++        /*
++        ArrayList<String> kat = new ArrayList<>();
++        ArrayList<Kategori> k = fraKategoritilArray(kategoridata);
+ 
++        kat.add("Alle");
++        for (Kategori kategori : k){
++            boolean unik = true;
++            for (String s : kat){
++                if (kategori.navn.equals(s)){
++                    unik = false;
++                }
++            }
++            if (unik){
++                kat.add(kategori.navn);
++            }
++        }
++        ObservableList<String> observableList = fraArraytilObservable(kat);
++        typevalg.setItems(observableList);
++        typevalg.getSelectionModel().selectFirst();
++
++         */
++    }
+ 
+     public void Søk(KeyEvent keyEvent) {
+     }
+@@ -276,7 +311,7 @@
+         Button d = new Button("Legg til");
+ 
+         LagringKategori.LeggTil(nyttnavn.get());
+-        comboKategori.setItems(finnKategorier());
++        comboKategori.setItems(finnKategorier(false));
+         lblPrisogNavn.setText("Kategori lagt til");
+     }
+ 
+@@ -284,7 +319,7 @@
+     public void btnFjern(ActionEvent event) throws FileNotFoundException {
+         String kategori = comboKategori.getValue();
+         LagringKategori.slettKategori(kategori);
+-        comboKategori.setItems(finnKategorier());
++        comboKategori.setItems(finnKategorier(false));
+         comboKategori.getSelectionModel().selectFirst();
+         lblPrisogNavn.setText("Kategori slettet");
+     }
+Index: src/main/resources/org/openjfx/registrerprodukt.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/org/openjfx/registrerprodukt.fxml b/src/main/resources/org/openjfx/registrerprodukt.fxml
+new file mode 100644
+--- /dev/null	(date 1620317224182)
++++ b/src/main/resources/org/openjfx/registrerprodukt.fxml	(date 1620317224182)
+@@ -0,0 +1,160 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import java.lang.*?>
++<?import java.util.*?>
++<?import javafx.scene.*?>
++<?import javafx.scene.control.*?>
++<?import javafx.scene.layout.*?>
++
++<?import javafx.scene.shape.Rectangle?>
++<?import javafx.scene.text.Text?>
++<?import javafx.scene.text.Font?>
++<?import javafx.scene.shape.Line?>
++<?import javafx.scene.control.cell.PropertyValueFactory?>
++<?import javafx.collections.FXCollections?>
++<?import javafx.scene.shape.Circle?>
++<AnchorPane xmlns="http://javafx.com/javafx"
++            xmlns:fx="http://javafx.com/fxml"
++            fx:controller="org.openjfx.Controller.RegistrerproduktController"
++            prefHeight="400.0" prefWidth="600.0">
++    <children>
++        <BorderPane prefHeight="780.0" prefWidth="1100.0">
++            <left>
++                <Pane prefHeight="200.0" prefWidth="282.0" styleClass="gradient"  BorderPane.alignment="CENTER">
++                    <children>
++                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffffb0" height="167.0" layoutX="24.0" layoutY="163.0" stroke="#e8e8e800" strokeLineJoin="ROUND" strokeMiterLimit="15.0" strokeType="INSIDE" width="225.0" />
++                        <Button fx:id="loggOut" layoutX="18.0" layoutY="732.0" mnemonicParsing="false" onAction="#forsideBtn" prefHeight="25.0" prefWidth="243.0" styleClass="button-basket" stylesheets="@../styles.css" text="Logg ut" />
++                        <Text fill="WHITE" layoutX="50.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-under-header" text="ADMINISTRATORSIDE">
++                            <font>
++                                <Font size="18.0" />
++                            </font>
++                        </Text>
++                        <Text fill="WHITE" layoutX="24.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-header" text="RÅFETDATA.NO">
++                            <font>
++                                <Font name="System Bold" size="30.0" />
++                            </font>
++                        </Text>
++                        <Line endX="124.0" layoutX="125.0" layoutY="89.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="1.25" />
++                        <Text fill="#656565" layoutX="34.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tilbakemeldinger:">
++                            <font>
++                                <Font name="System Bold" size="17.0" />
++                            </font>
++                        </Text>
++                        <Label fx:id="lblMessage" alignment="TOP_LEFT" layoutX="36.0" layoutY="200.0" prefHeight="116.0" prefWidth="200.0">
++                            <font>
++                                <Font size="14.0" />
++                            </font></Label>
++                    </children>
++                </Pane>
++            </left>
++            <center>
++                <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" styleClass="bg-white"  BorderPane.alignment="CENTER">
++                    <children>
++                        <Text fill="#f89a76" layoutX="90.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRER NYTT KOMPONENT">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategori" wrappingWidth="92.73095703125" />
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pris" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="produktPris" layoutX="91.0" layoutY="673.0" prefHeight="29.0" prefWidth="132.0"  />
++                        <Button fx:id="slettRader" layoutX="525.0" layoutY="309.0" mnemonicParsing="false" onAction="#slettRader" prefHeight="25.0" prefWidth="244.0" styleClass="delete" stylesheets="@../styles.css" text="Slett valgt rad" />
++                        <TableView fx:id="komponenter" layoutX="89.0" layoutY="68.0" prefHeight="234.0" prefWidth="679.0" >
++                            <columns>
++                                <TableColumn fx:id="produktnavn" onEditCommit="#endreTableViewDataString" prefWidth="202.0" text="Produktnavn">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="navn" />
++                                    </cellValueFactory>
++                                    <cellFactory>
++                                    </cellFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="kategori" onEditCommit="#endreTableViewDataString" prefWidth="164.0" text="Kategori">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="kategori" />
++                                    </cellValueFactory>
++                                    <cellFactory>
++                                    </cellFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="pris" minWidth="0.0" onEditCommit="#endreTableViewDataDouble" prefWidth="159.0" text="Pris">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="pris" />
++                                    </cellValueFactory>
++                                </TableColumn>
++
++                                <TableColumn fx:id="duplikat" onEditCommit="#endreTableViewDataBool" prefWidth="153.0" text="Antall pr. konfigurasjon">
++                                    <cellValueFactory>
++                                        <PropertyValueFactory property="duplikat" />
++                                    </cellValueFactory>
++
++                                </TableColumn>
++
++                            </columns>
++                        </TableView>
++                        <Text fill="#f89a76" layoutX="89.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="txt-header-lower" text="KOMPONENTLISTE">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#f89a76" layoutX="526.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRER BRUKER">
++                            <font>
++                                <Font size="21.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="528.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type (admin/vanlig bruker)" wrappingWidth="202.73095703125" />
++                        <Text fill="#5e5e5e" layoutX="527.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brukernavn" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="user" layoutX="527.0" layoutY="614.0" prefHeight="27.0" prefWidth="180.0"  />
++                        <Text fill="#5e5e5e" layoutX="528.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord" wrappingWidth="72.02001953125" />
++                        <TextField fx:id="pass" layoutX="528.0" layoutY="673.0" prefHeight="27.0" prefWidth="179.0"  />
++                        <Button fx:id="registrerBruker" layoutX="599.0" layoutY="717.0" mnemonicParsing="false" onAction="#registrerbtn" prefHeight="25.0" prefWidth="108.0" styleClass="save"  text="Registrer" />
++                        <Text fill="#5e5e5e" layoutX="91.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produktnavn" wrappingWidth="140.02001953125" />
++                        <TextField fx:id="produktNavn" layoutX="91.0" layoutY="558.0" prefHeight="29.0" prefWidth="329.0"  />
++                        <TextField fx:id="kategoriNavn" layoutX="231.0" layoutY="614.0" prefHeight="29.0" prefWidth="189.0"  />
++                        <Text fill="#5e5e5e" layoutX="233.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorinavn " wrappingWidth="141.73095703125" />
++                        <Button fx:id="registrerProduktBtn" layoutX="311.0" layoutY="715.0" mnemonicParsing="false" onAction="#registererProdukt" prefHeight="25.0" prefWidth="108.0" styleClass="save" text="Registrer" />
++
++                        <ComboBox fx:id="adminORuser" layoutX="527.0" layoutY="558.0" prefHeight="27.0" prefWidth="179.0" promptText="Velg" styleClass="choicebox-product">
++                            <items>
++                                <FXCollections fx:factory="observableArrayList">
++                                    <String fx:id="admin" fx:value="Admin" />
++                                    <String fx:id="bruker" fx:value="Bruker" />
++                                </FXCollections>
++                            </items>
++                        </ComboBox>
++                        <ComboBox fx:id="kategoriCombobox" layoutX="89.0" layoutY="614.0" onAction="#setKategoriTilgjengelig" prefHeight="27.0" prefWidth="135.0" styleClass="choicebox-product" stylesheets="@../styles.css" value="Velg kategori" />
++                        <Button fx:id="setMasterFil" layoutX="443.0" layoutY="442.0" mnemonicParsing="false" onAction="#setMasterFil" prefHeight="25.0" prefWidth="261.0" styleClass="save" stylesheets="@../styles.css" text="Sett nåværende komponetliste til master" />
++                        <TextField fx:id="filteredData" layoutX="95.0" layoutY="309.0" prefHeight="28.0" prefWidth="417.0" promptText="Søk etter komponent" styleClass="search-bar" stylesheets="@../styles.css">
++                            <font>
++                                <Font size="11.0" />
++                            </font></TextField>
++                        <Line endX="529.0" layoutX="191.0" layoutY="481.0" startX="-100.0" stroke="#c6c6c6" />
++                        <Button fx:id="hentFraFil" layoutX="89.0" layoutY="437.0" mnemonicParsing="false" onAction="#hentFraFil" prefHeight="25.0" prefWidth="97.0" styleClass="button-basket" stylesheets="@../styles.css" text="Hent" />
++                        <ComboBox fx:id="filListe" layoutX="90.0" layoutY="404.0" prefHeight="25.0" prefWidth="205.0" promptText="Velg versjon" styleClass="choicebox-product" stylesheets="@../styles.css" />
++                        <Text fill="#3c3c3c" layoutX="90.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filbehandling for komponentliste">
++                            <font>
++                                <Font name="System Bold" size="17.0" />
++                            </font>
++                        </Text>
++                        <Text fill="#5e5e5e" layoutX="234.0" layoutY="668.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall pr. konfigurasjon" wrappingWidth="208.02001953125" />
++                        <Circle fill="#ffffff00" layoutX="484.0" layoutY="320.0" radius="8.0" stroke="#7c7c7c" strokeType="INSIDE" strokeWidth="2.5" />
++                        <Line endX="-95.0" endY="8.0" layoutX="589.0" layoutY="323.0" startX="-100.0" startY="1.666656494140625" stroke="#7c7c7c" strokeWidth="2.5" />
++                        <TextField fx:id="produktAntall" layoutX="232.0" layoutY="674.0" prefHeight="29.0" prefWidth="187.0" stylesheets="@../styles.css" />
++                        <Button fx:id="lagreTilFil" layoutX="198.0" layoutY="437.0" mnemonicParsing="false" onAction="#lagreTilFil" prefHeight="25.0" prefWidth="97.0" styleClass="save" stylesheets="@../styles.css" text="Lagre" />
++                        <Button fx:id="hentFraMaster" layoutX="443.0" layoutY="409.0" mnemonicParsing="false" onAction="#hentMasterFil" prefHeight="25.0" prefWidth="261.0" styleClass="button-basket" stylesheets="@../styles.css" text="Hent masterliste" />
++                        <Text layoutX="91.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valgt komponentliste:" />
++                        <Label fx:id="lblFilNavn" layoutX="218.0" layoutY="382.0" text="filnavn" textFill="#e46d13" />
++                        <Text fill="#3c3c3c" layoutX="443.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filbehandling for masterliste">
++                            <font>
++                                <Font size="17.0" />
++                            </font>
++                        </Text>
++                        <Line endX="183.0" endY="-30.0" layoutX="206.0" layoutY="497.0" startX="183.0" startY="-140.0" stroke="#c6c6c6" />
++                        <Label fx:id="lblMaster" layoutX="580.0" layoutY="382.0" text="master" textFill="#e46d13" />
++                        <Text layoutX="443.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nåværende masterliste:" />
++                    </children>
++                </Pane>
++            </center>
++        </BorderPane>
++    </children>
++</AnchorPane>
+Index: src/main/java/org/openjfx/Controller/RegistrerproduktController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/RegistrerproduktController.java b/src/main/java/org/openjfx/Controller/RegistrerproduktController.java
+new file mode 100644
+--- /dev/null	(date 1620317207336)
++++ b/src/main/java/org/openjfx/Controller/RegistrerproduktController.java	(date 1620317207336)
+@@ -0,0 +1,43 @@
++package org.openjfx.Controller;
++
++import javafx.event.ActionEvent;
++import javafx.scene.control.TableColumn;
++
++public class RegistrerproduktController {
++
++    public void forsideBtn(ActionEvent actionEvent) {
++    }
++
++    public void endreTableViewDataString(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void endreTableViewDataDouble(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void endreTableViewDataBool(TableColumn.CellEditEvent cellEditEvent) {
++    }
++
++    public void setKategoriTilgjengelig(ActionEvent actionEvent) {
++    }
++
++    public void slettRader(ActionEvent actionEvent) {
++    }
++
++    public void registrerbtn(ActionEvent actionEvent) {
++    }
++
++    public void registererProdukt(ActionEvent actionEvent) {
++    }
++
++    public void setMasterFil(ActionEvent actionEvent) {
++    }
++
++    public void hentFraFil(ActionEvent actionEvent) {
++    }
++
++    public void lagreTilFil(ActionEvent actionEvent) {
++    }
++
++    public void hentMasterFil(ActionEvent actionEvent) {
++    }
++}
+Index: src/main/resources/org/openjfx/produkter.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import java.lang.String?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.ChoiceBox?>\r\n<?import javafx.scene.control.ComboBox?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.Spinner?>\r\n<?import javafx.scene.control.TableColumn?>\r\n<?import javafx.scene.control.TableView?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.control.cell.PropertyValueFactory?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.Pane?>\r\n<?import javafx.scene.text.Font?>\r\n<?import javafx.scene.control.SpinnerValueFactory?>\r\n\r\n<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>\r\n<Pane xmlns=\"http://javafx.com/javafx/11.0.1\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"org.openjfx.Controller.ProdukterController\">\r\n    <children>\r\n        <AnchorPane layoutY=\"-11.0\" prefHeight=\"550.0\" prefWidth=\"900.0\">\r\n            <TextField fx:id=\"txtNavn\" layoutX=\"35.0\" layoutY=\"212.0\" prefHeight=\"27.0\" prefWidth=\"155.0\" promptText=\"Navn\" />\r\n            <Button fx:id=\"btnLeggtil\" layoutX=\"139.0\" layoutY=\"310.0\" mnemonicParsing=\"false\" onAction=\"#btnLeggTil\" text=\"Legg til\" />\r\n            <Button fx:id=\"btnLeggtilKat\" layoutX=\"197.0\" layoutY=\"178.0\" mnemonicParsing=\"false\" onAction=\"#btnLeggTilKat\" text=\"+\" />\r\n            <Button fx:id=\"btnSlett\" layoutX=\"306.0\" layoutY=\"449.0\" mnemonicParsing=\"false\" onAction=\"#btnSlett\" text=\"Slett valgt\" />\r\n            <Button layoutX=\"35.0\" layoutY=\"44.0\" mnemonicParsing=\"false\" onAction=\"#btnTilbake\" text=\"Logg ut\" />\r\n\r\n            <TableView fx:id=\"tableView\" layoutX=\"305.0\" layoutY=\"178.0\" prefHeight=\"242.0\" prefWidth=\"538.0\">\r\n                <columns>\r\n                    <TableColumn fx:id=\"colNavn\" onEditCommit=\"#editTvNavn\" prefWidth=\"222.0\" text=\"Navn\">\r\n                        <cellValueFactory>\r\n                            <PropertyValueFactory property=\"navn\" />\r\n                        </cellValueFactory>\r\n                    </TableColumn>\r\n                    <TableColumn fx:id=\"colKategori\" editable=\"false\" prefWidth=\"176.0\" text=\"Kategori\">\r\n                        <cellValueFactory>\r\n                            <PropertyValueFactory property=\"kategorinavn\" />\r\n                        </cellValueFactory>\r\n                    </TableColumn>\r\n                    <TableColumn fx:id=\"colEgenskap\" editable=\"false\" prefWidth=\"176.0\" text=\"Egenskap\">\r\n                        <cellValueFactory>\r\n                            <PropertyValueFactory property=\"egenskap\" />\r\n                        </cellValueFactory>\r\n                    </TableColumn>\r\n                    <TableColumn fx:id=\"colAntall\" onEditCommit=\"#editTvAntall\" prefWidth=\"117.0\" text=\"Antall\">\r\n                        <cellValueFactory>\r\n                            <PropertyValueFactory property=\"antall\" />\r\n                        </cellValueFactory>\r\n                    </TableColumn>\r\n                </columns>\r\n            </TableView>\r\n\r\n            <ComboBox fx:id=\"comboKategori\" layoutX=\"35.0\" layoutY=\"178.0\" prefHeight=\"27\" prefWidth=\"155\" />\r\n            <Label fx:id=\"lblFeilmld\" alignment=\"CENTER_RIGHT\" layoutX=\"419.0\" layoutY=\"449.0\" prefHeight=\"27.0\" prefWidth=\"228.0\" wrapText=\"true\">\r\n                <font>\r\n                    <Font size=\"14.0\" />\r\n                </font>\r\n            </Label>\r\n            <Button fx:id=\"btnÅpne\" layoutX=\"741.0\" layoutY=\"449.0\" mnemonicParsing=\"false\" onAction=\"#btnÅpne\" text=\"Last inn lagrede\" />\r\n            <Label layoutX=\"47.0\" layoutY=\"97.0\" text=\"Registrer produkter\">\r\n                <font>\r\n                    <Font size=\"30.0\" />\r\n                </font>\r\n            </Label>\r\n            <TextField fx:id=\"txtSøk\" layoutX=\"683.0\" layoutY=\"134.0\" onKeyTyped=\"#Søk\" promptText=\"Søk...\" />\r\n            <ChoiceBox fx:id=\"kolonnesøk\" layoutX=\"604.0\" layoutY=\"134.0\" onAction=\"#SøkeValg\" prefHeight=\"27.0\" prefWidth=\"79.0\">\r\n                <String fx:value=\"Navn\" />\r\n                <String fx:value=\"Pris\" />\r\n            </ChoiceBox>\r\n            <ComboBox fx:id=\"KategoriValg\" layoutX=\"475.0\" layoutY=\"134.0\" onAction=\"#velgKategori\" prefHeight=\"27.0\" prefWidth=\"120.0\" />\r\n         <Button fx:id=\"btnLagre\" layoutX=\"659.0\" layoutY=\"449.0\" mnemonicParsing=\"false\" onAction=\"#btnlagre\" text=\"Lagre alle\" />\r\n         <Label fx:id=\"lblPrisogNavn\" alignment=\"CENTER_RIGHT\" layoutX=\"82.0\" layoutY=\"337.0\" prefHeight=\"17.0\" prefWidth=\"155.0\" />\r\n         <Spinner fx:id=\"spnAntall\" initialValue=\"0\" editable=\"false\" layoutX=\"130.0\" layoutY=\"275.0\" prefHeight=\"27.0\" prefWidth=\"60.0\" >\r\n         <valueFactory>\r\n             <SpinnerValueFactory.IntegerSpinnerValueFactory min=\"0\" max=\"1000\"/>\r\n         </valueFactory>\r\n         </Spinner>\r\n         <Label layoutX=\"88.0\" layoutY=\"280.0\" text=\"Antall:\" />\r\n         <TextField fx:id=\"txtEgenskap\" layoutX=\"35.0\" layoutY=\"243.0\" prefHeight=\"27.0\" prefWidth=\"155.0\" promptText=\"Egenskap\" />\r\n         <Button fx:id=\"btnFjernKat\" layoutX=\"226.0\" layoutY=\"178.0\" mnemonicParsing=\"false\" onAction=\"#btnFjern\" prefHeight=\"27.0\" prefWidth=\"26.0\" text=\"-\" />\r\n        </AnchorPane>\r\n    </children>\r\n</Pane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/org/openjfx/produkter.fxml b/src/main/resources/org/openjfx/produkter.fxml
+--- a/src/main/resources/org/openjfx/produkter.fxml	(revision 9b873410d85c34410a2e4986789558bcbef882d0)
++++ b/src/main/resources/org/openjfx/produkter.fxml	(date 1620331800555)
+@@ -5,7 +5,6 @@
+ <?import javafx.scene.control.ChoiceBox?>
+ <?import javafx.scene.control.ComboBox?>
+ <?import javafx.scene.control.Label?>
+-<?import javafx.scene.control.Spinner?>
+ <?import javafx.scene.control.TableColumn?>
+ <?import javafx.scene.control.TableView?>
+ <?import javafx.scene.control.TextField?>
+@@ -13,9 +12,9 @@
+ <?import javafx.scene.layout.AnchorPane?>
+ <?import javafx.scene.layout.Pane?>
+ <?import javafx.scene.text.Font?>
+-<?import javafx.scene.control.SpinnerValueFactory?>
+ 
+-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
++
++<?import javafx.scene.control.Spinner?>
+ <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
+     <children>
+         <AnchorPane layoutY="-11.0" prefHeight="550.0" prefWidth="900.0">
+@@ -34,7 +33,7 @@
+                     </TableColumn>
+                     <TableColumn fx:id="colKategori" editable="false" prefWidth="176.0" text="Kategori">
+                         <cellValueFactory>
+-                            <PropertyValueFactory property="kategorinavn" />
++                            <PropertyValueFactory property="kategori" />
+                         </cellValueFactory>
+                     </TableColumn>
+                     <TableColumn fx:id="colEgenskap" editable="false" prefWidth="176.0" text="Egenskap">
+@@ -67,7 +66,7 @@
+                 <String fx:value="Navn" />
+                 <String fx:value="Pris" />
+             </ChoiceBox>
+-            <ComboBox fx:id="KategoriValg" layoutX="475.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
++            <ComboBox fx:id="comboType" layoutX="475.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
+          <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
+          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="337.0" prefHeight="17.0" prefWidth="155.0" />
+          <Spinner fx:id="spnAntall" initialValue="0" editable="false" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0" >

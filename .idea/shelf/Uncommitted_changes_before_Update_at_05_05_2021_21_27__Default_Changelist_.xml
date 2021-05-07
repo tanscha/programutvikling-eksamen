@@ -1,0 +1,39 @@
+<changelist name="Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]" date="1620242851200" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 05.05.2021 21:27 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/filbehandling2/SkrivTXT.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/filbehandling2/SkrivTXT.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/SkrivTXT.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/Controller/NyKundeController.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/Controller/NyKundeController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/NyKundeController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/validering/Validerer.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/validering/Validerer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/Validerer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/Controller/AlleOrdreController.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/Controller/AlleOrdreController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/AlleOrdreController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/Controller/AdminController.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/Controller/AdminController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/AdminController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/Controller/KundeBestillController.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/Controller/KundeBestillController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/KundeBestillController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/komponenter/Komponentliste.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/komponenter/Komponentliste.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2021_21_27_[Default_Changelist]/Komponentliste.class" />
+  </binary>
+</changelist>

@@ -1,0 +1,23 @@
+Index: src/main/java/org/openjfx/komponenter/ProductRegister.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/komponenter/ProductRegister.java b/src/main/java/org/openjfx/komponenter/ProductRegister.java
+new file mode 100644
+--- /dev/null	(date 1620241180635)
++++ b/src/main/java/org/openjfx/komponenter/ProductRegister.java	(date 1620241180635)
+@@ -0,0 +1,13 @@
++package org.openjfx.komponenter;
++
++import java.util.ArrayList;
++
++public class ProductRegister {
++    private static ArrayList<Arbeidskler> arbeidsklerArrayList = new ArrayList<>();
++    private static ArrayList<Gjodsel> gjodselArrayList = new ArrayList<>();
++    private static ArrayList<Korn> kornArrayList = new ArrayList<>();
++    private static ArrayList<Traktor> traktorArrayList = new ArrayList<>();
++    private static ArrayList<NewCategory> newCategories = new ArrayList<>();
++
++
++}

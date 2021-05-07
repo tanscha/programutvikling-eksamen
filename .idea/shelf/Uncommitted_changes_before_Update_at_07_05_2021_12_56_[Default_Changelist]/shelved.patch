@@ -1,0 +1,67 @@
+Index: src/main/java/org/openjfx/Filer/Produkter.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Navn\t Egenskap\t Antall\t Kategori \r\nheii\tfsfd\t7\tHeis\r\nhei\tff\t6\tHeis\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filer/Produkter.csv b/src/main/java/org/openjfx/Filer/Produkter.csv
+--- a/src/main/java/org/openjfx/Filer/Produkter.csv	(revision 5e527b6ca8727b75658dedfa77a5ecfc01d7a9b8)
++++ b/src/main/java/org/openjfx/Filer/Produkter.csv	(date 1620382946908)
+@@ -1,3 +1,3 @@
+ Navn	 Egenskap	 Antall	 Kategori 
+-heii	fsfd	7	Heis
+-hei	ff	6	Heis
++blå	10hk	4	Traktor
++rød	hei	2	Traktor
+Index: src/main/java/org/openjfx/Validering/FeilFil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Validering;\r\n\r\nimport org.openjfx.Filbehandling.FileOpener;\r\nimport org.openjfx.Filbehandling.FileOpenerCSV;\r\nimport org.openjfx.Filbehandling.LagreCSV;\r\nimport org.openjfx.Lagring.LagringKategori;\r\nimport org.openjfx.Lagring.LagringProdukt;\r\nimport org.openjfx.Produkter.*;\r\n\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\n\r\npublic class FeilFil {\r\n\r\n    public static void kategorifraProdukt() throws IOException {\r\n        Produktliste ps = FileOpenerCSV.ListefraCSV();\r\n        ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);\r\n        ArrayList<Kategori> ny = new ArrayList<>();\r\n\r\n        for (Produkt p : ap){\r\n            Kategori k = new Kategori(p.getKategori());\r\n            boolean finnes = false;\r\n            for (Kategori kny : ny){\r\n                if (kny.getNavn().equalsIgnoreCase(k.getNavn())){\r\n                    finnes = true;\r\n                }\r\n            } if (!finnes){ny.add(k);}\r\n\r\n        }\r\n\r\n        LagringKategori.fjernAlt();\r\n        LagringKategori.lagre(KonverterListe.fraArraytilKategorier(ny));\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Validering/FeilFil.java b/src/main/java/org/openjfx/Validering/FeilFil.java
+--- a/src/main/java/org/openjfx/Validering/FeilFil.java	(revision 5e527b6ca8727b75658dedfa77a5ecfc01d7a9b8)
++++ b/src/main/java/org/openjfx/Validering/FeilFil.java	(date 1620384598759)
+@@ -11,7 +11,7 @@
+ import java.util.ArrayList;
+ 
+ public class FeilFil {
+-
++    //metode for håndtering av injisert data i fil
+     public static void kategorifraProdukt() throws IOException {
+         Produktliste ps = FileOpenerCSV.ListefraCSV();
+         ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);
+Index: src/main/java/org/openjfx/Controller/NyBrukerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Controller;\r\n\r\npublic class NyBrukerController {\r\n    private int kundeNummer(){\r\n        int kundeNummer =\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/NyBrukerController.java b/src/main/java/org/openjfx/Controller/NyBrukerController.java
+--- a/src/main/java/org/openjfx/Controller/NyBrukerController.java	(revision 5e527b6ca8727b75658dedfa77a5ecfc01d7a9b8)
++++ b/src/main/java/org/openjfx/Controller/NyBrukerController.java	(date 1620384007111)
+@@ -1,7 +1,21 @@
+ package org.openjfx.Controller;
+ 
++import javafx.event.ActionEvent;
++import javafx.scene.control.Label;
++import javafx.scene.control.TextField;
++
+ public class NyBrukerController {
++    public TextField txtPassord;
++    public TextField txtNavn;
++    public Label lblMld;
++
+     private int kundeNummer(){
+         int kundeNummer =
+     }
++
++    public void btnTilbake(ActionEvent event) {
++    }
++
++    public void Registrer(ActionEvent event) {
++    }
+ }

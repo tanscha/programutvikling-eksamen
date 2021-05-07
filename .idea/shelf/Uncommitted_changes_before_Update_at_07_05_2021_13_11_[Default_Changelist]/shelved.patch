@@ -1,0 +1,126 @@
+Index: src/main/java/org/openjfx/Filer/Produkter.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Navn\t Egenskap\t Antall\t Kategori \r\nheii\tfsfd\t7\tHeis\r\nhei\tff\t6\tHeis\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filer/Produkter.csv b/src/main/java/org/openjfx/Filer/Produkter.csv
+--- a/src/main/java/org/openjfx/Filer/Produkter.csv	(revision 0cb72a7cd5d2ff9859ef0c8410c4116a19597897)
++++ b/src/main/java/org/openjfx/Filer/Produkter.csv	(date 1620384967241)
+@@ -1,3 +1,3 @@
+ Navn	 Egenskap	 Antall	 Kategori 
+-heii	fsfd	7	Heis
+-hei	ff	6	Heis
++blå	10hk	4	Traktor
++rød	hei	2	Traktor
+Index: src/main/java/org/openjfx/Validering/FeilFil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Validering;\r\n\r\nimport org.openjfx.Filbehandling.FileOpener;\r\nimport org.openjfx.Filbehandling.FileOpenerCSV;\r\nimport org.openjfx.Filbehandling.LagreCSV;\r\nimport org.openjfx.Lagring.LagringKategori;\r\nimport org.openjfx.Lagring.LagringProdukt;\r\nimport org.openjfx.Produkter.*;\r\n\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\n\r\npublic class FeilFil {\r\n\r\n    public static void kategorifraProdukt() throws IOException {\r\n        Produktliste ps = FileOpenerCSV.ListefraCSV();\r\n        ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);\r\n        ArrayList<Kategori> ny = new ArrayList<>();\r\n\r\n        for (Produkt p : ap){\r\n            Kategori k = new Kategori(p.getKategori());\r\n            boolean finnes = false;\r\n            for (Kategori kny : ny){\r\n                if (kny.getNavn().equalsIgnoreCase(k.getNavn())){\r\n                    finnes = true;\r\n                }\r\n            } if (!finnes){ny.add(k);}\r\n\r\n        }\r\n\r\n        LagringKategori.fjernAlt();\r\n        LagringKategori.lagre(KonverterListe.fraArraytilKategorier(ny));\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Validering/FeilFil.java b/src/main/java/org/openjfx/Validering/FeilFil.java
+--- a/src/main/java/org/openjfx/Validering/FeilFil.java	(revision 0cb72a7cd5d2ff9859ef0c8410c4116a19597897)
++++ b/src/main/java/org/openjfx/Validering/FeilFil.java	(date 1620384967250)
+@@ -11,7 +11,7 @@
+ import java.util.ArrayList;
+ 
+ public class FeilFil {
+-
++    //metode for håndtering av injisert data i fil
+     public static void kategorifraProdukt() throws IOException {
+         Produktliste ps = FileOpenerCSV.ListefraCSV();
+         ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);
+Index: src/main/java/org/openjfx/Controller/NyBrukerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Controller;\r\n\r\nimport org.openjfx.Bruker.Bruker;\r\nimport org.openjfx.Bruker.BrukerRegister;\r\nimport org.openjfx.Bruker.Brukere;\r\nimport org.openjfx.Validering.Regex;\r\n\r\nimport javax.xml.validation.Validator;\r\nimport java.awt.event.ActionEvent;\r\n\r\npublic class NyBrukerController {\r\n\r\n    private String hentNavn() {return txtNavn.getText();}\r\n    private String hentPassord() {return txtPassord.getText();}\r\n\r\n    private int brukerNR(){\r\n        int brukernr = 1 + Brukere.HentBrukere().size();\r\n        return brukernr;\r\n    }\r\n\r\n    public void Registrer(ActionEvent event){\r\n        String navn = hentNavn();\r\n        if (Regex.godkjentnavnRegex(navn)){\r\n            Bruker nyBruker = new Bruker(hentNavn(), hentPassord(), brukerNR());\r\n            Brukere.LeggTil(nyBruker);\r\n            lblMld.setText(\"Du er nå registrert! Logg inn for å registrere produkter.\")\r\n        } else {\r\n            lblMld.setText(\"Skriv gyldig brukernavn og passord\");\r\n            txtNavn.clear();\r\n            txtPassord.clear();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/NyBrukerController.java b/src/main/java/org/openjfx/Controller/NyBrukerController.java
+--- a/src/main/java/org/openjfx/Controller/NyBrukerController.java	(revision 0cb72a7cd5d2ff9859ef0c8410c4116a19597897)
++++ b/src/main/java/org/openjfx/Controller/NyBrukerController.java	(date 1620385645554)
+@@ -1,5 +1,8 @@
+ package org.openjfx.Controller;
+ 
++import javafx.scene.control.Label;
++import javafx.scene.control.PasswordField;
++import javafx.scene.control.TextField;
+ import org.openjfx.Bruker.Bruker;
+ import org.openjfx.Bruker.BrukerRegister;
+ import org.openjfx.Bruker.Brukere;
+@@ -7,9 +10,14 @@
+ 
+ import javax.xml.validation.Validator;
+ import java.awt.event.ActionEvent;
++import java.io.FileNotFoundException;
+ 
+ public class NyBrukerController {
+ 
++    public Label lblMld;
++    public TextField txtNavn;
++    public PasswordField txtPassord;
++
+     private String hentNavn() {return txtNavn.getText();}
+     private String hentPassord() {return txtPassord.getText();}
+ 
+@@ -18,16 +26,22 @@
+         return brukernr;
+     }
+ 
+-    public void Registrer(ActionEvent event){
++    public void Registrer(ActionEvent event) throws FileNotFoundException {
+         String navn = hentNavn();
+         if (Regex.godkjentnavnRegex(navn)){
+             Bruker nyBruker = new Bruker(hentNavn(), hentPassord(), brukerNR());
+             Brukere.LeggTil(nyBruker);
+-            lblMld.setText("Du er nå registrert! Logg inn for å registrere produkter.")
++            lblMld.setText("Du er nå registrert! Logg inn for å registrere produkter.");
+         } else {
+             lblMld.setText("Skriv gyldig brukernavn og passord");
+             txtNavn.clear();
+             txtPassord.clear();
+         }
+     }
++
++    public void btnTilbake(javafx.event.ActionEvent event) {
++    }
++
++    public void Registrer(javafx.event.ActionEvent event) {
++    }
+ }
+Index: src/main/java/org/openjfx/Filbehandling/LagreJOBJ.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Filbehandling;\r\n\r\nimport org.openjfx.Bruker.Bruker;\r\nimport org.openjfx.Produkter.Kategori;\r\n\r\nimport java.io.IOException;\r\nimport java.io.PrintWriter;\r\nimport java.nio.file.Paths;\r\nimport java.util.ArrayList;\r\n\r\n\r\npublic class LagreJOBJ {\r\n\r\n    public static void lagreKategoriTilFil(String filnavn, ArrayList<Kategori> listeinn){\r\n        try {\r\n            FilesSaver saver = new FileSaverJOBJ();\r\n            saver.save(listeinn, Paths.get(\"src/main/java/org/openjfx/Filer/\" + filnavn));\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        public static void lagreBrukerTilListe(String filnavn, ArrayList<Bruker> listeinn) {\r\n            try {\r\n                FilesSaver saver = new FileSaverJOBJ();\r\n                saver.save(listeinn, Paths.get(\"src/main/java/org/openjfx/Filer/\" + filnavn));\r\n            } catch (IOException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Filbehandling/LagreJOBJ.java b/src/main/java/org/openjfx/Filbehandling/LagreJOBJ.java
+--- a/src/main/java/org/openjfx/Filbehandling/LagreJOBJ.java	(revision 0cb72a7cd5d2ff9859ef0c8410c4116a19597897)
++++ b/src/main/java/org/openjfx/Filbehandling/LagreJOBJ.java	(date 1620385632316)
+@@ -11,13 +11,14 @@
+ 
+ public class LagreJOBJ {
+ 
+-    public static void lagreKategoriTilFil(String filnavn, ArrayList<Kategori> listeinn){
++    public static void lagreKategoriTilFil(String filnavn, ArrayList<Kategori> listeinn) {
+         try {
+             FilesSaver saver = new FileSaverJOBJ();
+             saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
++    }
+ 
+         public static void lagreBrukerTilListe(String filnavn, ArrayList<Bruker> listeinn) {
+             try {
+@@ -28,4 +29,4 @@
+             }
+         }
+     }
+-}
++

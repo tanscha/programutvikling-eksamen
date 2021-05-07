@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Update_at_07_05_2021_00_17_[Default_Changelist]" date="1620339448090" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_00_17_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 07.05.2021 00:17 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/org/openjfx/App.class" />
+    <option name="AFTER_PATH" value="target/classes/org/openjfx/App.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_05_2021_00_17_[Default_Changelist]/App.class" />
+  </binary>
+</changelist>
