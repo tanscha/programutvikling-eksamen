@@ -6,10 +6,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import org.openjfx.App;
+import org.openjfx.Bruker.BrukerRegister;
+import org.openjfx.Filbehandling.FileOpener;
+import org.openjfx.Filbehandling.FileOpenerJOBJ;
+import org.openjfx.Produkter.Kategoriliste;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class LogginnController {
+    public void initialize(){
+        BrukerRegister.setAktivBruker(null);
+
+        FileOpener opener = new FileOpenerJOBJ() {
+    }
 
     public Button btnLoggInn;
     public Button btnUten;
