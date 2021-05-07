@@ -11,6 +11,7 @@ import org.openjfx.Validering.Regex;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NyBrukerController {
 
@@ -28,20 +29,36 @@ public class NyBrukerController {
         return brukernr;
     }
 
+    private boolean finnes(String brukernavn){
+        ArrayList<Bruker> brukere = Brukere.HentBrukere();
+
+        for (Bruker b : brukere){
+            if (b.getBrukernavn().equalsIgnoreCase(brukernavn)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void btnTilbake(javafx.event.ActionEvent event) throws IOException {
         App.setRoot("logginn");
     }
 
     public void btnRegistrer(javafx.event.ActionEvent event) throws FileNotFoundException {
         String navn = hentNavn();
-        if (Regex.godkjentnavnRegex(navn)){
+        if (Regex.godkjentnavnRegex(navn) && !finnes(navn)){
             Bruker nyBruker = new Bruker(hentNavn(), hentPassord(), brukerNR());
             Brukere.LeggTil(nyBruker);
-            lblMld.setText("Du er nå registrert! Logg inn for å registrere produkter.");
+            lblMld.setText("Du er nå registrert!");
+        } else if (finnes(navn)){
+            lblMld.setText("Brukeren eksisterer fra før!");
+            txtNavn.clear();
+            txtPassord.clear();
         } else {
-            lblMld.setText("Skriv gyldig brukernavn og passord");
+            lblMld.setText("Skriv inn gyldig brukernavn og passord!");
             txtNavn.clear();
             txtPassord.clear();
         }
+
     }
 }
