@@ -4,6 +4,7 @@ import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Exceptions.InvalidNavnException;
 
 public class Regex {
+
     public static String navnRegex (String string){
         if (string.matches("[A-Z][a-zøæåA-ZÆØÅ \\-0-9./,]+")){
             return string;
@@ -16,5 +17,6 @@ public class Regex {
         }
         else throw new InvalidAntallException("Ugyldig antall, vennligst prøv igjen");
     }
+
 
 }

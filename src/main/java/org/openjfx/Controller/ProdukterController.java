@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
+import org.openjfx.Exceptions.InvalidNavnException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Filbehandling.LagreJOBJ;
@@ -391,10 +392,15 @@ public class ProdukterController implements Initializable {
 
     public void editTvNavn(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
         Produkt produkt = tableView.getSelectionModel().getSelectedItem();
-        String navn = cellEditEvent.getNewValue();
-        produkt.setNavn(navn);
+        try {
+            String navn = cellEditEvent.getNewValue();
+            Regex.navnRegex(navn);
+            produkt.setNavn(navn);
+            lblFeilmld.setText("Navnet er endret!");
+        }catch (InvalidNavnException e){
+            lblFeilmld.setText("Ugyldig navn. Vennligst prøv igjen.");
+        }
         tableView.refresh();
-        lblFeilmld.setText("Navnet er endret!");
         lagre();
     }
 
