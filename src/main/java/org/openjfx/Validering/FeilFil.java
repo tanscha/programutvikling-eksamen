@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FeilFil {
-
+    //henter Kategorier fra ProduktListe hvis KategoriListe er tom
     public static void kategorifraProdukt() throws IOException {
         Produktliste ps = FileOpenerCSV.ListefraCSV();
         ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);

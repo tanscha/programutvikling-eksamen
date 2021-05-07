@@ -3,10 +3,12 @@ package org.openjfx.Validering;
 import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Exceptions.InvalidNavnException;
 
+import java.util.Optional;
+
 public class Regex {
 
     public static String navnRegex (String string){
-        if (string.matches("(?:\\s*[a-zøæåA-ZÆØÅ0-9,_\\.\\077\\0100\\*\\+\\&\\#\\'\\~\\;\\-\\!\\@\\;]{2,}\\s*)*")){
+        if (string.matches("(?:\\s*[a-zøæåA-ZÆØÅ0-9,_\\.\\077\\0100\\-]{2,}\\s*)*")){
             return string;
         }
         else throw new InvalidNavnException("Ugyldig navn, vennligst prøv igjen");
@@ -25,4 +27,11 @@ public class Regex {
     }
 
 
+    public static String kategoriRegex(Optional<String> kategori) {
+        String string = kategori.get();
+        if (string.matches("(?:\\s*[a-zøæåA-ZÆØÅ0-9,_\\.\\077\\0100\\*\\+\\&\\#\\'\\~\\;\\-\\!\\@\\;]{2,}\\s*)*")){
+            return string;
+        }
+        else throw new InvalidNavnException("Ugyldig navn, vennligst prøv igjen");
+    }
 }

@@ -2,15 +2,11 @@ package org.openjfx.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
@@ -18,16 +14,19 @@ import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Exceptions.InvalidEgenskapException;
+import org.openjfx.Exceptions.InvalidKategoriException;
 import org.openjfx.Exceptions.InvalidNavnException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Lagring.LagringProdukt;
-import org.openjfx.Produkter.*;
+import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.KonverterListe;
+import org.openjfx.Produkter.Produkt;
+import org.openjfx.Produkter.Produktliste;
 import org.openjfx.Sleep;
 import org.openjfx.Validering.FeilFil;
 import org.openjfx.Validering.Regex;
-
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,16 +39,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static java.lang.Thread.sleep;
 import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
 
 
 public class ProdukterController implements Initializable {
 
-
-
-    ObservableList<Produkt> produktObservableList;
-    ObservableList<Kategori> kategoriObservableList;
 
     public ComboBox<String> comboKategori;
 
@@ -209,11 +203,6 @@ public class ProdukterController implements Initializable {
     }
 
 
-    //Søkefelt som filtrerer dataliste
-    @FXML
-    void SøkeValg(ActionEvent event) {
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.setEditable(true);
@@ -314,6 +303,7 @@ public class ProdukterController implements Initializable {
         LagreCSV.save(fraKomponenttilArray(produktliste));
     }
 
+    //lagrer registrering til tekstfil, CSV eller txt
     public void btnlagre(ActionEvent event) throws IOException {
         LagreCSV.save(fraKomponenttilArray(produktliste));
         FileChooser fileChooser = new FileChooser();
@@ -370,17 +360,22 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnLeggTilKat(ActionEvent event) throws IOException {
-
         TextInputDialog td = new TextInputDialog("Nytt navn på kategori...");
         td.setHeaderText("Legg til ny kategori");
         Optional<String> nyttnavn = td.showAndWait();
-
+        try{
+            Regex.kategoriRegex(nyttnavn);
+        }
+        catch (InvalidKategoriException e){
+            lblPrisogNavn.setText("Ugyldig kategorinavn. Vennligst prøv igjen.");
+            e.printStackTrace();
+        }
         LagringKategori.LeggTil(nyttnavn.get());
         setKategorier();
         lblPrisogNavn.setText("Kategori lagt til");
     }
 
-
+    //Fjerne hel kategori
     public void btnFjern(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Advarsel!");

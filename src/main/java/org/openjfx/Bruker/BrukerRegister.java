@@ -50,10 +50,4 @@ public class BrukerRegister {
     public static void setAktivBrukerListe(ObservableList<Bruker> aktivBrukerListe) {
         BrukerRegister.aktivBrukerListe = aktivBrukerListe;
     }
-    public static void StreamBrukernavn(String s){
-         BrukerRegister.setAktivBrukerListe
-                 (BrukerRegister.getBrukerObservableList().stream().filter(x ->
-                         x.getBrukernavn().toLowerCase().contains(s.toLowerCase())).
-                         collect(Collectors.toCollection(FXCollections::observableArrayList)));
-    }
 }
