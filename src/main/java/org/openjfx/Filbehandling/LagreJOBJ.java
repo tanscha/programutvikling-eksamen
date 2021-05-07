@@ -18,13 +18,16 @@ public class LagreJOBJ {
             e.printStackTrace();
         }}
 
-        public static void lagreBrukerTilFil (String filnavn, ArrayList <Bruker> listeinn){
-            try {
+
+    public static void lagreBrukerTilFil (String filnavn, ArrayList <Bruker> listeinn){
+        try {
                 FilesSaver saver = new FileSaverJOBJ();
                 saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        }
+
     }
+
 

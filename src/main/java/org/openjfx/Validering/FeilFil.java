@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FeilFil {
-
+    //metode for håndtering av injisert data i fil
     public static void kategorifraProdukt() throws IOException {
         Produktliste ps = FileOpenerCSV.ListefraCSV();
         ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);
