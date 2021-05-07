@@ -1,6 +1,8 @@
 package org.openjfx.Filbehandling;
 
 import org.openjfx.Bruker.Bruker;
+import org.openjfx.Exceptions.InvalidBrukerException;
+import org.openjfx.Exceptions.InvalidKategoriException;
 import org.openjfx.Produkter.Kategori;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class LagreJOBJ {
         try {
             FilesSaver saver = new FileSaverJOBJ();
             saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));
-        } catch (IOException e) {
+        } catch (InvalidKategoriException | IOException e) {
             e.printStackTrace();
         }}
 
@@ -23,7 +25,7 @@ public class LagreJOBJ {
         try {
                 FilesSaver saver = new FileSaverJOBJ();
                 saver.save(listeinn, Paths.get("src/main/java/org/openjfx/Filer/" + filnavn));
-        } catch (IOException e) {
+        } catch (InvalidBrukerException | IOException e) {
             e.printStackTrace();
         }
         }

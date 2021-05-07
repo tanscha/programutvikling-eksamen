@@ -1,17 +1,17 @@
 package org.openjfx.Validering;
 
-import org.openjfx.Filbehandling.FileOpener;
 import org.openjfx.Filbehandling.FileOpenerCSV;
-import org.openjfx.Filbehandling.LagreCSV;
 import org.openjfx.Lagring.LagringKategori;
-import org.openjfx.Lagring.LagringProdukt;
-import org.openjfx.Produkter.*;
+import org.openjfx.Produkter.Kategori;
+import org.openjfx.Produkter.KonverterListe;
+import org.openjfx.Produkter.Produkt;
+import org.openjfx.Produkter.Produktliste;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class FeilFil {
-    //metode for håndtering av injisert data i fil
+
     public static void kategorifraProdukt() throws IOException {
         Produktliste ps = FileOpenerCSV.ListefraCSV();
         ArrayList<Produkt> ap = KonverterListe.fraKomponenttilArray(ps);

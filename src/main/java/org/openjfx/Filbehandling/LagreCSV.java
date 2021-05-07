@@ -19,10 +19,6 @@ public class LagreCSV {
         blank();
         Files.write(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), printString(a));
     }
-
-    //Metode som gjør liste om til string
-    //Skriver name, category og quantity med tabulator mellom slik at filen kan åpnes av excel
-    //Velger tabulator som delimiter fordi noen av navnene har komma eller " i seg
     private static byte[] printString(ArrayList<Produkt> a) {
         String tekst = "Navn\t Egenskap\t Antall\t Kategori \n";
         for (Produkt p : a) {
@@ -34,8 +30,8 @@ public class LagreCSV {
     public static void save(Produktliste pl) throws IOException {
         save(KonverterListe.fraKomponenttilArray(pl));
     }
-
-    public static void blank() throws IOException {
+    //metode for å cleare en fil
+    public static void blank() {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter("src/main/java/org/openjfx/Filer/Produkter.csv");

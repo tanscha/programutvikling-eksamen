@@ -10,11 +10,6 @@ public class Kategoriliste implements Serializable {
 
     private static ObservableList<Kategori> kategorier = FXCollections.observableArrayList();
 
-    public void attachTableView(TableView<Kategori> tableView){
-        System.out.println(kategorier);
-        tableView.setItems(kategorier);
-    }
-
     public void addObjekt(Kategori k) {
         kategorier.add(k);
     }
@@ -25,22 +20,6 @@ public class Kategoriliste implements Serializable {
 
     public static void fjernAlt() {
         kategorier.clear();
-    }
-
-    public void fjern(Kategori k) {
-        kategorier.remove(k);
-    }
-
-    public boolean isEmpty() {
-        if (kategorier.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public int size() {
-        return kategorier.size();
     }
 
     @Override

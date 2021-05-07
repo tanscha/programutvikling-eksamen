@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class FileOpenerJOBJ implements FileOpener {
     public void openFile(Kategoriliste kategoriliste, Path path) throws IOException {
-        kategoriliste.fjernAlt();
+        Kategoriliste.fjernAlt();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path.toFile()))) {
         }
     }

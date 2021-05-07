@@ -44,8 +44,7 @@ public class Produktliste implements Serializable {
     }
 
 
-    //Metoder som filtrer ut komponenter etter gitt navn, pris eller type
-    //Returner en observablelist med disse komponentene
+    //Filtrerer ut fra Produkt og returnerer en ObservableList for å søke
     public static ObservableList<Produkt> søkEtterString(String input, ObservableList<Produkt> a) {
         return a.stream().filter(objekt ->
                 objekt.toString().toLowerCase().matches(String.format("%s%s%s", ".*", input.toLowerCase(), ".*"))).collect(Collectors.toCollection(FXCollections::observableArrayList));

@@ -5,16 +5,8 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class KonverterListe {
-    public static Produktliste fraArraytilProdukt(ArrayList<Produkt> a) {
-        Produktliste ny = new Produktliste();
 
-        for (Produkt element : a) {
-            ny.addObjekt(element);
-        }
-        return ny;
-    }
-
-    //Metode som omgjør Arraylist til Observable-StringListe
+    //Metode som gjør om arraylist til ObservableList
     public static ObservableList<String> fraArraytilObservable(ArrayList<String> a) {
         ObservableList<String> ny = FXCollections.observableArrayList();
 
@@ -31,7 +23,7 @@ public class KonverterListe {
         }
         return ny;
     }
-
+    //Fra array til kategorierliste
     public static Kategoriliste fraArraytilKategorier(ArrayList<Kategori> a) {
         Kategoriliste ny = new Kategoriliste();
 
@@ -40,7 +32,7 @@ public class KonverterListe {
         }
         return ny;
     }
-
+    //Fra Kategoriliste til Array
     public static ArrayList<Kategori> fraKategoritilArray(Kategoriliste a) {
         var aa = a.getKategorier();
         ArrayList<Kategori> ny = new ArrayList<>(aa);

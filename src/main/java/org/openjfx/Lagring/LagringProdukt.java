@@ -1,10 +1,7 @@
 package org.openjfx.Lagring;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
-import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.KonverterListe;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;

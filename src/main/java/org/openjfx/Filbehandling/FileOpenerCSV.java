@@ -13,10 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileOpenerCSV {
-
+    //leser CSV og splitter string
     public static ArrayList<String[]> readCSV() throws IOException {
         ArrayList<String[]> liste = new ArrayList<>();
-
             String line;
             String splitBy = "\t";
             try
@@ -36,13 +35,12 @@ public class FileOpenerCSV {
         return liste;
     }
 
-
+    //metode for å hente en produktliste fra csv-fil
     public static Produktliste ListefraCSV() throws IOException {
         ArrayList<String[]> liste = readCSV();
         Produktliste produktliste = new Produktliste();
         if (!liste.isEmpty()) {
             liste.remove(0);
-
             for (String[] x : liste) {
                 try {
                 Kategori k = LagringKategori.finnKategori(x[3]);
@@ -51,11 +49,9 @@ public class FileOpenerCSV {
                 }
                 catch (Exception e) {
                     e.printStackTrace();}
-
             }
         }
         return produktliste;
-
     }
 }
 
