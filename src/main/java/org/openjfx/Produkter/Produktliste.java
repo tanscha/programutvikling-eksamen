@@ -23,7 +23,7 @@ public class Produktliste implements Serializable {
         return produktliste;
     }
 
-    public void fjernAlt() {
+    public static void fjernAlt() {
         produktliste.clear();
     }
 

@@ -5,8 +5,10 @@ import org.openjfx.Produkter.KonverterListe;
 import org.openjfx.Produkter.Produkt;
 import org.openjfx.Produkter.Produktliste;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -34,9 +36,14 @@ public class LagreCSV {
     }
 
     public static void blank() throws IOException {
-        String blank = "";
-        byte[] blynk = blank.getBytes();
-        Files.write(Paths.get("src/main/java/org/openjfx/Filer/Produkter.csv"), blynk);
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("src/main/java/org/openjfx/Filer/Produkter.csv");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        writer.print("");
+        writer.close();
 
     }
 

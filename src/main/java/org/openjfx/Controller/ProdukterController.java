@@ -4,20 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
-import org.openjfx.Filbehandling.LagreJOBJ;
 import org.openjfx.Lagring.LagringKategori;
 import org.openjfx.Lagring.LagringProdukt;
 import org.openjfx.Produkter.*;
@@ -25,15 +24,12 @@ import org.openjfx.Sleep;
 import org.openjfx.Validering.Regex;
 
 
-import java.awt.print.Printable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.*;
 
 import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
 
@@ -318,7 +314,7 @@ public class ProdukterController implements Initializable {
                     Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
                     nullstillTxt();
                     produktliste = FileOpenerCSV.ListefraCSV();
-                    LagringProdukt.LeggTilProdukt(produkt, produktliste);
+                    LagringProdukt.leggTilProdukt(produkt, produktliste);
                     lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
                     lblPrisogNavn.setText("");
                     produktliste.fjernAlt();
@@ -360,12 +356,34 @@ public class ProdukterController implements Initializable {
 
 
     public void btnFjern(ActionEvent event) {
-        String kategori = comboKategori.getValue();
-        LagringKategori.slettKategori(kategori);
-        setKategorier();
-        comboKategori.getSelectionModel().selectFirst();
-        lblPrisogNavn.setText("Kategori slettet");
-    }
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advarsel!");
+        alert.setHeaderText("Du er i ferd med å slette en kategori og alle tilhørende produkter!");
+        alert.setContentText("Vil du avbryte?");
+        ButtonType show = new ButtonType("Slett kategori", ButtonBar.ButtonData.RIGHT);
+        alert.getButtonTypes().add(show);
+
+        ButtonBar.setButtonUniformSize(alert.getDialogPane().lookupButton(show), false);
+        alert.getDialogPane().lookupButton(show).addEventFilter(ActionEvent.ACTION, eevent -> {
+            String kategori = comboKategori.getValue();
+            try {
+                LagringProdukt.slettProdukter(kategori);
+                LagringKategori.slettKategori(kategori);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setKategorier();
+            comboKategori.getSelectionModel().selectFirst();
+            lblPrisogNavn.setText("Kategori slettet");});
+            event.consume();
+
+            Optional<ButtonType> option = alert.showAndWait();
+            oppdater();
+
+
+        }
+
+
 
     public void editTvNavn(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
         Produkt produkt = tableView.getSelectionModel().getSelectedItem();

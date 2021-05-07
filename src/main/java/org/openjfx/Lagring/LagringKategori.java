@@ -23,14 +23,17 @@ public class LagringKategori {
         writer.close();
     }
 
-    public static void slettKategori(String navn) {
-        Kategoriliste kl = lastNed();
-        Kategori k = finnKategori(navn);
-        ArrayList<Kategori> akl = KonverterListe.fraKategoritilArray(kl);
+    public static void slettKategori(String navn) throws IOException {
+        Kategoriliste.fjernAlt();
+        ArrayList<Kategori> arrayList = hentFraFil();
+        Kategoriliste kategoriliste = new Kategoriliste();
 
-        kl.fjern(k);
-        LagreJOBJ.lagreKategoriTilFil("Kat.jobj", akl);
-
+        for (Kategori k : arrayList){
+            if (!k.getNavn().equalsIgnoreCase(navn)){
+                kategoriliste.addObjekt(k);
+            }
+        }
+        lagre(kategoriliste);
     }
 
     public static ArrayList<Kategori> hentFraFil() {

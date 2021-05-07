@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
 
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
     <children>
@@ -56,7 +62,7 @@
             <TextField fx:id="txtSøk" layoutX="661.0" layoutY="134.0" onKeyTyped="#Søk" prefHeight="27.0" prefWidth="183.0" promptText="Søk..." />
             <ComboBox fx:id="KategoriValg" layoutX="534.0" layoutY="134.0" onAction="#velgKategori" prefHeight="27.0" prefWidth="120.0" />
          <Button fx:id="btnLagre" layoutX="659.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnlagre" text="Lagre alle" />
-         <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="337.0" prefHeight="17.0" prefWidth="155.0" />
+         <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="45.0" layoutY="347.0" prefHeight="17.0" prefWidth="155.0" />
          <Spinner fx:id="spnAntall" editable="false" initialValue="0" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0">
          <valueFactory>
              <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="0" />
