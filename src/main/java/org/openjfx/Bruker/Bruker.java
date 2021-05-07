@@ -5,6 +5,7 @@ import org.openjfx.Produkter.Produktliste;
 import java.io.Serializable;
 
 public class Bruker implements Serializable {
+
     public String brukernavn;
     public String passord;
     public int brukerId;
