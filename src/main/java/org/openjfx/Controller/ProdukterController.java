@@ -4,11 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.TilePane;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
@@ -27,6 +30,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.*;
 
 import static org.openjfx.Produkter.KonverterListe.fraKomponenttilArray;
@@ -41,7 +47,7 @@ public class ProdukterController implements Initializable {
 
     public TextField txtNavn;
     public TextField txtEgenskap;
-    public Spinner <Integer> spnAntall;
+    public Spinner<Integer> spnAntall;
     public Label lblPrisogNavn;
 
     public TableColumn<Object, Integer> colAntall;
@@ -50,9 +56,7 @@ public class ProdukterController implements Initializable {
     public TableColumn<Object, String> colEgenskap;
 
     public TextField txtSøk;
-    public ComboBox typevalg;
-    public ComboBox<String> comboType;
-    public ComboBox KategoriValg;
+    public ComboBox<String> KategoriValg;
 
     public Button btnÅpne;
     public Button btnLeggtil;
@@ -70,7 +74,6 @@ public class ProdukterController implements Initializable {
     private TableView<Produkt> tableView;
     private Kategoriliste kategorier;
 
-
     @FXML
     void btnTilbake(ActionEvent event) throws IOException {
         App.setRoot("logginn");
@@ -78,14 +81,17 @@ public class ProdukterController implements Initializable {
 
     private Produktliste produktliste = new Produktliste();
 
-    private ObservableList<String> finnKategorier() {
-        ObservableList<String> kategorier = FXCollections.observableArrayList();
+    private void setKategorier() {
+        ArrayList<Kategori> liste = LagringKategori.hentFraFil();
+        ArrayList<String> ut = new ArrayList<>();
 
-        ArrayList<Kategori> liste = KonverterListe.fraKategoritilArray(LagringKategori.hentKategorier());
         for (Kategori k : liste){
-            kategorier.add(k.getNavn());
+            ut.add(k.getNavn());
         }
-        return kategorier;
+
+        ObservableList<String> os = KonverterListe.fraArraytilObservable(ut);
+        comboKategori.setItems(os);
+        comboKategori.getSelectionModel().selectFirst();
     }
 
     //Tømmer tekstfelt
@@ -94,7 +100,7 @@ public class ProdukterController implements Initializable {
         txtEgenskap.setText("");
     }
 
-    private void oppdater(){
+    private void oppdater() {
         tableView.getItems().removeAll();
         tableView.setItems(valgtTypeListe());
         txtSøk.clear();
@@ -103,12 +109,12 @@ public class ProdukterController implements Initializable {
     }
 
     @FXML
-    private void btnÅpne(ActionEvent event) throws IOException {
+    private void btnÅpne(ActionEvent event) {
         produktliste.fjernAlt();
         hemKnapper();
         lblFeilmld.setText("Produkter lastes inn...");
         lblPrisogNavn.setText("");
-
+        setKategorier();
         task = new Sleep();
         task.setOnSucceeded(this::threadDone);
         task.setOnFailed(this::threadFailed);
@@ -120,18 +126,17 @@ public class ProdukterController implements Initializable {
     private void threadDone(WorkerStateEvent workerStateEvent) {
         produktliste = task.getValue();
         produktliste.attachTableView(tableView);
-        if (produktliste == null){
+        if (produktliste == null) {
             lblFeilmld.setText("Fant ingen produkter");
+        } else {
+            produktliste.attachTableView(tableView);
+            setKategorivalg();
+            if (produktliste.isEmpty()) {
+                lblFeilmld.setText("Fant ingen produkter");
+            } else {
+                lblFeilmld.setText("Viser alle lagrede produkter");
+            }
         }
-        else {
-        produktliste.attachTableView(tableView);
-        setKategorivalg();
-        if (produktliste.isEmpty()){
-            lblFeilmld.setText("Fant ingen produkter");
-        }
-        else {
-            lblFeilmld.setText("Viser alle lagrede produkter");
-        }}
         aktiverKnapper();
         oppdater();
     }
@@ -196,22 +201,26 @@ public class ProdukterController implements Initializable {
         comboKategori.setDisable(true);
         btnLeggtilKat.setDisable(true);
         btnFjernKat.setDisable(true);
+        setKategorier();
 
         try {
             produktliste = FileOpenerCSV.ListefraCSV();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
     }
-    private void setKategorivalg(){
+
+    private void setKategorivalg() {
         ArrayList<String> kategorier = new ArrayList<>();
         ArrayList<Produkt> a = fraKomponenttilArray(produktliste);
 
         kategorier.add("Alle");
 
-        for (Produkt p : a){
+        for (Produkt p : a) {
             boolean finnes = false;
             for (String s : kategorier) {
                 if (p.getKategori().equalsIgnoreCase(s))
@@ -230,12 +239,13 @@ public class ProdukterController implements Initializable {
     private ObservableList<Produkt> valgtTypeListe() {
         String typestring = KategoriValg.getValue().toString();
 
-        ArrayList<Produkt> alle = fraKomponenttilArray(produktliste);
+        ArrayList<Produkt> alle = KonverterListe.fraKomponenttilArray(produktliste);
         ObservableList<Produkt> ny = FXCollections.observableArrayList();
 
-        for (Produkt p : alle){
-            if (p.getKategori().matches(typestring) || typestring.equalsIgnoreCase("Alle"))
-            {ny.add(p); }
+        for (Produkt p : alle) {
+            if (p.getKategori().matches(typestring) || typestring.equalsIgnoreCase("Alle")) {
+                ny.add(p);
+            }
         }
         return ny;
     }
@@ -244,7 +254,8 @@ public class ProdukterController implements Initializable {
     public void velgKategori(ActionEvent event) {
         try {
             tableView.setItems(valgtTypeListe());
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
 
     }
 
@@ -285,23 +296,22 @@ public class ProdukterController implements Initializable {
         if (navn == null || navn.isEmpty()) {
             lblPrisogNavn.setText("Skriv inn riktig navn");
             lblFeilmld.setText("");
-            try{
+            try {
                 Integer.parseInt(spnAntall.getPromptText());
             } catch (IllegalArgumentException e){
                 lblPrisogNavn.setText("Skriv inn riktig navn og pris");
                 lblFeilmld.setText("");
             }
-        } else if (egenskap == null || egenskap.isEmpty()){
+        } else if (egenskap == null || egenskap.isEmpty()) {
             lblPrisogNavn.setText("Skriv inn riktig egenskap");
             lblFeilmld.setText("");
-            try{
+            try {
                 Integer.parseInt(spnAntall.getPromptText());
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 lblPrisogNavn.setText("Skriv inn riktig egenskap og pris");
                 lblFeilmld.setText("");
             }
-        }
-        else {
+        } else {
             try {
                 int antall = spnAntall.getValue();
                 System.out.println(antall);
@@ -316,6 +326,7 @@ public class ProdukterController implements Initializable {
                     produktliste = FileOpenerCSV.ListefraCSV();
                     oppdater();
                     setKategorivalg();
+                    setKategorier();
                 } else {
                     lblPrisogNavn.setText("Prisen må være med enn 0");
                     lblFeilmld.setText("");
@@ -338,7 +349,7 @@ public class ProdukterController implements Initializable {
         lagre();
     }
 
-    public void btnLeggTilKat(ActionEvent event) throws FileNotFoundException {
+    public void btnLeggTilKat(ActionEvent event) {
 
         TextInputDialog td = new TextInputDialog("Nytt navn på kategori...");
         td.setHeaderText("Legg til ny kategori");
@@ -346,15 +357,15 @@ public class ProdukterController implements Initializable {
         Button d = new Button("Legg til");
 
         LagringKategori.LeggTil(nyttnavn.get());
-        comboKategori.setItems(finnKategorier());
+        setKategorier();
         lblPrisogNavn.setText("Kategori lagt til");
     }
 
 
-    public void btnFjern(ActionEvent event) throws FileNotFoundException {
+    public void btnFjern(ActionEvent event) {
         String kategori = comboKategori.getValue();
         LagringKategori.slettKategori(kategori);
-        comboKategori.setItems(finnKategorier());
+        setKategorier();
         comboKategori.getSelectionModel().selectFirst();
         lblPrisogNavn.setText("Kategori slettet");
     }

@@ -1,67 +1,59 @@
 package org.openjfx.Lagring;
 
-import org.openjfx.Filbehandling.FileOpener;
-import org.openjfx.Filbehandling.FileOpenerJOBJ;
-import org.openjfx.Filbehandling.LagreJOBJ;
+import org.openjfx.Filbehandling.*;
 import org.openjfx.Produkter.Kategori;
 import org.openjfx.Produkter.Kategoriliste;
 import org.openjfx.Produkter.KonverterListe;
-
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class LagringKategori {
 
-    private static Kategoriliste fil = new Kategoriliste();
-
-    public static void fjernAlt() throws FileNotFoundException {
+    public static void fjernAlt() {
         ArrayList<Kategori> ferdigliste = new ArrayList<>();
-        LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", ferdigliste);
-
-
+        LagreJOBJ.lagreKategoriTilFil("Kat.jobj", ferdigliste);
+        
     }
 
-    public static void slettKategori(String navn) throws FileNotFoundException {
-        Kategoriliste kl = hentKategorier();
+    public static void slettKategori(String navn) {
+        Kategoriliste kl = lastNed();
         Kategori k = finnKategori(navn);
         ArrayList<Kategori> akl = KonverterListe.fraKategoritilArray(kl);
 
         kl.fjern(k);
-        LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", akl);
+        LagreJOBJ.lagreKategoriTilFil("Kat.jobj", akl);
 
     }
 
-    public static void lastNed(){
-        try{
+    public static ArrayList<Kategori> hentFraFil() {
+        ArrayList<Kategori> liste = new ArrayList<>();
+        try {
             FileOpener les = new FileOpenerJOBJ();
-            var liste = (ArrayList<Kategori>) les.read("src/main/java/org/openjfx/Filer/Kategorier.jobj");
-            Kategoriliste alle = KonverterListe.fraArraytilKategorier(liste);
-            fil = alle;}
-        catch (Exception e){}
-
+            liste = (ArrayList<Kategori>) les.read("src/main/java/org/openjfx/Filer/Kat.jobj");
+        } catch (Exception e) {
+        }
+        return liste;
     }
 
-    public static void lagre(Kategoriliste kategoriliste) throws FileNotFoundException {
+    public static Kategoriliste lastNed() {
+        return KonverterListe.fraArraytilKategorier(hentFraFil());
+    }
+
+    public static void lagre(Kategoriliste kategoriliste) {
         ArrayList<Kategori> ferdigliste = KonverterListe.fraKategoritilArray(kategoriliste);
-        LagreJOBJ.lagreKategoriTilListe("Kategorier.jobj", ferdigliste);
+        LagreJOBJ.lagreKategoriTilFil("Kat.jobj", ferdigliste);
     }
 
-    public static Kategoriliste hentKategorier(){
-        lastNed();
-        return fil;
-    }
-
-    public static void LeggTil(String navn) throws FileNotFoundException {
+    public static void LeggTil(String navn) {
+        Kategoriliste fil = lastNed();
+        
         if (!(sjekkKategori(navn) && navn!=null)){
-            lastNed();
             Kategori k = new Kategori(navn);
             fil.addObjekt(k);
             lagre(fil);}
     }
 
-    public static boolean sjekkKategori(String navn){
-        ArrayList<Kategori> ArrayKategorier = KonverterListe.fraKategoritilArray(hentKategorier());
+    public static boolean sjekkKategori(String navn)  {
+        ArrayList<Kategori> ArrayKategorier = KonverterListe.fraKategoritilArray(lastNed());
         boolean finnes = false;
 
         for (Kategori k : ArrayKategorier){
@@ -72,14 +64,21 @@ public class LagringKategori {
         return finnes;
     }
 
-    public static Kategori finnKategori(String navn) throws FileNotFoundException {
-        ArrayList<Kategori> ArrayKategorier = KonverterListe.fraKategoritilArray(hentKategorier());
+    public static Kategori finnKategori(String navn) {
+        ArrayList<Kategori> ArrayKategorier = hentFraFil();
+        boolean finnes = false;
+        Kategori kategori = null;
 
+        
         for (Kategori k : ArrayKategorier){
             if (k.getNavn().equalsIgnoreCase(navn)){
-                return k;
+                kategori = k;
+                finnes = true;
             }
         }
-        return null;
+        if (!finnes){
+            kategori = new Kategori(navn);
+        }
+        return kategori;
     }
 }

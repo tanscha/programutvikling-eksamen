@@ -5,8 +5,6 @@ import java.io.Serializable;
 public class Kategori implements Serializable {
 
     public String navn;
-    //public int kundenr;
-
 
     public Kategori(String navn) {
         this.navn = navn;

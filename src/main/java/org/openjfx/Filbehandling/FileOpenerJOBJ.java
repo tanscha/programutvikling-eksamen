@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+
 public class FileOpenerJOBJ implements FileOpener {
     public void openFile(Kategoriliste kategoriliste, Path path) throws IOException {
         Kategoriliste.fjernAlt();

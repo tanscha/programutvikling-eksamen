@@ -1,16 +1,13 @@
 package org.openjfx.Filbehandling;
 
+import org.openjfx.Produkter.Kategoriliste;
+
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.nio.file.Path;
 
 
 public interface FileOpener {
-    // dette er vår:
-    // void openFile(Produktliste komponentliste, Path path) throws IOException, ClassNotFoundException;
-    // Object read(String string) throws IOException;
+    void openFile(Kategoriliste kategoriliste, Path path) throws IOException, ClassNotFoundException;
 
-    // erik sin:
-    ArrayList<? extends Serializable> read(String path) throws IOException, ClassNotFoundException;
-
+    Object read(String string) throws IOException;
 }
