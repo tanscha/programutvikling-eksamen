@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.App;
 import org.openjfx.Exceptions.InvalidAntallException;
+import org.openjfx.Exceptions.InvalidEgenskapException;
 import org.openjfx.Exceptions.InvalidNavnException;
 import org.openjfx.Filbehandling.FileOpenerCSV;
 import org.openjfx.Filbehandling.LagreCSV;
@@ -319,8 +320,8 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("");
             try {
                 Integer.parseInt(spnAntall.getPromptText());
-            } catch (IllegalArgumentException e){
-                lblPrisogNavn.setText("Skriv inn riktig navn og pris");
+            } catch (InvalidNavnException | InvalidAntallException e){
+                lblPrisogNavn.setText("Skriv inn riktig navn og antall");
                 lblFeilmld.setText("");
             }
         } else if (egenskap == null || egenskap.isEmpty()) {
@@ -328,8 +329,8 @@ public class ProdukterController implements Initializable {
             lblFeilmld.setText("");
             try {
                 Integer.parseInt(spnAntall.getPromptText());
-            } catch (IllegalArgumentException e) {
-                lblPrisogNavn.setText("Skriv inn riktig egenskap og pris");
+            } catch (InvalidEgenskapException | InvalidAntallException e) {
+                lblPrisogNavn.setText("Skriv inn riktig egenskap og antall");
                 lblFeilmld.setText("");
             }
         } else {
@@ -341,7 +342,7 @@ public class ProdukterController implements Initializable {
                     nullstillTxt();
                     produktliste = FileOpenerCSV.ListefraCSV();
                     LagringProdukt.LeggTilProdukt(produkt, produktliste);
-                    lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
+                    lblFeilmld.setText("Produkt lagt til");
                     lblPrisogNavn.setText("");
                     produktliste.fjernAlt();
                     produktliste = FileOpenerCSV.ListefraCSV();
@@ -349,10 +350,10 @@ public class ProdukterController implements Initializable {
                     setKategorivalg();
                     setKategorier();
                 } else {
-                    lblPrisogNavn.setText("Prisen må være med enn 0");
+                    lblPrisogNavn.setText("Antall må være med enn 0");
                     lblFeilmld.setText("");
                 }
-            } catch (IllegalArgumentException | IOException e) {
+            } catch (InvalidAntallException | IOException e) {
                 lblPrisogNavn.setText("Skriv inn riktig antall");
                 lblFeilmld.setText("");
                 txtNavn.setText("");
@@ -371,7 +372,6 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnLeggTilKat(ActionEvent event) throws IOException {
-
         TextInputDialog td = new TextInputDialog("Nytt navn på kategori...");
         td.setHeaderText("Legg til ny kategori");
         Optional<String> nyttnavn = td.showAndWait();
@@ -397,7 +397,8 @@ public class ProdukterController implements Initializable {
             Regex.navnRegex(navn);
             produkt.setNavn(navn);
             lblFeilmld.setText("Navnet er endret!");
-        }catch (InvalidNavnException e){
+        }
+        catch (InvalidNavnException e){
             lblFeilmld.setText("Ugyldig navn. Vennligst prøv igjen.");
         }
         tableView.refresh();
