@@ -432,6 +432,10 @@ public class ProdukterController implements Initializable {
             Regex.antallRegex(antall);
             produkt.setAntall(antall);
             lblFeilmld.setText("Antall er endret!");
+            if (antall == 0){
+                produktliste.fjern(produkt);
+                tableView.refresh();
+            }
         }
         catch (InvalidAntallException e){
             lblFeilmld.setText("Antall må være over null!");
