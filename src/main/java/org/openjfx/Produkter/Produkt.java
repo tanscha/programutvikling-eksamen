@@ -49,6 +49,6 @@ public class Produkt implements Serializable {
 
     @Override
     public String toString() {
-        return  navn + egenskap + antall + kategori;
+        return  navn + egenskap + antall + kategori.getNavn();
     }
 }

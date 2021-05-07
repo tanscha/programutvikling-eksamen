@@ -51,17 +51,6 @@ public class Produktliste implements Serializable {
                 objekt.toString().toLowerCase().matches(String.format("%s%s%s", ".*", input.toLowerCase(), ".*"))).collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
-    public static ObservableList<Produkt> filtrerEtterEgenskap(String egenskap, ObservableList<Produkt> a) {
-        return a.stream().filter(objekt -> objekt.getEgenskap().
-                toLowerCase().matches(String.format("%s%s%s", ".*", egenskap.
-                toLowerCase(), ".*"))).collect(Collectors.toCollection(FXCollections::observableArrayList));
-    }
-
-    public static ObservableList<Produkt> filtrerEtterAntall(int antall, ObservableList<Produkt> a) {
-        return a.stream().filter(objekt -> objekt.getAntall() == antall).
-                collect(Collectors.toCollection(FXCollections::observableArrayList));
-    }
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
