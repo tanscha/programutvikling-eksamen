@@ -123,7 +123,7 @@ public class ProdukterController implements Initializable {
 
     @FXML
     private void btnÅpne(ActionEvent event) {
-        produktliste.fjernAlt();
+        Produktliste.fjernAlt();
         hemKnapper();
         lblFeilmld.setText("Produkter lastes inn...");
         lblPrisogNavn.setText("");
@@ -317,47 +317,38 @@ public class ProdukterController implements Initializable {
     }
 
     public void btnLeggTil(ActionEvent event) throws FileNotFoundException {
-        produktliste.fjernAlt();
+        Produktliste.fjernAlt();
         String navn = txtNavn.getText();
         String egenskap = txtEgenskap.getText();
+        int antall = spnAntall.getValue();
         Kategori kategori = LagringKategori.finnKategori(comboKategori.getValue());
         if (navn == null || navn.isEmpty()) {
             lblPrisogNavn.setText("Skriv inn riktig navn");
             lblFeilmld.setText("");
-            try {
-                Integer.parseInt(spnAntall.getPromptText());
-            } catch (InvalidNavnException | InvalidAntallException e){
+        }
+        try {
+                Regex.antallRegex(antall);
+            }
+            catch (InvalidAntallException e) {
                 lblPrisogNavn.setText("Skriv inn riktig navn og antall");
                 lblFeilmld.setText("");
             }
-        } else if (egenskap == null || egenskap.isEmpty()) {
-            lblPrisogNavn.setText("Skriv inn riktig egenskap");
-            lblFeilmld.setText("");
-            try {
-                Integer.parseInt(spnAntall.getPromptText());
-            } catch (InvalidEgenskapException | InvalidAntallException e) {
-                lblPrisogNavn.setText("Skriv inn riktig egenskap og antall");
+        try {
+            if (antall > 0) {
+                Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
+                nullstillTxt();
+                produktliste = FileOpenerCSV.ListefraCSV();
+                LagringProdukt.leggTilProdukt(produkt, produktliste);
+                lblFeilmld.setText("Produkt lagt til!");
+                lblPrisogNavn.setText("");
+                Produktliste.fjernAlt();
+                produktliste = FileOpenerCSV.ListefraCSV();
+                oppdater();
+                setKategorivalg();
+                setKategorier();
+            } else {
+                lblPrisogNavn.setText("Antall må være med enn 0");
                 lblFeilmld.setText("");
-            }
-        } else {
-            try {
-                int antall = spnAntall.getValue();
-                System.out.println(antall);
-                if (antall > 0) {
-                    Produkt produkt = new Produkt(navn, egenskap, antall, kategori);
-                    nullstillTxt();
-                    produktliste = FileOpenerCSV.ListefraCSV();
-                    LagringProdukt.leggTilProdukt(produkt, produktliste);
-                    lblFeilmld.setText("Produkt lagt til. Husk å lagre!");
-                    lblPrisogNavn.setText("");
-                    produktliste.fjernAlt();
-                    produktliste = FileOpenerCSV.ListefraCSV();
-                    oppdater();
-                    setKategorivalg();
-                    setKategorier();
-                } else {
-                    lblPrisogNavn.setText("Antall må være med enn 0");
-                    lblFeilmld.setText("");
                 }
             } catch (InvalidAntallException | IOException e) {
                 lblPrisogNavn.setText("Skriv inn riktig antall");
@@ -367,7 +358,6 @@ public class ProdukterController implements Initializable {
             }
         }
 
-    }
 
     public void btnSlett(ActionEvent event) throws IOException {
         Produkt slett = tableView.getSelectionModel().getSelectedItem();
@@ -442,9 +432,26 @@ public class ProdukterController implements Initializable {
             Regex.antallRegex(antall);
             produkt.setAntall(antall);
             lblFeilmld.setText("Antall er endret!");
+            if (antall == 0){
+                produktliste.fjern(produkt);
+                tableView.refresh();
+            }
         }
         catch (InvalidAntallException e){
             lblFeilmld.setText("Antall må være over null!");
+        }
+        tableView.refresh();
+        lagre();
+    }
+    public void editTvEgenskap(TableColumn.CellEditEvent<Object, String> cellEditEvent) throws IOException {
+        Produkt produkt = tableView.getSelectionModel().getSelectedItem();
+        try{
+            String egenskap = cellEditEvent.getNewValue();
+            produkt.setEgenskap(egenskap);
+            lblFeilmld.setText("Egenskap er endret!");
+        }
+        catch (InvalidEgenskapException e){
+            lblFeilmld.setText("Ugyldig egenskap. Vennligst prøv igjen.");
         }
         tableView.refresh();
         lagre();

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -13,6 +12,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
+<?import javafx.scene.control.SpinnerValueFactory?>
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.Controller.ProdukterController">
     <children>
         <AnchorPane layoutY="-11.0" prefHeight="550.0" prefWidth="900.0">
@@ -34,7 +35,7 @@
                             <PropertyValueFactory property="kategori" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="colEgenskap" editable="false" prefWidth="140.0" text="Egenskap">
+                    <TableColumn fx:id="colEgenskap" onEditCommit="#editTvEgenskap" prefWidth="140.0" text="Egenskap">
                         <cellValueFactory>
                             <PropertyValueFactory property="egenskap" />
                         </cellValueFactory>
@@ -65,7 +66,7 @@
          <Label fx:id="lblPrisogNavn" alignment="CENTER_RIGHT" layoutX="45.0" layoutY="347.0" prefHeight="17.0" prefWidth="155.0" />
          <Spinner fx:id="spnAntall" editable="false" initialValue="0" layoutX="130.0" layoutY="275.0" prefHeight="27.0" prefWidth="60.0">
          <valueFactory>
-             <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="0" />
+             <SpinnerValueFactory.IntegerSpinnerValueFactory max="1000" min="0"/>
          </valueFactory>
          </Spinner>
          <Label layoutX="88.0" layoutY="280.0" text="Antall:" />
