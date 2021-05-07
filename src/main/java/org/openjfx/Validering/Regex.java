@@ -18,5 +18,11 @@ public class Regex {
         else throw new InvalidAntallException("Ugyldig antall, vennligst prøv igjen");
     }
 
+    public static boolean godkjentnavnRegex(String string){
+        if (string.matches(navnRegex(string))){
+            return true;
+        } return false;
+    }
+
 
 }

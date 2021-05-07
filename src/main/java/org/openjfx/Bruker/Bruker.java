@@ -1,15 +1,18 @@
 package org.openjfx.Bruker;
 
+import org.openjfx.Produkter.Produktliste;
+
 import java.io.Serializable;
 
 public class Bruker implements Serializable {
-    private String brukernavn;
-    private String passord;
-    private int brukerId;
+    public String brukernavn;
+    public String passord;
+    public int brukerId;
 
-    public Bruker(String brukernavn, String passord) {
+    public Bruker(String brukernavn, String passord, int brukerId) {
         this.brukernavn = brukernavn;
         this.passord = passord;
+        this.brukerId = brukerId;
     }
 
     public String getBrukernavn() {
