@@ -1,0 +1,31 @@
+Index: src/main/java/org/openjfx/Controller/LogginnController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.openjfx.Controller;\r\n\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.PasswordField;\r\nimport org.openjfx.App;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class LogginnController {\r\n\r\n    public Button btnLoggInn;\r\n    public Button btnUten;\r\n    public Button btnNyBruker;\r\n\r\n    @FXML\r\n    private PasswordField txtPassord;\r\n    @FXML\r\n    private javafx.scene.control.TextField txtBrukernavn;\r\n    @FXML\r\n    private Label lblFeil;\r\n\r\n\r\n    private void logginn() throws IOException {\r\n        if (!txtPassord.getText().equals(\"passord\") || !txtBrukernavn.getText().toLowerCase().equals(\"admin\")) {\r\n            lblFeil.setText(\"Feil brukernavn og/eller passord!\");\r\n            txtPassord.clear();\r\n        } else {\r\n            App.setRoot(\"produkter\");\r\n        }\r\n    }\r\n\r\n\r\n    @FXML\r\n    void btnLoggInn(ActionEvent event) throws IOException {\r\n        logginn();\r\n    }\r\n\r\n    @FXML\r\n    void loggInnUten(ActionEvent event) throws IOException {\r\n        App.setRoot(\"produkter\");\r\n    }\r\n\r\n    public void btnNyBruker(ActionEvent event) throws IOException {\r\n        App.setRoot(\"nyBruker\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/openjfx/Controller/LogginnController.java b/src/main/java/org/openjfx/Controller/LogginnController.java
+--- a/src/main/java/org/openjfx/Controller/LogginnController.java	(revision b8184aa877f907d9a7a104568f437782783d8b25)
++++ b/src/main/java/org/openjfx/Controller/LogginnController.java	(date 1620387693966)
+@@ -6,10 +6,20 @@
+ import javafx.scene.control.Label;
+ import javafx.scene.control.PasswordField;
+ import org.openjfx.App;
++import org.openjfx.Bruker.BrukerRegister;
++import org.openjfx.Filbehandling.FileOpener;
++import org.openjfx.Filbehandling.FileOpenerJOBJ;
++import org.openjfx.Produkter.Kategoriliste;
+ 
+ import java.io.IOException;
++import java.nio.file.Path;
+ 
+ public class LogginnController {
++    public void initialize(){
++        BrukerRegister.setAktivBruker(null);
++
++        FileOpener opener = new FileOpenerJOBJ() {
++    }
+ 
+     public Button btnLoggInn;
+     public Button btnUten;
